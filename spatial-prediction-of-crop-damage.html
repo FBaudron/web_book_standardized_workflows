@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Spatial prediction of crop damage | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Spatial prediction of crop damage | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Spatial prediction of crop damage | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ecological-network-analysis.html"/>
+<link rel="next" href="potential-manure-production-under-current-land-use.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-prediction-of-crop-damage" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Spatial prediction of crop damage<a href="spatial-prediction-of-crop-damage.html#spatial-prediction-of-crop-damage" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a spatial modelling workflow to explore how landscape characteristics influence crop damage by pests and to predict its distribution across the study area.</p>
+<div id="introduction-2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Introduction<a href="spatial-prediction-of-crop-damage.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Crop damage by insect pests is often influenced by processes operating beyond the field itself. The composition and configuration of the surrounding landscape can affect the abundance and movement of pests and their natural enemies, and may therefore influence the level of damage observed in individual fields. Understanding these relationships requires considering both field-level characteristics and the landscape in which fields are embedded.</p>
+<p>This chapter presents a workflow to describe the landscape surrounding maize fields in Ethiopia and examine its relationship with damage caused by stemborers. The analysis combines field observations collected over three years: 2013, 2014 and 2015 <span class="citation">(<a href="#ref-Kebede2019">Y. Kebede et al. 2019</a>)</span>, with land-cover information derived from a Dynamic World raster. Landscape metrics are calculated around each field at several spatial scales, and are then related to observed stemborer damage using a random forest model.</p>
+<p>The dataset contains 94 plot-year observations from 33 plots. Landscape characteristics are treated as static over the study period, whereas stemborer damage varies between years. Landscape metrics are therefore calculated once for each unique plot and then joined to the 94 plot-year observations using <em>PlotID</em>. This retains the temporal variation in damage rather than averaging observations across years.</p>
+<p>The workflow comprises five main stages:</p>
+<ol style="list-style-type: decimal">
+<li>Preparing the field observations and checking their geographic coordinates;</li>
+<li>Calculating landscape metrics around each unique plot from a land-cover raster;</li>
+<li>Exploring the distribution of landscape metrics across plots and buffer distances;</li>
+<li>Joining landscape metrics to the plot-year observations and examining their relationship with stemborer damage;</li>
+<li>Fitting and evaluating a random forest model while accounting for repeated observations from the same plot.</li>
+</ol>
+<p>The analysis focuses on <em>LengthTunnelling</em> as the main indicator of stemborer damage. Other indicators in the dataset, including <em>CobDamage</em>, <em>TotalHoles</em> and <em>TotalLarvaePlant</em>, can be examined using the same workflow. The random forest is used here as an exploratory predictive approach. With only 33 independent plots, model performance and variable importance should be interpreted cautiously.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/09-spatial_prediction_crop_damage/spatial_prediction_crop_damage.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/09-spatial_prediction_crop_damage/spatial_prediction_crop_damage.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;openxlsx&quot;)) install.packages(&quot;openxlsx&quot;)
+if (!require(&quot;dplyr&quot;)) install.packages(&quot;dplyr&quot;)
+if (!require(&quot;tidyr&quot;)) install.packages(&quot;tidyr&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;stringr&quot;)) install.packages(&quot;stringr&quot;)
+if (!require(&quot;ranger&quot;)) install.packages(&quot;ranger&quot;)
+if (!require(&quot;pdp&quot;)) install.packages(&quot;pdp&quot;)
+
+library(terra)
+library(openxlsx)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(ranger)
+library(pdp)</code></pre>
+</div>
+<div id="data-preparation-2" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Data preparation<a href="spatial-prediction-of-crop-damage.html#data-preparation-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Excel workbook can be downloaded from Dataverse (<a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/C9Z4I4" class="uri">https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/C9Z4I4</a>) or from the Github repositing the standalone script (<a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/09-spatial_prediction_crop_damage/Kebede%20et%20al.%202019a.xlsx" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/09-spatial_prediction_crop_damage/Kebede%20et%20al.%202019a.xlsx</a>).</p>
+<p>The Excel workbook contains a sheet named <em>Data</em> with 94 observations and 45 variables. Each row represents one plot in one year. The same plot can therefore occur more than once, while its geographic coordinates and surrounding landscape are assumed to remain constant over the study period.</p>
+<pre class="text"><code>d_eth = as.data.frame(read.xlsx(&quot;Data/Kebede et al. 2019a.xlsx&quot;, sheet = &quot;Data&quot;))</code></pre>
+<p>The coordinates are stored as numeric values without decimal points. We restore the decimal point by retaining one digit before it for latitude and two for longitude.</p>
+<pre class="text"><code>fix_coord = function(x, int_digits) {
+    n = nchar(as.character(as.integer(x)))
+    x/10^(n - int_digits)
+}
+
+d_eth = d_eth %&gt;%
+    mutate(Lat = fix_coord(Lat, int_digits = 1), Lon = fix_coord(Lon, int_digits = 2))</code></pre>
+<p>Landscape metrics are calculated once per plot because the land-cover raster represents a single landscape snapshot (2015) and the landscape descriptors are treated as static across the three years. We therefore identify unique combinations of <em>PlotID</em>, latitude and longitude.</p>
+<pre class="text"><code>unique_plots = d_eth %&gt;%
+    distinct(PlotID, Lat, Lon)
+
+nrow(unique_plots)</code></pre>
+<pre><code>[1] 33</code></pre>
+<p>The resulting table is converted to the format expected by <em>run_hwc_pipeline()</em>. The function expects columns named <em>lon</em> and <em>lat</em>, as well as a unique point identifier.</p>
+<pre class="text"><code>ethiopia_pts = data.frame(point_id = as.character(unique_plots$PlotID), lat = unique_plots$Lat,
+    lon = unique_plots$Lon)
+
+ethiopia_pts2 = terra::vect(ethiopia_pts, geom = c(&quot;lon&quot;, &quot;lat&quot;), crs = &quot;EPSG:4326&quot;)
+
+plot(ethiopia_pts2, main = &quot;Unique maize plot locations&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-148-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calculate-landscape-metrics" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Calculate landscape metrics<a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="functions-to-calculate-landscape-metrics" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Functions to calculate landscape metrics<a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>landscape_metrics()</em> calculates raster-based metrics around each point, including land-cover proportions, patch numbers, Shannon diversity and distances to the nearest occurrence of each class. <em>vector_layer_metrics()</em> can calculate complementary metrics for vector layers such as roads, rivers and polygons. <em>run_hwc_pipeline()</em> brings these components together and returns one row per plot, with buffer-specific metrics in separate columns.</p>
+<p>The distance extraction below deliberately selects the second column returned by <em>terra::extract()</em>, which contains the raster value. The first column is the extraction ID and is not the distance.</p>
+<pre class="text"><code>## 1. Landscape metrics from land-use raster
+landscape_metrics = function(landuse_map, points, class_ids, buffers, id_col = &quot;id&quot;,
+    crs_proj, dist_only_ids = integer(0)) {
+
+    lu_proj = terra::project(landuse_map, crs_proj, method = &quot;near&quot;)
+    pts_proj = terra::project(points, crs_proj)
+    pt_xy = terra::crds(pts_proj)
+    ids = as.data.frame(pts_proj)[[id_col]]
+
+    # Distance to nearest land-use class
+    all_dist_ids = c(class_ids, dist_only_ids)
+    dist_df = data.frame(id = ids)
+
+    for (cl in all_dist_ids) {
+        cl_r = lu_proj == cl
+        cl_r[cl_r == 0] = NA
+        dist_r = terra::distance(cl_r)
+        dist_df[[paste0(&quot;dist_class&quot;, cl)]] = terra::extract(dist_r, pt_xy)[, 1]
+    }
+
+    # Buffer-based metrics
+    buffer_rows = vector(&quot;list&quot;, length(buffers))
+
+    for (j in seq_along(buffers)) {
+        b = buffers[j]
+        message(format(Sys.time(), &quot;%H:%M:%S&quot;), &quot;  Buffer &quot;, b, &quot; m started&quot;)
+
+        buf = terra::buffer(pts_proj, width = b)
+        pt_rows = vector(&quot;list&quot;, nrow(pts_proj))
+
+        for (i in seq_len(nrow(pts_proj))) {
+            if (i%%50 == 0)
+                message(&quot;Point &quot;, i, &quot; of &quot;, nrow(pts_proj))
+
+            lu_crop = terra::crop(lu_proj, buf[i, ], mask = TRUE)
+            vals = terra::values(lu_crop)
+            vals = vals[!is.na(vals)]
+            total_n = length(vals)
+
+            row = data.frame(id = ids[i], buffer = b, flag_empty_buffer = total_n ==
+                0)
+
+            if (total_n == 0) {
+                pt_rows[[i]] = row
+                next
+            }
+
+            for (cl in class_ids) {
+                row[[paste0(&quot;prop_class&quot;, cl)]] = sum(vals == cl)/total_n
+
+                bin = lu_crop == cl
+                bin[bin == 0] = NA
+
+                if (sum(!is.na(terra::values(bin))) == 0) {
+                  row[[paste0(&quot;npatch_class&quot;, cl)]] = 0
+                } else {
+                  patches_r = terra::patches(bin, directions = 8)
+                  pvals = terra::values(patches_r)
+                  row[[paste0(&quot;npatch_class&quot;, cl)]] = length(unique(pvals[!is.na(pvals)]))
+                }
+            }
+
+            p = table(vals)/total_n
+            p = p[p &gt; 0]
+            row$shannon = -sum(p * log(p))
+
+            pt_rows[[i]] = row
+        }
+
+        buffer_rows[[j]] = do.call(rbind, pt_rows)
+        message(format(Sys.time(), &quot;%H:%M:%S&quot;), &quot;  Buffer &quot;, b, &quot; m completed&quot;)
+    }
+
+    buffer_metrics = do.call(rbind, buffer_rows)
+    merge(buffer_metrics, dist_df, by = &quot;id&quot;)
+}
+
+## 2. Metrics from vector layers
+vector_layer_metrics = function(points_proj, buffers, id_col = &quot;point_id&quot;, polygon_layers = list(),
+    line_layers = list()) {
+
+    ids = as.data.frame(points_proj)[[id_col]]
+
+    nearest_dist = function(pts, layer) {
+        vapply(seq_len(nrow(pts)), function(i) min(terra::distance(pts[i, ], layer)),
+            numeric(1))
+    }
+
+    dist_df = data.frame(id = ids)
+
+    for (nm in names(polygon_layers)) {
+        dist_df[[paste0(&quot;dist_&quot;, nm)]] = nearest_dist(points_proj, polygon_layers[[nm]])
+    }
+
+    for (nm in names(line_layers)) {
+        dist_df[[paste0(&quot;dist_&quot;, nm)]] = nearest_dist(points_proj, line_layers[[nm]])
+    }
+
+    buffer_rows = vector(&quot;list&quot;, length(buffers))
+
+    for (j in seq_along(buffers)) {
+        b = buffers[j]
+        buf = terra::buffer(points_proj, width = b)
+        buf_area = terra::expanse(buf)
+        pt_rows = vector(&quot;list&quot;, nrow(points_proj))
+
+        for (i in seq_len(nrow(points_proj))) {
+            row = data.frame(id = ids[i], buffer = b)
+
+            for (nm in names(polygon_layers)) {
+                inter = tryCatch(terra::intersect(buf[i, ], polygon_layers[[nm]]),
+                  error = function(e) NULL)
+
+                row[[paste0(&quot;prop_&quot;, nm)]] = if (is.null(inter) || nrow(inter) ==
+                  0) {
+                  0
+                } else {
+                  sum(terra::expanse(inter))/buf_area[i]
+                }
+            }
+
+            for (nm in names(line_layers)) {
+                inter = tryCatch(terra::intersect(buf[i, ], line_layers[[nm]]), error = function(e) NULL)
+
+                row[[paste0(nm, &quot;_length_m&quot;)]] = if (is.null(inter) || nrow(inter) ==
+                  0) {
+                  0
+                } else {
+                  sum(terra::perim(inter))
+                }
+            }
+
+            pt_rows[[i]] = row
+        }
+
+        buffer_rows[[j]] = do.call(rbind, pt_rows)
+    }
+
+    buffer_metrics = do.call(rbind, buffer_rows)
+    merge(buffer_metrics, dist_df, by = &quot;id&quot;)
+}
+
+## 3. Generic landscape metrics pipeline
+run_hwc_pipeline = function(points, id_col, detail_cols, lulc, lulc_classes, crs_proj,
+    buffers_m, dist_only_classes = integer(0), polygon_layer_paths = list(), line_layer_paths = list(),
+    skip_crop = character(0), margin_deg = 0.05, output_path, fill_na_km2 = NULL,
+    fill_na_value = NULL) {
+
+    lu = lulc
+
+    # Optional filling of large internal no-data areas
+    if (!is.null(fill_na_km2) &amp;&amp; !is.null(fill_na_value)) {
+        lu = lu[[1]]
+        pa = terra::patches(terra::ifel(is.na(lu), 1, NA), directions = 8)
+        pm = terra::as.matrix(pa, wide = TRUE)
+
+        edge_ids = unique(c(pm[1, ], pm[nrow(pm), ], pm[, 1], pm[, ncol(pm)]))
+
+        area_by_patch = terra::zonal(terra::cellSize(lu, unit = &quot;km&quot;), pa, fun = &quot;sum&quot;)
+
+        big_ids = area_by_patch[area_by_patch[[2]] &gt;= fill_na_km2, 1]
+        fill_ids = setdiff(big_ids, edge_ids[!is.na(edge_ids)])
+
+        message(&quot;Pipeline: filled &quot;, length(fill_ids), &quot; no-data area(s) with class &quot;,
+            fill_na_value)
+
+        if (length(fill_ids) &gt; 0) {
+            lu = terra::cover(lu, terra::classify(pa, cbind(fill_ids, fill_na_value),
+                others = NA))
+        }
+    }
+
+    pts = terra::vect(points, geom = c(&quot;lon&quot;, &quot;lat&quot;), crs = &quot;EPSG:4326&quot;)
+
+    # Raster-based metrics
+    raster_metrics = landscape_metrics(landuse_map = lu, points = pts, class_ids = lulc_classes,
+        buffers = buffers_m, id_col = id_col, crs_proj = crs_proj, dist_only_ids = dist_only_classes)
+
+    class_name_map = setNames(names(c(lulc_classes, dist_only_classes)), paste0(&quot;class&quot;,
+        c(lulc_classes, dist_only_classes)))
+
+    nms = names(raster_metrics)
+    for (tag in names(class_name_map)) {
+        nms = gsub(tag, class_name_map[[tag]], nms)
+    }
+    names(raster_metrics) = nms
+
+    # Optional vector-based metrics
+    have_vector_layers = length(polygon_layer_paths) &gt; 0 || length(line_layer_paths) &gt;
+        0
+
+    if (have_vector_layers) {
+        pts_proj = terra::project(pts, crs_proj)
+
+        study_ext_wgs = terra::ext(pts) + margin_deg
+        study_ext_vect = terra::vect(study_ext_wgs, crs = &quot;EPSG:4326&quot;)
+
+        crop_to_study = function(layer_path) {
+            layer = terra::vect(layer_path)
+            ext_native = terra::project(study_ext_vect, terra::crs(layer))
+            cropped = terra::crop(layer, ext_native)
+
+            if (nrow(cropped) == 0) {
+                stop(&quot;No features found in &quot;, layer_path, &quot;. Increase margin_deg or skip cropping this layer.&quot;)
+            }
+
+            cropped
+        }
+
+        polygon_layers = setNames(lapply(names(polygon_layer_paths), function(nm) {
+            p = polygon_layer_paths[[nm]]
+            lyr = if (nm %in% skip_crop)
+                terra::vect(p) else crop_to_study(p)
+            terra::makeValid(terra::project(lyr, crs_proj))
+        }), names(polygon_layer_paths))
+
+        line_layers = setNames(lapply(names(line_layer_paths), function(nm) {
+            p = line_layer_paths[[nm]]
+            lyr = if (nm %in% skip_crop)
+                terra::vect(p) else crop_to_study(p)
+            terra::project(lyr, crs_proj)
+        }), names(line_layer_paths))
+
+        vector_metrics = vector_layer_metrics(points_proj = pts_proj, buffers = buffers_m,
+            id_col = id_col, polygon_layers = polygon_layers, line_layers = line_layers)
+
+        long_metrics = merge(raster_metrics, vector_metrics, by = c(&quot;id&quot;, &quot;buffer&quot;))
+    } else {
+        long_metrics = raster_metrics
+    }
+
+    # Reshape metrics to wide format
+    dist_cols = grep(&quot;^dist_&quot;, names(long_metrics), value = TRUE)
+    dist_wide = unique(long_metrics[, c(&quot;id&quot;, dist_cols)])
+    names(dist_wide)[-1] = paste0(names(dist_wide)[-1], &quot;_m&quot;)
+
+    buf_cols = setdiff(names(long_metrics), c(&quot;id&quot;, &quot;buffer&quot;, dist_cols, &quot;flag_empty_buffer&quot;))
+
+    wide_list = lapply(buffers_m, function(b) {
+        sub = long_metrics[long_metrics$buffer == b, c(&quot;id&quot;, buf_cols)]
+        names(sub)[-1] = paste0(names(sub)[-1], &quot;_&quot;, b, &quot;m&quot;)
+        sub
+    })
+
+    buf_wide = Reduce(function(x, y) merge(x, y, by = &quot;id&quot;), wide_list)
+
+    wide = merge(dist_wide, buf_wide, by = &quot;id&quot;)
+    names(wide)[names(wide) == &quot;id&quot;] = id_col
+
+    names(wide) = gsub(&quot;^npatch_(.+)_([0-9]+m)$&quot;, &quot;n_\\1_patches_\\2&quot;, names(wide))
+
+    if (length(detail_cols) &gt; 0) {
+        wide = merge(points[, c(id_col, detail_cols)], wide, by = id_col)
+    }
+
+    write.csv(wide, output_path, row.names = FALSE)
+    wide
+}</code></pre>
+</div>
+<div id="land-cover-map" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Land-cover map<a href="spatial-prediction-of-crop-damage.html#land-cover-map" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The land-cover raster was derived from Dynamic World for 2015, and can be downloaded here: <a href="https://www.dropbox.com/scl/fi/dj9egibkh0mrwk09s44df/ethiopia_dynamicworld_2015_updated.tiff?rlkey=tjh8s4rvtzeen596vu7zk8ata&amp;st=1b27r40m&amp;dl=0" class="uri">https://www.dropbox.com/scl/fi/dj9egibkh0mrwk09s44df/ethiopia_dynamicworld_2015_updated.tiff?rlkey=tjh8s4rvtzeen596vu7zk8ata&amp;st=1b27r40m&amp;dl=0</a>. We first load and inspect the raster. The raster uses categorical land-cover codes, so nearest-neighbour resampling is used whenever it is projected; interpolation methods such as bilinear interpolation would create artificial class values.</p>
+<pre class="text"><code>lulc = terra::rast(&quot;Data/Spatial/Raw/ethiopia_dynamicworld_2015_updated.tiff&quot;)
+
+ethiopia_pts2 = terra::project(ethiopia_pts2, terra::crs(lulc))
+
+plot(lulc, main = &quot;Dynamic World land cover (2015)&quot;, col = c(&quot;steelblue&quot;, &quot;darkgreen&quot;,
+    &quot;palegreen3&quot;, &quot;turquoise3&quot;, &quot;gold&quot;, &quot;olivedrab3&quot;, &quot;red3&quot;, &quot;tan&quot;, &quot;white&quot;))
+
+terra::points(ethiopia_pts2, pch = 20, cex = 2, col = &quot;black&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-150-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>We use the following Dynamic World classes in the landscape analysis:</p>
+<pre class="text"><code>dynamicworld_classes = c(water = 0, trees = 1, grass = 2, flooded_vegetation = 3,
+    crops = 4, shrub_and_scrub = 5, bare = 7)</code></pre>
+<p>Distances and areas are calculated in a projected coordinate reference system, with metres as the unit. We use UTM zone 37N (EPSG:32637), which is appropriate for the study area in southern Ethiopia.</p>
+<p>Landscape metrics are calculated within six circular buffers around each plot: 100, 500, 1,000, 1,500, 2,000 and 5,000 m. These distances represent different spatial extents around each field, from the immediate surroundings to the broader landscape.</p>
+<pre class="text"><code>crs_ethiopia = &quot;EPSG:32637&quot;
+
+buffers_ethiopia = c(100, 500, 1000, 1500, 2000, 5000)</code></pre>
+</div>
+<div id="run-the-landscape-metric-workflow" class="section level3 hasAnchor" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> Run the landscape-metric workflow<a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The function <em>run_hwc_pipeline()</em> combines the raster-based metrics calculated by <em>landscape_metrics()</em>. For each plot and buffer distance, it calculates:</p>
+<ul>
+<li>the proportion of the buffer occupied by each selected land-cover class;</li>
+<li>the number of separate patches of each selected class;</li>
+<li>the Shannon diversity index of land-cover classes within the buffer;</li>
+<li>the distance from the plot to the nearest cell of each selected land-cover class.</li>
+</ul>
+<p>The vector-layer component of the function can also calculate distances to roads, rivers or other linear features, and the proportion of buffers covered by polygon layers. No vector layers are used in this example, so the analysis focuses on the Dynamic World raster.</p>
+<pre class="text"><code>ethiopia_wide = run_hwc_pipeline(points = ethiopia_pts, id_col = &quot;point_id&quot;, detail_cols = character(0),
+    lulc = lulc, lulc_classes = dynamicworld_classes, dist_only_classes = integer(0),
+    crs_proj = crs_ethiopia, buffers_m = buffers_ethiopia, polygon_layer_paths = list(),
+    line_layer_paths = list(), output_path = &quot;Data/ethiopia_landscape_metrics_wide.csv&quot;)</code></pre>
+<p>The output contains one row per unique plot. Buffer-dependent metrics are stored in separate columns, with the buffer distance appended to each variable name. Distances to land-cover classes are stored once per plot because they do not depend on buffer size.</p>
+</div>
+</div>
+<div id="explore-landscape-metrics" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Explore landscape metrics<a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We first read the output table and convert it from wide to long format. This makes it possible to compare the distribution of each metric across buffer distances.</p>
+<pre class="text"><code>metrics = ethiopia_wide
+
+buffer_levels = c(&quot;100m&quot;, &quot;500m&quot;, &quot;1000m&quot;, &quot;1500m&quot;, &quot;2000m&quot;, &quot;5000m&quot;)
+
+metrics_long = metrics %&gt;%
+    pivot_longer(cols = -point_id, names_to = &quot;raw_metric&quot;, values_to = &quot;value&quot;) %&gt;%
+    mutate(buffer = str_extract(raw_metric, &quot;(100|500|1000|1500|2000|5000)m$&quot;), buffer = if_else(is.na(buffer),
+        &quot;Distance (m)&quot;, buffer), buffer = factor(buffer, levels = c(buffer_levels,
+        &quot;Distance (m)&quot;)), metric_type = case_when(str_starts(raw_metric, &quot;prop_&quot;) ~
+        &quot;Proportion&quot;, str_starts(raw_metric, &quot;n_&quot;) &amp; str_detect(raw_metric, &quot;_patches_&quot;) ~
+        &quot;Patch Count&quot;, str_starts(raw_metric, &quot;shannon&quot;) ~ &quot;Shannon Diversity&quot;, str_starts(raw_metric,
+        &quot;dist_&quot;) ~ &quot;Distance to Class (m)&quot;, TRUE ~ &quot;Other&quot;), landcover = raw_metric %&gt;%
+        str_remove(&quot;^(prop_|n_|dist_)&quot;) %&gt;%
+        str_remove(&quot;_patches(_(100|500|1000|1500|2000|5000)m)?$&quot;) %&gt;%
+        str_remove(&quot;_m$&quot;) %&gt;%
+        str_remove(&quot;_(100|500|1000|1500|2000|5000)m$&quot;) %&gt;%
+        if_else(metric_type == &quot;Shannon Diversity&quot;, &quot;All classes&quot;, .))</code></pre>
+<p>We plot the proportion of each land-cover class and the number of patches across buffer distances, to assess how landscape composition and configuration vary among plot locations and how these differences depend on the spatial scale considered.</p>
+<pre class="text"><code>metrics_long %&gt;%
+    filter(metric_type %in% c(&quot;Proportion&quot;, &quot;Patch Count&quot;)) %&gt;%
+    ggplot(aes(x = landcover, y = value, fill = buffer)) + geom_boxplot(outlier.size = 0.8,
+    alpha = 0.85) + facet_wrap(~metric_type, scales = &quot;free_y&quot;, ncol = 1) + labs(x = &quot;Land-cover class&quot;,
+    y = &quot;Metric value&quot;, fill = &quot;Buffer distance&quot;) + theme_bw() + theme(axis.text.x = element_text(angle = 30,
+    hjust = 1))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-155-1.png" alt="" width="85%" style="display: block; margin: auto;" /></p>
+<p>Distance metrics describe the proximity of each plot to the nearest cell belonging to a given land-cover class. These metrics are not calculated separately for each buffer because they represent the distance from the plot to the nearest occurrence of the class in the raster.</p>
+<pre class="text"><code>metrics_long %&gt;%
+    filter(metric_type == &quot;Distance to Class (m)&quot;) %&gt;%
+    ggplot(aes(x = reorder(landcover, value, median, na.rm = TRUE), y = value)) +
+    geom_boxplot(fill = &quot;#4E79A7&quot;, outlier.size = 0.8, alpha = 0.85) + labs(x = &quot;Land-cover class&quot;,
+    y = &quot;Distance (m)&quot;) + theme_bw() + theme(axis.text.x = element_text(angle = 30,
+    hjust = 1))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-156-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<p>The Shannon index summarises the diversity of land-cover classes within a buffer. It increases with the number of classes present and with the evenness of their relative proportions. It does not, by itself, distinguish between different landscape configurations: two buffers with similar class proportions can have similar Shannon values even if their patches are arranged differently.</p>
+<pre class="text"><code>metrics_long %&gt;%
+    filter(metric_type == &quot;Shannon Diversity&quot;) %&gt;%
+    ggplot(aes(x = buffer, y = value)) + geom_boxplot(fill = &quot;#4E79A7&quot;, outlier.size = 0.8,
+    alpha = 0.85) + labs(x = &quot;Buffer distance&quot;, y = &quot;Shannon diversity index&quot;) +
+    theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-157-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="link-landscape-metrics-to-plot-year-observations" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Link landscape metrics to plot-year observations<a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Landscape metrics are calculated for unique plots, whereas the response variable varies between years. We therefore join the landscape metrics to the original dataset using <em>PlotID</em>. This produces a table with one row per plot-year observation.</p>
+<pre class="text"><code>d_eth$PlotID = as.character(d_eth$PlotID)
+
+d_eth_metrics = d_eth %&gt;%
+    left_join(ethiopia_wide, by = c(PlotID = &quot;point_id&quot;))</code></pre>
+<div id="predict-stemborer-damage-using-random-forest" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Predict stemborer damage using random forest<a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The response variable is <em>LengthTunnelling</em>. The predictors are the landscape metrics, <em>Year</em>, and a predefined set of field-level variables covering planting, cropping system, maize variety, fertilizer inputs and topsoil properties. No other variables from the workbook are included.</p>
+<p>The observation with an exceptionally large tunnelling length (approximately 1,025 cm) is excluded from the analysis. This value is far outside the range of the other observations and has a disproportionate influence on prediction error. The exclusion is made explicitly below so that it can be revisited if the original measurement is subsequently verified.</p>
+<p>The extreme observation is identified before filtering:</p>
+<pre class="text"><code>d_eth_metrics %&gt;%
+    filter(LengthTunnelling &gt;= 100) %&gt;%
+    select(PlotID, Year, LengthTunnelling)</code></pre>
+<pre><code>  PlotID Year LengthTunnelling
+1      3 2015             1025</code></pre>
+<pre class="text"><code>response_variable = &quot;LengthTunnelling&quot;
+
+field_predictors = c(&quot;PlantingDate&quot;, &quot;PlantingDensity&quot;, &quot;CroppingSystem&quot;, &quot;MaizeVariety&quot;,
+    &quot;DAP&quot;, &quot;Urea&quot;, &quot;NInput&quot;, &quot;MC_0_30&quot;, &quot;MN_0_30&quot;, &quot;MP_0_30&quot;, &quot;pH_top_soil&quot;)
+
+# Check that all requested field-level variables are present in the workbook.
+missing_field_predictors = setdiff(field_predictors, names(d_eth))
+if (length(missing_field_predictors) &gt; 0) {
+    stop(&quot;Missing field-level variables: &quot;, paste(missing_field_predictors, collapse = &quot;, &quot;))
+}
+
+landscape_predictors = setdiff(names(ethiopia_wide), &quot;point_id&quot;)
+candidate_predictors = c(&quot;Year&quot;, field_predictors, landscape_predictors)
+
+model_data = d_eth_metrics %&gt;%
+    filter(!is.na(.data[[response_variable]]), .data[[response_variable]] &lt; 100) %&gt;%
+    select(PlotID, all_of(response_variable), all_of(candidate_predictors))
+
+# Convert categorical variables to factors for ranger.
+model_data = model_data %&gt;%
+    mutate(across(where(is.character), as.factor), Year = as.factor(Year))
+
+# Remove predictors with no variation or entirely missing values.
+candidate_predictors = candidate_predictors[vapply(model_data[, candidate_predictors,
+    drop = FALSE], function(x) length(unique(x[!is.na(x)])) &gt; 1, logical(1))]
+
+model_data = model_data %&gt;%
+    select(PlotID, all_of(response_variable), all_of(candidate_predictors))</code></pre>
+<p>The model uses complete cases for the response and predictors. This ensures that the same observations and predictors are used consistently in all cross-validation folds.</p>
+<pre class="text"><code>model_data_complete = model_data %&gt;%
+    filter(if_all(all_of(c(response_variable, candidate_predictors)), ~!is.na(.x)))</code></pre>
+<p>Before fitting the random forest, we examined correlations among numerical predictors using Spearman’s rank correlation coefficient. This analysis was used to identify potentially redundant predictors, particularly landscape metrics calculated at different buffer distances. Predictors with strong correlations were retained in the random forest, since the algorithm can accommodate correlated variables. However, correlations were considered when interpreting variable importance, as importance may be distributed among correlated predictors.</p>
+<pre class="text"><code># Select numerical predictors only.
+numeric_predictors = candidate_predictors[vapply(model_data_complete[, candidate_predictors,
+    drop = FALSE], is.numeric, logical(1))]
+
+# Calculate Spearman correlation matrix
+cor_matrix = stats::cor(model_data_complete[, numeric_predictors, drop = FALSE],
+    method = &quot;spearman&quot;, use = &quot;complete.obs&quot;)
+
+# Identify pairs of predictors with strong correlations
+correlation_threshold = 0.7
+
+# Identify highly correlated predictors
+correlated_predictors_to_remove = caret::findCorrelation(cor_matrix, cutoff = correlation_threshold,
+    names = TRUE, exact = TRUE)
+
+# Update candidate predictors
+candidate_predictors = setdiff(candidate_predictors, correlated_predictors_to_remove)
+
+# Update model dataset
+model_data_complete = model_data_complete %&gt;%
+    dplyr::select(-dplyr::all_of(correlated_predictors_to_remove))
+
+# Display removed predictors
+correlated_predictors_to_remove</code></pre>
+<pre><code> [1] &quot;prop_trees_5000m&quot;                   &quot;prop_bare_1500m&quot;                   
+ [3] &quot;n_bare_patches_1000m&quot;               &quot;prop_bare_1000m&quot;                   
+ [5] &quot;n_bare_patches_2000m&quot;               &quot;prop_trees_2000m&quot;                  
+ [7] &quot;n_bare_patches_1500m&quot;               &quot;prop_bare_2000m&quot;                   
+ [9] &quot;dist_bare_m&quot;                        &quot;prop_trees_1500m&quot;                  
+[11] &quot;prop_bare_5000m&quot;                    &quot;n_bare_patches_5000m&quot;              
+[13] &quot;n_bare_patches_500m&quot;                &quot;prop_trees_1000m&quot;                  
+[15] &quot;prop_bare_500m&quot;                     &quot;n_crops_patches_1500m&quot;             
+[17] &quot;prop_trees_500m&quot;                    &quot;n_crops_patches_1000m&quot;             
+[19] &quot;n_crops_patches_5000m&quot;              &quot;prop_grass_5000m&quot;                  
+[21] &quot;n_trees_patches_2000m&quot;              &quot;n_crops_patches_2000m&quot;             
+[23] &quot;n_trees_patches_5000m&quot;              &quot;n_trees_patches_1500m&quot;             
+[25] &quot;n_trees_patches_1000m&quot;              &quot;n_trees_patches_500m&quot;              
+[27] &quot;prop_flooded_vegetation_5000m&quot;      &quot;prop_water_2000m&quot;                  
+[29] &quot;dist_water_m&quot;                       &quot;prop_water_1500m&quot;                  
+[31] &quot;dist_trees_m&quot;                       &quot;prop_crops_500m&quot;                   
+[33] &quot;prop_crops_1500m&quot;                   &quot;n_bare_patches_100m&quot;               
+[35] &quot;prop_flooded_vegetation_1500m&quot;      &quot;prop_shrub_and_scrub_2000m&quot;        
+[37] &quot;n_flooded_vegetation_patches_1000m&quot; &quot;prop_crops_2000m&quot;                  
+[39] &quot;prop_water_5000m&quot;                   &quot;n_flooded_vegetation_patches_1500m&quot;
+[41] &quot;prop_flooded_vegetation_1000m&quot;      &quot;dist_flooded_vegetation_m&quot;         
+[43] &quot;DAP&quot;                                &quot;n_flooded_vegetation_patches_2000m&quot;
+[45] &quot;prop_shrub_and_scrub_1500m&quot;         &quot;prop_crops_100m&quot;                   
+[47] &quot;n_water_patches_1500m&quot;              &quot;prop_crops_5000m&quot;                  
+[49] &quot;prop_trees_100m&quot;                    &quot;prop_water_1000m&quot;                  
+[51] &quot;prop_flooded_vegetation_2000m&quot;      &quot;n_flooded_vegetation_patches_5000m&quot;
+[53] &quot;n_shrub_and_scrub_patches_2000m&quot;    &quot;prop_shrub_and_scrub_1000m&quot;        
+[55] &quot;prop_shrub_and_scrub_5000m&quot;         &quot;prop_flooded_vegetation_500m&quot;      
+[57] &quot;prop_shrub_and_scrub_100m&quot;          &quot;shannon_1000m&quot;                     
+[59] &quot;n_shrub_and_scrub_patches_5000m&quot;    &quot;n_grass_patches_2000m&quot;             
+[61] &quot;n_grass_patches_1000m&quot;              &quot;shannon_2000m&quot;                     
+[63] &quot;n_grass_patches_500m&quot;               &quot;dist_grass_m&quot;                      
+[65] &quot;prop_grass_2000m&quot;                   &quot;n_shrub_and_scrub_patches_1000m&quot;   
+[67] &quot;prop_grass_1000m&quot;                   &quot;n_grass_patches_1500m&quot;             
+[69] &quot;prop_water_500m&quot;                    &quot;n_water_patches_500m&quot;              
+[71] &quot;n_grass_patches_100m&quot;              </code></pre>
+<p>The same plot can contribute observations in more than one year. Randomly splitting individual rows would allow observations from the same plot to occur in both training and testing data. Since these observations share landscape characteristics, this would lead to information leakage.</p>
+<p>We therefore use leave-one-plot-out cross-validation. In each iteration, all observations from one plot are held out for testing, and the model is trained on the remaining plots. The model includes <em>Year</em>, the 11 specified field-level variables (where they have variation and non-missing data), and landscape metrics. <em>PlantingDate</em> is retained as a numeric predictor, while character variables such as <em>CroppingSystem</em> and <em>MaizeVariety</em> are converted to factors.</p>
+<pre class="text"><code>set.seed(123)
+
+plot_ids = unique(model_data_complete$PlotID)
+model_formula = reformulate(candidate_predictors, response = response_variable)
+
+cv_predictions = data.frame()
+
+for (i in seq_along(plot_ids)) {
+
+    test_plot = plot_ids[i]
+    train_data = model_data_complete %&gt;%
+        filter(PlotID != test_plot)
+    test_data = model_data_complete %&gt;%
+        filter(PlotID == test_plot)
+    rf_cv = ranger(formula = model_formula, data = train_data %&gt;%
+        select(-PlotID), num.trees = 1000, mtry = max(1, floor(sqrt(length(candidate_predictors)))),
+        min.node.size = 5, importance = &quot;none&quot;, seed = 123)
+
+    pred = predict(rf_cv, data = test_data %&gt;%
+        select(-PlotID, -all_of(response_variable)))$predictions
+
+    cv_predictions = rbind(cv_predictions, data.frame(PlotID = test_data$PlotID,
+        observed = test_data[[response_variable]], predicted = pred))
+}</code></pre>
+<p>We evaluate predictive performance using RMSE, MAE and the coefficient of determination (R²). These statistics summarise prediction errors across all held-out plot-year observations.</p>
+<pre class="text"><code>RMSE = sqrt(mean((cv_predictions$observed - cv_predictions$predicted)^2))
+
+MAE = mean(abs(cv_predictions$observed - cv_predictions$predicted))
+
+R2 = 1 - sum((cv_predictions$observed - cv_predictions$predicted)^2)/sum((cv_predictions$observed -
+    mean(cv_predictions$observed))^2)
+
+data.frame(n_observations = nrow(cv_predictions), n_plots = n_distinct(cv_predictions$PlotID),
+    RMSE = RMSE, MAE = MAE, R2 = R2)</code></pre>
+<pre><code>  n_observations n_plots     RMSE      MAE        R2
+1             93      33 9.553954 7.253975 0.3821937</code></pre>
+<p>The observed and predicted values are compared below. A close correspondence with the 1:1 line indicates better predictive agreement.</p>
+<pre class="text"><code>ggplot(cv_predictions, aes(x = observed, y = predicted)) + geom_point(alpha = 0.7) +
+    geom_abline(slope = 1, intercept = 0, linetype = &quot;dashed&quot;) + labs(x = &quot;Observed length of tunnelling (cm)&quot;,
+    y = &quot;Predicted length of tunnelling (cm)&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-165-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
+<p>After evaluating predictive performance, we fit a final random forest using all complete observations. This model is used to examine variable importance and partial dependence. Its apparent fit to the training data is not used as an estimate of predictive performance; that estimate is provided by cross-validation.</p>
+<pre class="text"><code>set.seed(123)
+
+rf_final = ranger(formula = model_formula, data = model_data_complete %&gt;%
+    select(-PlotID), num.trees = 1000, mtry = max(1, floor(sqrt(length(candidate_predictors)))),
+    min.node.size = 5, importance = &quot;permutation&quot;, seed = 123)
+
+importance = data.frame(variable = names(rf_final$variable.importance), importance = as.numeric(rf_final$variable.importance)) %&gt;%
+    arrange(desc(importance))
+
+head(importance, 20)</code></pre>
+<pre><code>                          variable importance
+1                             Year 20.9751836
+2                    shannon_5000m  7.7971440
+3                 prop_crops_1000m  6.7925507
+4                          MC_0_30  6.4665355
+5            n_water_patches_2000m  4.3221886
+6             n_trees_patches_100m  3.8319261
+7                  PlantingDensity  3.1376528
+8                     shannon_100m  3.1324753
+9           dist_shrub_and_scrub_m  2.8600752
+10                            Urea  2.3128968
+11 n_shrub_and_scrub_patches_1500m  1.8576301
+12            n_crops_patches_500m  1.7241020
+13           n_grass_patches_5000m  1.6982745
+14                         MN_0_30  1.5237051
+15                    dist_crops_m  1.2416603
+16                  prop_bare_100m  0.9863731
+17                         MP_0_30  0.9480079
+18                    PlantingDate  0.7453384
+19                    shannon_500m  0.6459572
+20                          NInput  0.5593147</code></pre>
+<p>Permutation importance is displayed for the 20 most important predictors. It measures the reduction in predictive performance when a predictor is randomly permuted. When predictors are correlated, importance may be shared among related variables and the ranking should be interpreted cautiously.</p>
+<pre class="text"><code>importance %&gt;%
+    slice_max(order_by = importance, n = 20) %&gt;%
+    ggplot(aes(x = reorder(variable, importance), y = importance)) + geom_col(fill = &quot;#4E79A7&quot;) +
+    coord_flip() + labs(x = NULL, y = &quot;Permutation importance&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-167-1.png" alt="" width="85%" style="display: block; margin: auto;" /></p>
+<p>Partial dependence plots illustrate how the model’s predictions change across the range of a selected explanatory variable, while averaging over the observed values of the other predictors. They can help describe non-linear patterns, but should not be interpreted as causal effects. Interpretation needs to be particularly cautious when predictors are correlated.</p>
+<p>The following example produces a partial dependence plot for the most important predictors.</p>
+<pre class="text"><code>model_predictors = model_data_complete %&gt;%
+    dplyr::select(-PlotID, -all_of(response_variable))
+
+# Year
+year_grid = sort(unique(model_predictors$Year))
+
+pdp_year = data.frame(Year = year_grid, yhat = sapply(year_grid, function(x) {
+    newdata = model_predictors
+    newdata$Year = x
+    mean(predict(rf_final, data = newdata)$predictions)
+}))
+
+ggplot(pdp_year, aes(x = Year, y = yhat)) + geom_line(linewidth = 1) + geom_point(size = 2) +
+    labs(x = &quot;Year&quot;, y = &quot;Predicted length of tunnelling (cm)&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-168-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code># Shannon diversity within 5 km
+shannon_grid = seq(min(model_predictors$shannon_5000m, na.rm = TRUE), max(model_predictors$shannon_5000m,
+    na.rm = TRUE), length.out = 50)
+
+pdp_shannon = data.frame(shannon_5000m = shannon_grid, yhat = sapply(shannon_grid,
+    function(x) {
+        newdata = model_predictors
+        newdata$shannon_5000m = x
+        mean(predict(rf_final, data = newdata)$predictions)
+    }))
+
+ggplot(pdp_shannon, aes(x = shannon_5000m, y = yhat)) + geom_line(linewidth = 1) +
+    labs(x = &quot;Shannon diversity within 5 km&quot;, y = &quot;Predicted length of tunnelling (cm)&quot;) +
+    theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-168-2.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code># Proportion of crops within 1 km
+prop_crops_grid = seq(min(model_predictors$prop_crops_1000m, na.rm = TRUE), max(model_predictors$prop_crops_1000m,
+    na.rm = TRUE), length.out = 50)
+
+pdp_prop_crops = data.frame(prop_crops_1000m = prop_crops_grid, yhat = sapply(prop_crops_grid,
+    function(x) {
+        newdata = model_predictors
+        newdata$prop_crops_1000m = x
+        mean(predict(rf_final, data = newdata)$predictions)
+    }))
+
+ggplot(pdp_prop_crops, aes(x = prop_crops_1000m, y = yhat)) + geom_line(linewidth = 1) +
+    labs(x = &quot;Proportion of crops within 1 km&quot;, y = &quot;Predicted length of tunnelling (cm)&quot;) +
+    theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-168-3.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Kebede2019" class="csl-entry">
+Kebede, Yodit, Felix J. J. A. Bianchi, Frédéric Baudron, and Pablo Tittonell. 2019. <span>“Landscape Composition Overrides Field Level Management Effects on Maize Stemborer Control in Ethiopia.”</span> <em>Agriculture, Ecosystems and Environment</em> 279: 65–73. <a href="https://doi.org/10.1016/j.agee.2019.04.006">https://doi.org/10.1016/j.agee.2019.04.006</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ecological-network-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="potential-manure-production-under-current-land-use.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/08-landscape-pest-control.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

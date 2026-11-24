@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Managing on-farm experiments | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Managing on-farm experiments | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Managing on-farm experiments | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-datasets.html"/>
+<link rel="next" href="evaluating-on-farm-experiments.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="managing-on-farm-experiments" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Managing on-farm experiments<a href="managing-on-farm-experiments.html#managing-on-farm-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a workflow for collecting and managing data from on-farm experiments using KoboToolBox and R, with QR codes to ensure reliable identification of farms, trials and treatments.</p>
+<p>The use of QR codes provides an efficient and reliable system for identifying farms/trials and plots/treatments during data collection in on-farm experiments.</p>
+<p>Each QR code encodes a unique identifier that corresponds to a farmer/experimental site or a specific plot/treatment. During field monitoring, these codes can be scanned directly in KoboToolbox, automatically filling in the correct ID in the data collection form. This approach minimizes transcription and labeling errors, ensures consistent tracking of repeated measurements, and facilitates seamless integration of field data with analytical workflows in R.</p>
+<p>In the CGIAR Agroecology initiative in Zimbabwe, each farmer hosting a trial received an ID card with a unique QR code. Before any data collection on a given farm/trial, the card was scanned to confirm the correct trial site and verify that the farmer was present. Each plot within a trial also had its own signboard displaying a QR code linked to its treatment, ensuring every observation was associated with the correct experimental condition.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="images/qr_codes.jpg" alt="ID card with unique QR code received by each farmer hosting a trial in the CGIAR Agroecology initiative in Zimbabwe (left) and signage with a unique QR code for each plot/treatment in the corresponding trial" width="80%" />
+<p class="caption">
+Figure 4.1: ID card with unique QR code received by each farmer hosting a trial in the CGIAR Agroecology initiative in Zimbabwe (left) and signage with a unique QR code for each plot/treatment in the corresponding trial
+</p>
+</div>
+<div id="generating-qr-codes" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Generating QR codes<a href="managing-on-farm-experiments.html#generating-qr-codes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will now demonstrate how to generate unique QR codes for both farms/trials and plots/treatments using the R package <strong>baRcodeR</strong> <span class="citation">(<a href="#ref-barcoder">Wu and Colautti 2022</a>)</span>.</p>
+<pre class="text"><code>if (!require(&quot;baRcodeR&quot;)) install.packages(&quot;baRcodeR&quot;)
+library(baRcodeR)</code></pre>
+<p>For demonstration and data protection compliance, we will use fictional farmer names that do not correspond to any real individuals. This ensures that no personal information is used while illustrating the workflow.</p>
+<pre class="text"><code>set.seed(123)
+
+given = c(&quot;Tendai&quot;, &quot;Fungai&quot;, &quot;Tawanda&quot;, &quot;Ropafadzo&quot;, &quot;Tafadzwa&quot;, &quot;Nyasha&quot;, &quot;Chiedza&quot;,
+    &quot;Anesu&quot;, &quot;Munyaradzi&quot;, &quot;Chenai&quot;, &quot;Kudzai&quot;, &quot;Tariro&quot;, &quot;Simba&quot;, &quot;Rutendo&quot;, &quot;Kudzanai&quot;,
+    &quot;Vimbai&quot;, &quot;Tanaka&quot;, &quot;Blessing&quot;, &quot;Shamiso&quot;, &quot;Rudo&quot;, &quot;Kuda&quot;, &quot;Tinashe&quot;, &quot;Chipo&quot;,
+    &quot;Prosper&quot;, &quot;Sekai&quot;, &quot;Loveness&quot;, &quot;Godfrey&quot;, &quot;Mercy&quot;, &quot;Brenna&quot;, &quot;Nokutenda&quot;, &quot;Sibusiso&quot;,
+    &quot;Vusumuzi&quot;, &quot;Eliazar&quot;, &quot;Palesa&quot;, &quot;Tafara&quot;, &quot;Mandla&quot;, &quot;Zvikomborero&quot;, &quot;Tanyaradzwa&quot;)
+
+surname = c(&quot;Mupfumi&quot;, &quot;Chikwepa&quot;, &quot;Mazarura&quot;, &quot;Nyamadzawo&quot;, &quot;Chikora&quot;, &quot;Makarau&quot;,
+    &quot;Gwekwerere&quot;, &quot;Mandizha&quot;, &quot;Sibanda&quot;, &quot;Gonye&quot;, &quot;Mtsvera&quot;, &quot;Ndlovu&quot;, &quot;Moyo&quot;, &quot;Ncube&quot;,
+    &quot;Mapfumo&quot;, &quot;Chidavaenzi&quot;, &quot;Mutsvangwa&quot;, &quot;Dube&quot;, &quot;Mashingaidze&quot;, &quot;Nyamapfene&quot;,
+    &quot;Gunda&quot;, &quot;Mungano&quot;, &quot;Chikowore&quot;, &quot;Matambanadzo&quot;, &quot;Zimuto&quot;, &quot;Mabhunu&quot;, &quot;Chinyoka&quot;,
+    &quot;Chimanikire&quot;, &quot;Chiriseri&quot;, &quot;Gwanyanya&quot;, &quot;Madziva&quot;, &quot;Mapiravana&quot;, &quot;Gwatidzo&quot;,
+    &quot;Chikore&quot;, &quot;Mashingairi&quot;, &quot;Chirwa&quot;, &quot;Chinyamurindi&quot;)
+
+n = 25
+
+fake_names = paste(sample(given, n, replace = TRUE), sample(surname, n, replace = TRUE))
+
+fake_names</code></pre>
+<pre><code> [1] &quot;Sibusiso Mapiravana&quot;    &quot;Kudzanai Gwekwerere&quot;    &quot;Rutendo Sibanda&quot;       
+ [4] &quot;Tawanda Gonye&quot;          &quot;Zvikomborero Chikowore&quot; &quot;Rutendo Chinyoka&quot;      
+ [7] &quot;Sekai Gwekwerere&quot;       &quot;Loveness Chinyoka&quot;      &quot;Godfrey Mapiravana&quot;    
+[10] &quot;Tafadzwa Zimuto&quot;        &quot;Godfrey Chikore&quot;        &quot;Mercy Chiriseri&quot;       
+[13] &quot;Munyaradzi Chikora&quot;     &quot;Brenna Mandizha&quot;        &quot;Tafara Ndlovu&quot;         
+[16] &quot;Anesu Moyo&quot;             &quot;Loveness Dube&quot;          &quot;Chiedza Gwatidzo&quot;      
+[19] &quot;Munyaradzi Chinyoka&quot;    &quot;Shamiso Zimuto&quot;         &quot;Mandla Gunda&quot;          
+[22] &quot;Rutendo Mapfumo&quot;        &quot;Tanaka Mabhunu&quot;         &quot;Tariro Madziva&quot;        
+[25] &quot;Kudzanai Chidavaenzi&quot;  </code></pre>
+<div id="generating-qr-codes-for-farmerstrials" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Generating QR codes for farmers/trials<a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now generate a first set of QR codes corresponding to farmers or trials.
+Each QR code encodes one of the fictional farmer names.</p>
+<p>The <em>create_PDF()</em> function from <strong>baRcodeR</strong> generates a printable PDF containing all QR codes and their labels, which can later be laminated or used on ID cards in the field (as represented in Figure 5.1 above).</p>
+<pre class="text"><code>create_PDF(Labels = fake_names, numcol = 2, numrow = 4, Fsz = 8, name = &quot;farms_qrcodes&quot;)
+
+knitr::include_graphics(&quot;farms_qrcodes.pdf&quot;)</code></pre>
+<embed src="farms_qrcodes.pdf" width="60%" style="display: block; margin: auto;" type="application/pdf" />
+<p>Once the PDF is created, each farmer has an identification label that can be scanned during data collection. Scanning the QR code in KoboToolbox automatically retrieves the farmer’s unique ID, ensuring that all data collected belong to the correct individual/site.</p>
+</div>
+<div id="generating-qr-codes-for-plotstreatments" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Generating QR codes for plots/treatments<a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will now generate QR codes for every combination of farmer × treatment. Each farm typically hosts multiple treatments or plots. In this example, there are three treatments per trial: ‘conventional practice’ (CONV), ‘conservation agriculture’ (CA), and ‘push-pull’ (PPULL). The <em>expand.grid()</em> function creates all combinations, which are then concatenated into unique identifiers such as: ‘Tendai Mupfumi-CONV’, ‘Tendai Mupfumi-CA’, ‘Tendai Mupfumi-PPULL’, etc. Each of these labels corresponds to a unique plot within a farmer’s trial.</p>
+<pre class="text"><code>l = expand.grid(FR = fake_names, TR = c(&quot;CONV&quot;, &quot;CA&quot;, &quot;PPULL&quot;))
+l = paste(l$FR, l$TR, sep = &quot;-&quot;)
+
+create_PDF(Labels = l, numcol = 2, numrow = 4, Fsz = 8, name = &quot;plots_qrcodes&quot;)
+
+knitr::include_graphics(&quot;plots_qrcodes.pdf&quot;)</code></pre>
+<embed src="plots_qrcodes.pdf" width="60%" style="display: block; margin: auto;" type="application/pdf" />
+<p>The resulting PDF contains QR codes for all farmer × treatment combinations, which can be printed on plot signboards (as represented in Figure 5.1 above). During fieldwork, scanning the plot’s QR code ensures that measurements (e.g., crop establishement, assessment of pest damage, estimation of yield) are automatically attributed to the correct farm and treatment.</p>
+</div>
+</div>
+<div id="integrating-qr-codes-in-kobotoolbox-surveys" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Integrating QR codes in KoboToolBox surveys<a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>QR codes can be easily integrated into KoboToolbox surveys to automatically record the identity of farms/trials and plots/treatments during data collection. This ensures that each observation is correctly linked to its corresponding farmer/trial and plot/treatment without manual typing or risk of mislabeling.</p>
+<p>As an example, consider the survey questionnaire used to monitor on-farm experiments under the CGIAR Agroecology Initiative in Zimbabwe. The corresponding XLSForm (used to build the questionnaire in KoboToolbox) is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20TOOL.xlsx" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20TOOL.xlsx</a>. A PDF version of the questionnaire is also provided: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20TOOL.pdf" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20TOOL.pdf</a>. You can adapt this survey questionnaire to your own use.</p>
+<p>In this questionnaire, several variables are of type ‘barcode’: ‘farmID’, ‘plotID_1’, ‘plotID_2’, and ‘plotID_3’ (each trial consists of three treatments arranged in three separate plots). The three treatments are: ‘conventional practice’ (CONV), ‘conservation agriculture’ (CA), and ‘push-pull’ (PPULL).</p>
+<p>Each of these variables corresponds to a question where the enumerator scans a QR code instead of typing an ID. The farmID is obtained by scanning the farmer’s ID card, while each plotID corresponds to the QR code placed on a specific plot signboard (Figure 5.1).</p>
+<p>In the Kobo form, the questions for the three plots are grouped between ‘begin_repeat’ and ‘end_repeat’ statements. This looping structure allows enumerators to enter repeated measurements (e.g., pest assessment in several points in each plot, typically 5, following a W-shaped sampling pattern) efficiently and consistently.</p>
+<div id="data-from-kobotoolbox-surveys-that-include-qr-codes" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Data from KoboToolBox surveys that include QR codes<a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Once data have been collected in KoboToolbox, they can be exported in Excel format for analysis in R. To illustrate this, you can download a sample dataset generated from the survey described above here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20DATA.xlsx" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/EXPERIMENT%20SURVEY%20DATA.xlsx</a>.</p>
+<p>This dataset was downloaded directly from KoboToolbox as an Excel file. It contain pest damage data collected on sorghum over one season in three different plots (corresponding to the different treatments described above). The file is made of four sheets: one main sheet with general information (e.g., farm ID, enumerator name, date), and three treatment sheets, each corresponding to pest assessment data in one of the three plots recorded through the ‘begin_repeat’/‘end_repeat’ structure in the questionnaire.</p>
+<p>A standalone R script containing the full workflow below is available at the following link: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/managing_experiments.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/04-managing_on_farm_experiments/managing_experiments.R</a>.</p>
+<p>We load the necessary packages and import the data in R.</p>
+<pre class="text"><code>if (!require(&quot;openxlsx&quot;)) install.packages(&quot;openxlsx&quot;)
+if (!require(&quot;tidyr&quot;)) install.packages(&quot;tidyr&quot;)
+if (!require(&quot;lmerTest&quot;)) install.packages(&quot;lmerTest&quot;)
+if (!require(&quot;performance&quot;)) install.packages(&quot;performance&quot;)
+if (!require(&quot;ggeffects&quot;)) install.packages(&quot;ggeffects&quot;)
+if (!require(&quot;sjPlot&quot;)) install.packages(&quot;sjPlot&quot;)
+if (!require(&quot;DHARMa&quot;)) install.packages(&quot;DHARMa&quot;)
+
+library(openxlsx)
+library(tidyr)
+library(lmerTest)
+library(performance)
+library(ggeffects)
+library(sjPlot)
+library(DHARMa)
+
+data = read.xlsx(&quot;EXPERIMENT SURVEY DATA.xlsx&quot;, sheet = 1)
+
+sc1 = read.xlsx(&quot;EXPERIMENT SURVEY DATA.xlsx&quot;, sheet = 2)
+sc2 = read.xlsx(&quot;EXPERIMENT SURVEY DATA.xlsx&quot;, sheet = 3)
+sc3 = read.xlsx(&quot;EXPERIMENT SURVEY DATA.xlsx&quot;, sheet = 4)</code></pre>
+<p>Each plot’s QR code (scanned in the field) produces a text string such as ‘Tendai Mupfumi-CA’ or ‘Rudo Makarau-CONV’. These strings combine the farmer’s name and the treatment applied to that plot.</p>
+<p>To make the data easier to analyze, we split each plot ID column into two new columns: farmer - extracted from the first part of the QR code label - and a renamed column for the treatment in that plot (e.g., ‘1st plot’, ‘2nd plot’). Since the farmer’s name is already recorded via the farmID QR code at the beginning of the survey, we later drop the redundant farmer column from each plot section. This leaves a clean dataset with one row per trial, including the farmer ID and treatments for the three plots. We also retain the submission ID (’_index’) to be able to later merge this data with pest assessment data.</p>
+<pre class="text"><code>data = separate(data = data, col = &quot;Scan.the.QR.code.of.the.1st.plot&quot;, into = c(&quot;Farmer&quot;,
+    &quot;1st plot&quot;), sep = &quot;-&quot;)
+
+data = data[, c(3, 17, 5:7)]
+
+data = separate(data = data, col = &quot;Scan.the.QR.code.of.the.2nd.plot&quot;, into = c(&quot;Farmer&quot;,
+    &quot;2nd plot&quot;), sep = &quot;-&quot;)
+
+data = data[, c(1:3, 5:6)]
+
+data = separate(data = data, col = &quot;Scan.the.QR.code.of.the.3rd.plot&quot;, into = c(&quot;Farmer&quot;,
+    &quot;3rd plot&quot;), sep = &quot;-&quot;)
+
+data = data[, c(1:4, 6)]</code></pre>
+<p>We split the main dataset into three separate datasets, one for each treatment. Each of these treatment-specific datasets contains three key fields: the farmer name, the treatment name, and the submission ID. Submission ID will allow merging with the repeated pest assessment data collected in KoboToolbox.</p>
+<p>For each treatment dataframe, we reorder the columns to place the submission ID first. We also remove columns that are not needed for analysis (e.g., submission date), keeping only the fields required for analysis.</p>
+<pre class="text"><code>data1 = data[, c(1:3)]
+data2 = data[, c(1:2, 4)]
+data3 = data[, c(1:2, 5)]
+
+sc1 = sc1[, c(11, 1:8)]
+sc2 = sc2[, c(11, 1:8)]
+sc3 = sc3[, c(11, 1:8)]</code></pre>
+<p>We merge each treatment dataset with its corresponding pest assessment data using the submission ID. In KoboToolbox exports, ’_index’ identifies the main submission, while ’_parent_index’ links repeated sections. This merge ensures that each plot’s pest assessment data aligns correctly with the corresponding farmer and treatment. After merging, we rename the plot columns to ‘Treatment’.</p>
+<p>We then combine the six treatment datasets into a single unified dataset. The submission ID is removed since it is no longer needed after merging. Selected columns are renamed to clearly reflect their contents, including the ‘Farmer’ column (captured from the QR code scanned at the start of the form) and various pest damage scores.</p>
+<pre class="text"><code>data1 = merge(data1, sc1, by.x = &quot;_index&quot;, by.y = &quot;_parent_index&quot;, all.y = TRUE)
+data2 = merge(data2, sc2, by.x = &quot;_index&quot;, by.y = &quot;_parent_index&quot;, all.y = TRUE)
+data3 = merge(data3, sc3, by.x = &quot;_index&quot;, by.y = &quot;_parent_index&quot;, all.y = TRUE)
+
+names(data1)[3] = &quot;Treatment&quot;
+names(data2)[3] = &quot;Treatment&quot;
+names(data3)[3] = &quot;Treatment&quot;
+
+data = rbind(data1, data2, data3)
+
+data = data[, -c(1)]
+
+names(data)[c(1, 4:10)] = c(&quot;Farmer&quot;, &quot;armmoured_cricket_leaf_damage&quot;, &quot;armmoured_cricket_damage_score&quot;,
+    &quot;fall_armyworm_leaf_damage&quot;, &quot;fall_armyworm_frass_whorl&quot;, &quot;fall_armyworm_damage_score&quot;,
+    &quot;stalk_borer_leaf_damage&quot;, &quot;stalk_borer_damage_score&quot;)</code></pre>
+</div>
+<div id="running-basic-statistical-models-on-the-cleaned-data" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Running basic statistical models on the cleaned data<a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using the cleaned and merged dataset, we fit a mixed-effects model to analyze the severity of fall armyworm damage.</p>
+<p>We first set the levels of the variable Treatment to ensure that ‘CONV’ (conventional practice) is used as the reference category, since R orders factor levels alphabetically by default. We then fit a generalized linear mixed-effects model to explain the variability in fall armyworm severity scores. Treatment and crop growth stage (Vstage) are included as fixed effects, while the farm (Farmer) is included as a random effect to account for variability among farms. Because the severity score is discrete (1–9), we use a Poisson distribution.</p>
+<p>We evaluate model performance using the function <em>check_model()</em> of the R package <strong>performance</strong> <span class="citation">(<a href="#ref-performance">Lüdecke et al. 2021</a>)</span> to ensure the assumptions of the mixed-effects model are reasonably met.</p>
+<pre class="text"><code>data$Treatment = factor(data$Treatment, levels = c(&quot;CONV&quot;, &quot;CA&quot;, &quot;PPULL&quot;))
+
+mod_faw_severity = glmer(fall_armyworm_damage_score ~ Treatment + Vstage + (1 | Farmer),
+    data = data, family = poisson())
+
+check_plot = check_model(mod_faw_severity)
+
+print(check_plot)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-28-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+<p>We examine the model results using both ANOVA and the model summary to assess the significance of fixed effects and to understand the estimated coefficients.</p>
+<pre class="text"><code>anova(mod_faw_severity)</code></pre>
+<pre><code>Analysis of Variance Table
+          npar Sum Sq Mean Sq F value
+Treatment    2 0.0169  0.0085  0.0085
+Vstage       1 5.4042  5.4042  5.4042</code></pre>
+<pre class="text"><code>summary(mod_faw_severity)</code></pre>
+<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: poisson  ( log )
+Formula: fall_armyworm_damage_score ~ Treatment + Vstage + (1 | Farmer)
+   Data: data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    424.5     439.3    -207.2     414.5       138 
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.01490 -0.33144 -0.04122  0.28653  3.09858 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ Farmer (Intercept) 0.07013  0.2648  
+Number of obs: 143, groups:  Farmer, 11
+
+Fixed effects:
+               Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)     0.36511    0.19565   1.866   0.0620 .
+TreatmentCA     0.01969    0.14880   0.132   0.8947  
+TreatmentPPULL  0.01554    0.14022   0.111   0.9118  
+Vstage          0.09504    0.04069   2.336   0.0195 *
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Correlation of Fixed Effects:
+            (Intr) TrtmCA TPPULL
+TreatmentCA -0.372              
+TrtmntPPULL -0.378  0.492       
+Vstage      -0.740  0.001  0.005</code></pre>
+<p>We calculate predicted mean severity scores for each treatment level based on the fitted model. This allows us to interpret the expected damage under different management practices.</p>
+<pre class="text"><code>predict_response(mod_faw_severity, terms = &quot;Treatment&quot;)</code></pre>
+<pre><code># Predicted counts of fall_armyworm_damage_score
+
+Treatment | Predicted |     95% CI
+----------------------------------
+CONV      |      1.98 | 1.19, 3.30
+CA        |      2.02 | 1.19, 3.44
+PPULL     |      2.01 | 1.21, 3.33
+
+Adjusted for:
+* Vstage = 3.35
+* Farmer = 0 (population-level)</code></pre>
+<p>Finally, we visualize the predicted mean severity scores for each treatment, which helps to compare the expected pest damage across different treatments.</p>
+<pre class="text"><code>plot_model(mod_faw_severity, type = &quot;pred&quot;, pred.type = &quot;fe&quot;, terms = &quot;Treatment&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-31-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-performance" class="csl-entry">
+Lüdecke, Daniel, Mattan S. Ben-Shachar, Indrajeet Patil, Philip Waggoner, and Dominique Makowski. 2021. <span>“<span class="nocase">performance</span>: An <span>R</span> Package for Assessment, Comparison and Testing of Statistical Models.”</span> <em>Journal of Open Source Software</em> 6 (60): 3139. <a href="https://doi.org/10.21105/joss.03139">https://doi.org/10.21105/joss.03139</a>.
+</div>
+<div id="ref-barcoder" class="csl-entry">
+Wu, Yihan, and Robert Colautti. 2022. <em>baRcodeR: Label Creation for Tracking and Collecting Data from Biological Samples</em>. <a href="https://CRAN.R-project.org/package=baRcodeR">https://CRAN.R-project.org/package=baRcodeR</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-datasets.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="evaluating-on-farm-experiments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/03-managing-experiments.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

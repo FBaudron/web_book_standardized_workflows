@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Soil and climate representativeness of trials | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Soil and climate representativeness of trials | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Soil and climate representativeness of trials | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="crop-eco-physiological-suitability.html"/>
+<link rel="next" href="technology-extrapolation-domains.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="soil-and-climate-representativeness-of-trials" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Soil and climate representativeness of trials<a href="soil-and-climate-representativeness-of-trials.html#soil-and-climate-representativeness-of-trials" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter assesses the representativeness of field trials in terms of soil and climate conditions, by estimating the share of crop production environments covered by existing trial sites.</p>
+<div id="introduction-6" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Introduction<a href="soil-and-climate-representativeness-of-trials.html#introduction-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Field trials and demonstration plots are often implemented at a limited number of locations. Their findings are most readily extrapolated when the environmental conditions at these sites are representative of those under which the target crop is cultivated. This chapter assesses the environmental representativeness of existing trial sites across Sub-Saharan Africa (SSA).</p>
+<p>The analysis characterises the climate and soil conditions associated with the harvested area of maize. It then locates field sites within these environmental distributions and estimates the share of maize harvested area occurring in environmental classes represented by at least one site.</p>
+<p>The approach is inspired by Figure 3 in <span class="citation">Ruane et al. (<a href="#ref-Ruane2017">2017</a>)</span>. It focuses on four variables: mean annual temperature, annual precipitation, plant-available water capacity (PAWC), and total soil nitrogen. Climate and soil coverage are assessed separately.</p>
+<p>The resulting coverage measures are descriptive indicators of environmental representativeness. They do not assess representativeness in terms of management, farming systems, socioeconomic conditions, or environmental dimensions. Coverage also depends on the environmental variables selected and the classification scheme used, particularly the number and width of the classes.</p>
+<p>The workflow has three main stages:</p>
+<ol style="list-style-type: decimal">
+<li>prepare the required data, including field-site locations;</li>
+<li>describe the distribution of maize harvested area across climate and soil conditions;</li>
+<li>assess the proportion of maize harvested area occurring in environmental classes represented by field sites.</li>
+</ol>
+<p>Here, the analysis is run for sub-Saharan Africa and maize.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/13-soil_climate_representativeness/soil_climate_representativeness.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/13-soil_climate_representativeness/soil_climate_representativeness.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;geodata&quot;)) install.packages(&quot;geodata&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;dplyr&quot;)) install.packages(&quot;dplyr&quot;)
+if (!require(&quot;tidyr&quot;)) install.packages(&quot;tidyr&quot;)
+if (!require(&quot;knitr&quot;)) install.packages(&quot;knitr&quot;)
+
+library(terra)
+library(geodata)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(dplyr)
+
+path = &quot;Data&quot;</code></pre>
+</div>
+<div id="preparing-the-data-4" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Preparing the data<a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="environmental-data-and-maize-harvested-area" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Environmental data and maize harvested area<a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The shapefiles and rasters required for the analysis were produced in Chapter 3. They can also be downloaded here: <a href="https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0" class="uri">https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0</a>.</p>
+<pre class="text"><code>ssa = vect(&quot;Data/Spatial/Processed/ssa.shp&quot;)
+
+cropmask = rast(&quot;Data/Spatial/Processed/cropmask.tif&quot;)
+
+mean_temperature = rast(&quot;Data/Spatial/Processed/tavg.tif&quot;)
+annual_precipitation = rast(&quot;Data/Spatial/Processed/prec.tif&quot;)
+soil_n = rast(&quot;Data/Spatial/Processed/soil_n.tif&quot;)
+pawc = rast(&quot;Data/Spatial/Processed/pawc.tif&quot;)
+
+environment_stack = c(mean_temperature, annual_precipitation, pawc, soil_n)
+
+names(environment_stack) = c(&quot;mean_temperature&quot;, &quot;annual_precipitation&quot;, &quot;pawc&quot;,
+    &quot;soil_n&quot;)</code></pre>
+<p>We use the MapSPAM 2020 harvested-area raster for maize. The MapSPAM layer represents harvested area in hectares per source cell. The raster was produced in Chapter 3, but can also be downloaded here: <a href="https://www.dropbox.com/scl/fi/r9ws9nszvk9edxg24icmz/maize_area.tif?rlkey=iopz5i3jonq00io8xxrfjhsop&amp;st=jw51gufc&amp;dl=0" class="uri">https://www.dropbox.com/scl/fi/r9ws9nszvk9edxg24icmz/maize_area.tif?rlkey=iopz5i3jonq00io8xxrfjhsop&amp;st=jw51gufc&amp;dl=0</a>.</p>
+<pre class="text"><code>maize_harvested_area = rast(&quot;Data/Spatial/Processed/maize_area.tif&quot;)
+
+global(maize_harvested_area, &quot;sum&quot;, na.rm = TRUE)</code></pre>
+<pre><code>                sum
+maize_area 35295543</code></pre>
+</div>
+<div id="field-site-locations" class="section level3 hasAnchor" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Field-site locations<a href="soil-and-climate-representativeness-of-trials.html#field-site-locations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The site table can be downloaded here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/13-soil_climate_representativeness/sites_Zim_Kenya_Combined.csv" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/13-soil_climate_representativeness/sites_Zim_Kenya_Combined.csv</a>. It contains longitude and latitude in decimal degrees (WGS84). A <em>codeSWstation</em> column is used to identify sites in the figures.</p>
+<pre class="text"><code>site_data = read.table(&quot;Data/sites_Zim_Kenya_Combined.csv&quot;, sep = &quot;;&quot;, header = TRUE,
+    stringsAsFactors = FALSE)
+
+sites = vect(site_data, geom = c(&quot;longitudeDD&quot;, &quot;latitudeDD&quot;), crs = &quot;EPSG:4326&quot;)
+
+sites_cropmask = project(sites, crs(cropmask))</code></pre>
+</div>
+</div>
+<div id="distribution-of-maize-harvested-area-across-climate-and-soil-conditions" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Distribution of maize harvested area across climate and soil conditions<a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="mapping-maize-harvested-area-and-field-sites" class="section level3 hasAnchor" number="13.3.1">
+<h3><span class="header-section-number">13.3.1</span> Mapping maize harvested area and field sites<a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We map maize harvested area on the cropmask grid and the locations of the field sites.</p>
+<pre class="text"><code># Log-transformed maize area
+maize_harvested_area_log = log1p(maize_harvested_area)
+
+plot(maize_harvested_area_log, col = rev(hcl.colors(7, &quot;YlOrRd&quot;)), main = &quot;Maize harvested area (log scale) and field sites&quot;,
+    plg = list(title = &quot;Harvested area\n(ha per cell)&quot;))
+plot(ssa, add = T)
+plot(sites_cropmask, add = T, pch = 21, bg = &quot;green&quot;, col = &quot;black&quot;, cex = 1.5)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-235-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="classifying-climate-and-soil-conditions" class="section level3 hasAnchor" number="13.3.2">
+<h3><span class="header-section-number">13.3.2</span> Classifying climate and soil conditions<a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To compare the environmental conditions at field sites with those across the maize harvested area, each environmental variable is divided into 20 quantile-based intervals. The intervals are defined using the distribution of environmental values weighted by maize harvested area, so that each interval contains approximately 5% of the maize harvested area with valid data for the variable concerned. This approach gives greater resolution to environmental conditions that account for a large share of maize production, while avoiding the uneven representation that can arise when using equal-width intervals.</p>
+<p>The interval boundaries are estimated from a random sample of 50,000 cells within the maize-growing area, using harvested area as weights. For total soil nitrogen, quantiles are calculated on the logarithmic scale and then back-transformed to the original scale to account for its strongly skewed distribution. The same class boundaries are subsequently used to classify both the environmental rasters and the field-site locations.</p>
+<p>For each pair of variables, the same number of intervals is used on both axes. The heatmaps are plotted in class-index space, so that each tile has the same width and height even though the environmental variables have different units. Tile colour represents the share of maize harvested area in that combination of classes.</p>
+<pre class="text"><code># Restrict the range calculations to cells with maize harvested area
+maize_domain = ifel(maize_harvested_area &gt; 0, 1, NA)
+
+temp_maize = mask(mean_temperature, maize_domain)
+rain_maize = mask(annual_precipitation, maize_domain)
+pawc_maize = mask(pawc, maize_domain)
+totn_maize = mask(soil_n, maize_domain)
+
+# Number of intervals (5% increments)
+n_intervals = 20
+quantile_probs = seq(0, 1, length.out = n_intervals + 1)
+
+# Sample environmental values and harvested area from the same cells
+set.seed(123)
+
+environment_sample = terra::spatSample(c(temp_maize, rain_maize, pawc_maize, totn_maize,
+    maize_harvested_area), size = 50000, method = &quot;random&quot;, na.rm = TRUE, as.df = TRUE)
+
+names(environment_sample) = c(&quot;temperature&quot;, &quot;rainfall&quot;, &quot;pawc&quot;, &quot;soil_n&quot;, &quot;harvested_area&quot;)
+
+environment_sample = environment_sample |&gt;
+    filter(harvested_area &gt; 0, soil_n &gt; 0)
+
+# Calculate weighted quantiles
+weighted_quantile = function(x, w, probs) {
+    ord = order(x)
+    x = x[ord]
+    w = w[ord]
+
+    cumulative_weight = (cumsum(w) - 0.5 * w)/sum(w)
+
+    approx(cumulative_weight, x, xout = probs, rule = 2)$y
+}
+
+temp_breaks = weighted_quantile(environment_sample$temperature, environment_sample$harvested_area,
+    quantile_probs)
+
+rain_breaks = weighted_quantile(environment_sample$rainfall, environment_sample$harvested_area,
+    quantile_probs)
+
+pawc_breaks = weighted_quantile(environment_sample$pawc, environment_sample$harvested_area,
+    quantile_probs)
+
+# Calculate soil N quantiles on the log scale, then back-transform
+totn_breaks = exp(weighted_quantile(log(environment_sample$soil_n), environment_sample$harvested_area,
+    quantile_probs))
+
+# Ensure maximum values are included in the final interval
+temp_breaks[length(temp_breaks)] = temp_breaks[length(temp_breaks)] + 1e-08
+
+rain_breaks[length(rain_breaks)] = rain_breaks[length(rain_breaks)] + 1e-08
+
+pawc_breaks[length(pawc_breaks)] = pawc_breaks[length(pawc_breaks)] + 1e-08
+
+totn_breaks[length(totn_breaks)] = totn_breaks[length(totn_breaks)] + 1e-08
+
+# Classify the four environmental rasters
+temp_class = classify(mean_temperature, rcl = cbind(head(temp_breaks, -1), tail(temp_breaks,
+    -1), seq_len(n_intervals)), right = FALSE)
+
+rain_class = classify(annual_precipitation, rcl = cbind(head(rain_breaks, -1), tail(rain_breaks,
+    -1), seq_len(n_intervals)), right = FALSE)
+
+pawc_class = classify(pawc, rcl = cbind(head(pawc_breaks, -1), tail(pawc_breaks,
+    -1), seq_len(n_intervals)), right = FALSE)
+
+totn_class = classify(soil_n, rcl = cbind(head(totn_breaks, -1), tail(totn_breaks,
+    -1), seq_len(n_intervals)), right = FALSE)</code></pre>
+</div>
+<div id="distribution-across-climate-conditions" class="section level3 hasAnchor" number="13.3.3">
+<h3><span class="header-section-number">13.3.3</span> Distribution across climate conditions<a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We plot the climate envelope.</p>
+<pre class="text"><code># Number of classes for each variable
+n_temp &lt;- length(temp_breaks) - 1
+n_rain &lt;- length(rain_breaks) - 1
+
+# Encode each temperature-rainfall class combination as a unique zone
+climate_zone &lt;- (temp_class - 1) * n_rain + rain_class
+
+# Exclude cells without valid classes or maize harvested area
+climate_zone &lt;- terra::mask(climate_zone, maize_harvested_area)
+
+# Calculate maize harvested area in each climate zone
+climate_area &lt;- terra::zonal(maize_harvested_area, climate_zone, fun = &quot;sum&quot;, na.rm = TRUE)
+
+# Convert to data frame and assign explicit column names
+climate_area &lt;- as.data.frame(climate_area)
+names(climate_area) &lt;- c(&quot;zone&quot;, &quot;harvested_area_ha&quot;)
+
+# Recover temperature and rainfall class indices
+climate_area &lt;- climate_area |&gt;
+    dplyr::mutate(temp_class = floor((zone - 1)/n_rain) + 1, rain_class = ((zone -
+        1)%%n_rain) + 1, share_area = harvested_area_ha/sum(harvested_area_ha) *
+        100)
+
+# Plot in class-index space to obtain square tiles
+axis_breaks &lt;- seq(1, n_temp, by = 2)
+
+temp_labels &lt;- (head(temp_breaks, -1) + tail(temp_breaks, -1))/2
+
+rain_labels &lt;- (head(rain_breaks, -1) + tail(rain_breaks, -1))/2
+
+ggplot(climate_area, aes(x = temp_class, y = rain_class, fill = share_area)) + geom_tile(width = 1,
+    height = 1) + scale_x_continuous(breaks = axis_breaks, labels = round(temp_labels[axis_breaks],
+    1), limits = c(0.5, n_temp + 0.5)) + scale_y_continuous(breaks = axis_breaks,
+    labels = round(rain_labels[axis_breaks], 0), limits = c(0.5, n_rain + 0.5)) +
+    scale_fill_gradient(low = &quot;white&quot;, high = &quot;darkgreen&quot;, name = &quot;Share of harvested\narea (%)&quot;) +
+    coord_fixed() + labs(x = &quot;Mean annual temperature (°C)&quot;, y = &quot;Annual precipitation (mm)&quot;,
+    title = &quot;Climate envelope of maize in Sub-Saharan Africa&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-237-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="distribution-across-soil-conditions" class="section level3 hasAnchor" number="13.3.4">
+<h3><span class="header-section-number">13.3.4</span> Distribution across soil conditions<a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We plot the soil envelope.</p>
+<pre class="text"><code># Number of classes for each variable
+n_pawc &lt;- length(pawc_breaks) - 1
+n_totn &lt;- length(totn_breaks) - 1
+
+# Encode each PAWC-total nitrogen class combination as a unique zone
+soil_zone &lt;- (pawc_class - 1) * n_totn + totn_class
+
+# Exclude cells without valid classes or maize harvested area
+soil_zone &lt;- terra::mask(soil_zone, maize_harvested_area)
+
+# Calculate maize harvested area in each soil zone
+soil_area &lt;- terra::zonal(maize_harvested_area, soil_zone, fun = &quot;sum&quot;, na.rm = TRUE)
+
+# Convert to data frame and assign explicit column names
+soil_area &lt;- as.data.frame(soil_area)
+names(soil_area) &lt;- c(&quot;zone&quot;, &quot;harvested_area_ha&quot;)
+
+# Recover PAWC and total nitrogen class indices
+soil_area &lt;- soil_area |&gt;
+    dplyr::mutate(pawc_class = floor((zone - 1)/n_totn) + 1, totn_class = ((zone -
+        1)%%n_totn) + 1, share_area = harvested_area_ha/sum(harvested_area_ha) *
+        100)
+
+# Plot in class-index space to obtain square tiles
+axis_breaks &lt;- seq(1, n_pawc, by = 2)
+
+pawc_labels &lt;- (head(pawc_breaks, -1) + tail(pawc_breaks, -1))/2
+
+totn_labels &lt;- (head(totn_breaks, -1) + tail(totn_breaks, -1))/2
+
+ggplot(soil_area, aes(x = pawc_class, y = totn_class, fill = share_area)) + geom_tile(width = 1,
+    height = 1) + scale_x_continuous(breaks = axis_breaks, labels = round(pawc_labels[axis_breaks],
+    1), limits = c(0.5, n_pawc + 0.5)) + scale_y_continuous(breaks = axis_breaks,
+    labels = round(totn_labels[axis_breaks], 1), limits = c(0.5, n_totn + 0.5)) +
+    scale_fill_gradient(low = &quot;white&quot;, high = &quot;darkgreen&quot;, name = &quot;Share of harvested\narea (%)&quot;) +
+    coord_fixed() + labs(x = &quot;Plant-available water capacity&quot;, y = &quot;Total soil nitrogen&quot;,
+    title = &quot;Soil envelope of maize in Sub-Saharan Africa&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-238-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="representativity-of-the-environmental-classes-covered-by-field-sites" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Representativity of the environmental classes covered by field sites<a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="characterising-environmental-conditions-at-field-sites" class="section level3 hasAnchor" number="13.4.1">
+<h3><span class="header-section-number">13.4.1</span> Characterising environmental conditions at field sites<a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Environmental values are extracted at the site coordinates from the same aligned rasters used to characterise maize harvested area. Sites with missing extracted values are excluded from the coverage calculations and can be identified in the resulting table.</p>
+<pre class="text"><code>site_values = terra::extract(environment_stack, sites_cropmask) |&gt;
+    as.data.frame() |&gt;
+    bind_cols(site_data)
+
+site_values = site_values |&gt;
+    mutate(temp_class = cut(mean_temperature, temp_breaks, right = FALSE, include.lowest = TRUE,
+        labels = FALSE), rain_class = cut(annual_precipitation, rain_breaks, right = FALSE,
+        include.lowest = TRUE, labels = FALSE), pawc_class = cut(pawc, pawc_breaks,
+        right = FALSE, include.lowest = TRUE, labels = FALSE), totn_class = cut(soil_n,
+        totn_breaks, right = FALSE, include.lowest = TRUE, labels = FALSE), climate_zone = interaction(temp_class,
+        rain_class, drop = TRUE), soil_zone = interaction(pawc_class, totn_class,
+        drop = TRUE))</code></pre>
+</div>
+<div id="mapping-field-sites-within-the-environmental-envelopes" class="section level3 hasAnchor" number="13.4.2">
+<h3><span class="header-section-number">13.4.2</span> Mapping field sites within the environmental envelopes<a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We overlay field sites on the environmental envelopes.</p>
+<pre class="text"><code>ggplot(climate_area, aes(x = temp_class, y = rain_class, fill = share_area)) + geom_tile(width = 1,
+    height = 1) + geom_point(data = site_values, aes(x = temp_class, y = rain_class),
+    inherit.aes = FALSE, shape = 1, colour = &quot;red&quot;, size = 5) + scale_x_continuous(breaks = axis_breaks,
+    labels = round(temp_breaks[axis_breaks], 1), limits = c(0.5, n_intervals + 0.5)) +
+    scale_y_continuous(breaks = axis_breaks, labels = round(rain_breaks[axis_breaks],
+        0), limits = c(0.5, n_intervals + 0.5)) + scale_fill_gradient(low = &quot;white&quot;,
+    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\\narea (%)&quot;) + coord_fixed() +
+    labs(x = &quot;Mean annual temperature (°C)&quot;, y = &quot;Annual precipitation (mm)&quot;, title = &quot;Maize climate envelope and field sites&quot;) +
+    theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-240-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>ggplot(soil_area, aes(x = pawc_class, y = totn_class, fill = share_area)) + geom_tile(width = 1,
+    height = 1) + geom_point(data = site_values, aes(x = pawc_class, y = totn_class),
+    inherit.aes = FALSE, shape = 1, colour = &quot;red&quot;, size = 5) + scale_x_continuous(breaks = axis_breaks,
+    labels = round(pawc_breaks[axis_breaks], 1), limits = c(0.5, n_intervals + 0.5)) +
+    scale_y_continuous(breaks = axis_breaks, labels = signif(totn_breaks[axis_breaks],
+        3), limits = c(0.5, n_intervals + 0.5)) + scale_fill_gradient(low = &quot;white&quot;,
+    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\\narea (%)&quot;) + coord_fixed() +
+    labs(x = &quot;Plant-available water capacity (mm)&quot;, y = &quot;Total soil nitrogen (%)&quot;,
+        title = &quot;Maize soil envelope and field sites&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-241-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calculating-environmental-coverage" class="section level3 hasAnchor" number="13.4.3">
+<h3><span class="header-section-number">13.4.3</span> Calculating environmental coverage<a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For each dimension (climate and soil), coverage is calculated as the proportion of maize harvested area occurring in environmental class combinations represented by at least one field site. It is obtained by summing the harvested area in these class combinations and dividing it by the total maize harvested area with valid data for the corresponding environmental variables.</p>
+<p>This is a class-based measure: a site represents the entire environmental class combination in which it falls. It does not imply that all locations within that class are identical to the site. Climate and soil coverage are calculated separately; the percentages therefore do not indicate the proportion of maize area represented simultaneously across all four variables.</p>
+<p>Coverage depends on the environmental variables and class boundaries used. In particular, changing the number of intervals or the classification method can change the resulting percentages.</p>
+<pre class="text"><code># Identify class combinations represented by at least one site
+climate_site_classes = site_values |&gt;
+    filter(!is.na(temp_class), !is.na(rain_class)) |&gt;
+    distinct(temp_class, rain_class)
+
+soil_site_classes = site_values |&gt;
+    filter(!is.na(pawc_class), !is.na(totn_class)) |&gt;
+    distinct(pawc_class, totn_class)
+
+# Total harvested area represented in each environmental envelope
+climate_total_area = sum(climate_area$harvested_area_ha, na.rm = TRUE)
+soil_total_area = sum(soil_area$harvested_area_ha, na.rm = TRUE)
+
+# Harvested area in class combinations containing at least one site
+climate_covered_area = climate_area |&gt;
+    inner_join(climate_site_classes, by = c(&quot;temp_class&quot;, &quot;rain_class&quot;)) |&gt;
+    summarise(area = sum(harvested_area_ha, na.rm = TRUE)) |&gt;
+    pull(area)
+
+soil_covered_area = soil_area |&gt;
+    inner_join(soil_site_classes, by = c(&quot;pawc_class&quot;, &quot;totn_class&quot;)) |&gt;
+    summarise(area = sum(harvested_area_ha, na.rm = TRUE)) |&gt;
+    pull(area)
+
+coverage_summary = tibble(dimension = c(&quot;Climate&quot;, &quot;Soil&quot;), total_harvested_area_ha = c(climate_total_area,
+    soil_total_area), harvested_area_in_site_classes_ha = c(climate_covered_area,
+    soil_covered_area), coverage_percent = 100 * c(climate_covered_area/climate_total_area,
+    soil_covered_area/soil_total_area))
+
+# Transpose summary for a more readable layout
+coverage_summary_t = data.frame(Indicator = c(&quot;Total harvested area (ha)&quot;, &quot;Harvested area in site classes (ha)&quot;,
+    &quot;Coverage (%)&quot;), Climate = as.numeric(t(coverage_summary[1, -1])), Soil = as.numeric(t(coverage_summary[2,
+    -1])))
+
+coverage_summary_t %&gt;%
+    knitr::kable(digits = 2, booktabs = TRUE, caption = &quot;Harvested area coverage by environmental dimension&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-242">Table 13.1: </span>Harvested area coverage by environmental dimension</caption>
+<thead>
+<tr class="header">
+<th align="left">Indicator</th>
+<th align="right">Climate</th>
+<th align="right">Soil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Total harvested area (ha)</td>
+<td align="right">35295543.2</td>
+<td align="right">35030152.44</td>
+</tr>
+<tr class="even">
+<td align="left">Harvested area in site classes (ha)</td>
+<td align="right">918443.3</td>
+<td align="right">1246430.80</td>
+</tr>
+<tr class="odd">
+<td align="left">Coverage (%)</td>
+<td align="right">2.6</td>
+<td align="right">3.56</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Ruane2017" class="csl-entry">
+Ruane, Alex C., Cynthia Rosenzweig, Senthold Asseng, Kenneth J. Boote, Joshua Elliott, Frank Ewert, James W. Jones, et al. 2017. <span>“An AgMIP Framework for Improved Agricultural Representation in Integrated Assessment Models.”</span> <em>Environmental Research Letters</em> 12 (November). <a href="https://doi.org/10.1088/1748-9326/aa8da6">https://doi.org/10.1088/1748-9326/aa8da6</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="crop-eco-physiological-suitability.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="technology-extrapolation-domains.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/12-soil-climate-domains.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

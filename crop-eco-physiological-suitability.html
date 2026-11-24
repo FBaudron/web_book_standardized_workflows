@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Crop eco-physiological suitability | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Crop eco-physiological suitability | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Crop eco-physiological suitability | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-recommendation-domains.html"/>
+<link rel="next" href="soil-and-climate-representativeness-of-trials.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="crop-eco-physiological-suitability" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Crop eco-physiological suitability<a href="crop-eco-physiological-suitability.html#crop-eco-physiological-suitability" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a workflow for mapping crop suitability across sub-Saharan Africa, using fuzzy membership functions to assess how well environmental conditions match crop requirements.</p>
+<div id="introduction-5" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Introduction<a href="crop-eco-physiological-suitability.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Crop-suitability mapping assesses the degree to which environmental conditions match the requirements of a given crop. Rather than classifying locations as simply suitable or unsuitable, fuzzy suitability assessment represents suitability as a continuous gradient, allowing for gradual transitions between optimal, suboptimal and unsuitable conditions <span class="citation">(<a href="#ref-Ahamed2000">Ahamed, Rao, and Murthy 2000</a>)</span>.</p>
+<p>Crop-specific environmental requirements and parameter ranges were informed by the FAO EcoCrop database, which documents the environmental constraints and characteristics of cultivated and wild plant species (<a href="https://ecocrop.apps.fao.org/ecocrop/srv/en/cropFindForm" class="uri">https://ecocrop.apps.fao.org/ecocrop/srv/en/cropFindForm</a>). In this workflow, suitability is assessed using three environmental components: temperature, precipitation and soil pH. Temperature is characterized by the mean temperature during the crop growing season, while precipitation and soil pH are represented by annual precipitation and soil pH, respectively. Each component is translated into a fuzzy suitability score using a trapezoidal membership function, defined by lower and upper absolute limits and an optimum range.</p>
+<p>The workflow comprises three main stages:</p>
+<ol style="list-style-type: decimal">
+<li>Preparing the environmental data: assembling the spatial layers and deriving mean temperature during the growing season from monthly temperature data and crop calendars;</li>
+<li>Assessing suitability for each environmental component: translating temperature, precipitation and soil pH values into crop-specific fuzzy suitability scores;</li>
+<li>Combining suitability components: aggregating the three scores into an overall suitability index, separately for each growing season, and retaining the highest score across the main and second growing seasons.</li>
+</ol>
+<p>Here, the analysis is conducted for maize and sorghum separately across sub-Saharan Africa.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/12-crop_eco_physiological_suitability/crop_eco_physiological_suitability.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/12-crop_eco_physiological_suitability/crop_eco_physiological_suitability.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;geodata&quot;)) install.packages(&quot;geodata&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;tidyterra&quot;)) install.packages(&quot;tidyterra&quot;)
+if (!require(&quot;ggspatial&quot;)) install.packages(&quot;ggspatial&quot;)
+if (!require(&quot;dplyr&quot;)) install.packages(&quot;dplyr&quot;)
+if (!require(&quot;viridis&quot;)) install.packages(&quot;viridis&quot;)
+
+library(terra)
+library(geodata)
+library(ggplot2)
+library(tidyterra)
+library(ggspatial)
+library(dplyr)
+library(viridis)
+
+path = &quot;Data&quot;</code></pre>
+</div>
+<div id="preparing-the-data-3" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Preparing the data<a href="crop-eco-physiological-suitability.html#preparing-the-data-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ssa-shapefile-cropland-mask-annual-precipitation-and-ph" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> SSA shapefile, cropland mask, annual precipitation and pH<a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The shapefiles and rasters required for the analysis were produced in Chapter 3. They can also be downloaded here: <a href="https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0" class="uri">https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0</a>.</p>
+<pre class="text"><code>ssa = vect(&quot;Data/Spatial/Processed/ssa.shp&quot;)
+
+cropmask = rast(&quot;Data/Spatial/Processed/cropmask.tif&quot;)
+
+prec_annual = rast(&quot;Data/Spatial/Processed/prec.tif&quot;)
+
+ph = rast(&quot;Data/Spatial/Processed/ph.tif&quot;)</code></pre>
+</div>
+<div id="deriving-growing-season-mean-temperature" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Deriving growing-season mean temperature<a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We download monthly mean temperatures from <strong>geodata</strong>. USing crop calendars for maize annd sorghum - also downloaded from <strong>geodata</strong> - we determine whether the midpoint of each month falls within the growing period of each crop. The approximate day-of-year values used for the monthly midpoints are 15, 45, 74, 105, 135, 166, 196, 227, 258, 288, 319 and 349, from January to December, respectively.</p>
+<p>A month is included when its midpoint lies between planting and harvest. As such, this should be considered as an approximation: a month is either included in full or excluded, depending on its midpoint.</p>
+<p>We first download monthly mean temparatures.</p>
+<pre class="text"><code>tavg = worldclim_global(var = &quot;tavg&quot;, res = 5, path = path)
+
+names(tavg) = c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;,
+    &quot;Nov&quot;, &quot;Dec&quot;)
+
+tavg = crop(tavg, cropmask)
+tavg = mask(tavg, cropmask)</code></pre>
+<p>We then download crop calendars from <strong>geodata</strong> for maize and sorghum. For each crop, the dataset provides a main and a second season. Each calendar includes start, midpoint and end estimates for planting and harvest. Here, we use the midpoint layers (<code>plant</code> and <code>harvest</code>) to define one representative growing period for each season.</p>
+<p>We use the cropland mask to mask cells outside of the cropland mask.</p>
+<pre class="text"><code>maize_main = crop_calendar_sacks(crop = &quot;Maize (main season)&quot;, path = path)
+maize_main = crop(maize_main, cropmask)
+maize_main = mask(maize_main, cropmask)
+
+plot(maize_main[[2]], main = &quot;Maize planting, main growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-213-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>plot(maize_main[[5]], main = &quot;Maize harvesting, main growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-214-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>maize_second = crop_calendar_sacks(crop = &quot;Maize (2nd season)&quot;, path = path)
+maize_second = crop(maize_second, cropmask)
+maize_second = mask(maize_second, cropmask)
+
+plot(maize_second[[2]], main = &quot;Maize planting, second growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-215-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>plot(maize_second[[5]], main = &quot;Maize harvesting, second growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-216-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>sorghum_main = crop_calendar_sacks(crop = &quot;Sorghum (main season)&quot;, path = path)
+sorghum_main = crop(sorghum_main, cropmask)
+sorghum_main = mask(sorghum_main, cropmask)
+
+plot(sorghum_main[[2]], main = &quot;Sorghum planting, main growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-217-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>plot(sorghum_main[[5]], main = &quot;Sorghum harvesting, main growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-218-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>sorghum_second = crop_calendar_sacks(crop = &quot;Sorghum (2nd season)&quot;, path = path)
+sorghum_second = crop(sorghum_second, cropmask)
+sorghum_second = mask(sorghum_second, cropmask)
+
+plot(sorghum_second[[2]], main = &quot;Sorghum planting, second growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-219-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>plot(sorghum_second[[5]], main = &quot;Sorghum harvesting, second growing season (mid-point)&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-220-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>We then calculate the mean temperature during the main growing season of maize, considering months whose midpoint falls within the growing season. We mask cells outside the cropland mask.</p>
+<pre class="text"><code>maize_main_plant = maize_main[[&quot;plant&quot;]]
+maize_main_harvest = maize_main[[&quot;harvest&quot;]]
+
+maize_main_valid = ifel(!is.na(maize_main_plant) &amp; !is.na(maize_main_harvest), 1,
+    NA)
+
+# Identify months whose midpoint falls within the growing period.  The second
+# condition accounts for growing seasons crossing December-January.
+maize_main_tjan = ifel((maize_main_plant &lt;= 15 &amp; maize_main_harvest &gt;= 15) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 15 | maize_main_harvest &gt;= 15)), tavg[[1]],
+    NA)
+
+maize_main_tfeb = ifel((maize_main_plant &lt;= 45 &amp; maize_main_harvest &gt;= 45) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 45 | maize_main_harvest &gt;= 45)), tavg[[2]],
+    NA)
+
+maize_main_tmar = ifel((maize_main_plant &lt;= 74 &amp; maize_main_harvest &gt;= 74) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 74 | maize_main_harvest &gt;= 74)), tavg[[3]],
+    NA)
+
+maize_main_tapr = ifel((maize_main_plant &lt;= 105 &amp; maize_main_harvest &gt;= 105) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 105 | maize_main_harvest &gt;= 105)), tavg[[4]],
+    NA)
+
+maize_main_tmay = ifel((maize_main_plant &lt;= 135 &amp; maize_main_harvest &gt;= 135) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 135 | maize_main_harvest &gt;= 135)), tavg[[5]],
+    NA)
+
+maize_main_tjun = ifel((maize_main_plant &lt;= 166 &amp; maize_main_harvest &gt;= 166) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 166 | maize_main_harvest &gt;= 166)), tavg[[6]],
+    NA)
+
+maize_main_tjul = ifel((maize_main_plant &lt;= 196 &amp; maize_main_harvest &gt;= 196) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 196 | maize_main_harvest &gt;= 196)), tavg[[7]],
+    NA)
+
+maize_main_taug = ifel((maize_main_plant &lt;= 227 &amp; maize_main_harvest &gt;= 227) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 227 | maize_main_harvest &gt;= 227)), tavg[[8]],
+    NA)
+
+maize_main_tsep = ifel((maize_main_plant &lt;= 258 &amp; maize_main_harvest &gt;= 258) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 258 | maize_main_harvest &gt;= 258)), tavg[[9]],
+    NA)
+
+maize_main_toct = ifel((maize_main_plant &lt;= 288 &amp; maize_main_harvest &gt;= 288) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 288 | maize_main_harvest &gt;= 288)), tavg[[10]],
+    NA)
+
+maize_main_tnov = ifel((maize_main_plant &lt;= 319 &amp; maize_main_harvest &gt;= 319) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 319 | maize_main_harvest &gt;= 319)), tavg[[11]],
+    NA)
+
+maize_main_tdec = ifel((maize_main_plant &lt;= 349 &amp; maize_main_harvest &gt;= 349) | (maize_main_harvest &lt;
+    maize_main_plant &amp; (maize_main_plant &lt;= 349 | maize_main_harvest &gt;= 349)), tavg[[12]],
+    NA)
+
+
+# Mean Tmean during maize main growing season Because `na.rm = TRUE` is used,
+# months outside the growing period are ignored
+maize_main_tmean = app(c(maize_main_tjan, maize_main_tfeb, maize_main_tmar, maize_main_tapr,
+    maize_main_tmay, maize_main_tjun, maize_main_tjul, maize_main_taug, maize_main_tsep,
+    maize_main_toct, maize_main_tnov, maize_main_tdec), mean, na.rm = TRUE)
+
+maize_main_tmean = mask(maize_main_tmean, maize_main_valid)
+
+names(maize_main_tmean) = &quot;maize_main_tmean&quot;
+
+plot(maize_main_tmean, main = &quot;Mean teamperature during the main growing season of maize&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-221-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The same procedure is applied to the second maize season.</p>
+<pre class="text"><code>maize_second_plant = maize_second[[&quot;plant&quot;]]
+maize_second_harvest = maize_second[[&quot;harvest&quot;]]
+
+maize_second_valid = ifel(!is.na(maize_second_plant) &amp; !is.na(maize_second_harvest),
+    1, NA)
+
+maize_second_tjan = ifel((maize_second_plant &lt;= 15 &amp; maize_second_harvest &gt;= 15) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 15 | maize_second_harvest &gt;=
+        15)), tavg[[1]], NA)
+
+maize_second_tfeb = ifel((maize_second_plant &lt;= 45 &amp; maize_second_harvest &gt;= 45) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 45 | maize_second_harvest &gt;=
+        45)), tavg[[2]], NA)
+
+maize_second_tmar = ifel((maize_second_plant &lt;= 74 &amp; maize_second_harvest &gt;= 74) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 74 | maize_second_harvest &gt;=
+        74)), tavg[[3]], NA)
+
+maize_second_tapr = ifel((maize_second_plant &lt;= 105 &amp; maize_second_harvest &gt;= 105) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 105 | maize_second_harvest &gt;=
+        105)), tavg[[4]], NA)
+
+maize_second_tmay = ifel((maize_second_plant &lt;= 135 &amp; maize_second_harvest &gt;= 135) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 135 | maize_second_harvest &gt;=
+        135)), tavg[[5]], NA)
+
+maize_second_tjun = ifel((maize_second_plant &lt;= 166 &amp; maize_second_harvest &gt;= 166) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 166 | maize_second_harvest &gt;=
+        166)), tavg[[6]], NA)
+
+maize_second_tjul = ifel((maize_second_plant &lt;= 196 &amp; maize_second_harvest &gt;= 196) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 196 | maize_second_harvest &gt;=
+        196)), tavg[[7]], NA)
+
+maize_second_taug = ifel((maize_second_plant &lt;= 227 &amp; maize_second_harvest &gt;= 227) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 227 | maize_second_harvest &gt;=
+        227)), tavg[[8]], NA)
+
+maize_second_tsep = ifel((maize_second_plant &lt;= 258 &amp; maize_second_harvest &gt;= 258) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 258 | maize_second_harvest &gt;=
+        258)), tavg[[9]], NA)
+
+maize_second_toct = ifel((maize_second_plant &lt;= 288 &amp; maize_second_harvest &gt;= 288) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 288 | maize_second_harvest &gt;=
+        288)), tavg[[10]], NA)
+
+maize_second_tnov = ifel((maize_second_plant &lt;= 319 &amp; maize_second_harvest &gt;= 319) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 319 | maize_second_harvest &gt;=
+        319)), tavg[[11]], NA)
+
+maize_second_tdec = ifel((maize_second_plant &lt;= 349 &amp; maize_second_harvest &gt;= 349) |
+    (maize_second_harvest &lt; maize_second_plant &amp; (maize_second_plant &lt;= 349 | maize_second_harvest &gt;=
+        349)), tavg[[12]], NA)
+
+
+maize_second_tmean = app(c(maize_second_tjan, maize_second_tfeb, maize_second_tmar,
+    maize_second_tapr, maize_second_tmay, maize_second_tjun, maize_second_tjul, maize_second_taug,
+    maize_second_tsep, maize_second_toct, maize_second_tnov, maize_second_tdec),
+    mean, na.rm = TRUE)
+
+maize_second_tmean = mask(maize_second_tmean, maize_second_valid)
+
+plot(maize_second_tmean, main = &quot;Mean teamperature during the second growing season of maize&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/maize-second-temperature-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The procedure is repeated for sorghum, using its own main- and second-season crop calendars. The monthly inclusion logic is identical; only the crop-calendar layers differ.</p>
+<pre class="text"><code>sorghum_main_plant = sorghum_main[[&quot;plant&quot;]]
+sorghum_main_harvest = sorghum_main[[&quot;harvest&quot;]]
+
+sorghum_main_valid = ifel(!is.na(sorghum_main_plant) &amp; !is.na(sorghum_main_harvest),
+    1, NA)
+
+sorghum_main_tjan = ifel((sorghum_main_plant &lt;= 15 &amp; sorghum_main_harvest &gt;= 15) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 15 | sorghum_main_harvest &gt;=
+        15)), tavg[[1]], NA)
+
+sorghum_main_tfeb = ifel((sorghum_main_plant &lt;= 45 &amp; sorghum_main_harvest &gt;= 45) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 45 | sorghum_main_harvest &gt;=
+        45)), tavg[[2]], NA)
+
+sorghum_main_tmar = ifel((sorghum_main_plant &lt;= 74 &amp; sorghum_main_harvest &gt;= 74) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 74 | sorghum_main_harvest &gt;=
+        74)), tavg[[3]], NA)
+
+sorghum_main_tapr = ifel((sorghum_main_plant &lt;= 105 &amp; sorghum_main_harvest &gt;= 105) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 105 | sorghum_main_harvest &gt;=
+        105)), tavg[[4]], NA)
+
+sorghum_main_tmay = ifel((sorghum_main_plant &lt;= 135 &amp; sorghum_main_harvest &gt;= 135) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 135 | sorghum_main_harvest &gt;=
+        135)), tavg[[5]], NA)
+
+sorghum_main_tjun = ifel((sorghum_main_plant &lt;= 166 &amp; sorghum_main_harvest &gt;= 166) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 166 | sorghum_main_harvest &gt;=
+        166)), tavg[[6]], NA)
+
+sorghum_main_tjul = ifel((sorghum_main_plant &lt;= 196 &amp; sorghum_main_harvest &gt;= 196) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 196 | sorghum_main_harvest &gt;=
+        196)), tavg[[7]], NA)
+
+sorghum_main_taug = ifel((sorghum_main_plant &lt;= 227 &amp; sorghum_main_harvest &gt;= 227) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 227 | sorghum_main_harvest &gt;=
+        227)), tavg[[8]], NA)
+
+sorghum_main_tsep = ifel((sorghum_main_plant &lt;= 258 &amp; sorghum_main_harvest &gt;= 258) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 258 | sorghum_main_harvest &gt;=
+        258)), tavg[[9]], NA)
+
+sorghum_main_toct = ifel((sorghum_main_plant &lt;= 288 &amp; sorghum_main_harvest &gt;= 288) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 288 | sorghum_main_harvest &gt;=
+        288)), tavg[[10]], NA)
+
+sorghum_main_tnov = ifel((sorghum_main_plant &lt;= 319 &amp; sorghum_main_harvest &gt;= 319) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 319 | sorghum_main_harvest &gt;=
+        319)), tavg[[11]], NA)
+
+sorghum_main_tdec = ifel((sorghum_main_plant &lt;= 349 &amp; sorghum_main_harvest &gt;= 349) |
+    (sorghum_main_harvest &lt; sorghum_main_plant &amp; (sorghum_main_plant &lt;= 349 | sorghum_main_harvest &gt;=
+        349)), tavg[[12]], NA)
+
+sorghum_main_tmean = app(c(sorghum_main_tjan, sorghum_main_tfeb, sorghum_main_tmar,
+    sorghum_main_tapr, sorghum_main_tmay, sorghum_main_tjun, sorghum_main_tjul, sorghum_main_taug,
+    sorghum_main_tsep, sorghum_main_toct, sorghum_main_tnov, sorghum_main_tdec),
+    mean, na.rm = TRUE)
+
+sorghum_main_tmean = mask(sorghum_main_tmean, sorghum_main_valid)
+
+plot(sorghum_main_tmean, main = &quot;Mean teamperature during the main growing season of sorghum&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-222-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>sorghum_second_plant = sorghum_second[[&quot;plant&quot;]]
+sorghum_second_harvest = sorghum_second[[&quot;harvest&quot;]]
+
+sorghum_second_valid = ifel(!is.na(sorghum_second_plant) &amp; !is.na(sorghum_second_harvest),
+    1, NA)
+
+sorghum_second_tjan = ifel((sorghum_second_plant &lt;= 15 &amp; sorghum_second_harvest &gt;=
+    15) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    15 | sorghum_second_harvest &gt;= 15)), tavg[[1]], NA)
+
+sorghum_second_tfeb = ifel((sorghum_second_plant &lt;= 45 &amp; sorghum_second_harvest &gt;=
+    45) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    45 | sorghum_second_harvest &gt;= 45)), tavg[[2]], NA)
+
+sorghum_second_tmar = ifel((sorghum_second_plant &lt;= 74 &amp; sorghum_second_harvest &gt;=
+    74) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    74 | sorghum_second_harvest &gt;= 74)), tavg[[3]], NA)
+
+sorghum_second_tapr = ifel((sorghum_second_plant &lt;= 105 &amp; sorghum_second_harvest &gt;=
+    105) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    105 | sorghum_second_harvest &gt;= 105)), tavg[[4]], NA)
+
+sorghum_second_tmay = ifel((sorghum_second_plant &lt;= 135 &amp; sorghum_second_harvest &gt;=
+    135) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    135 | sorghum_second_harvest &gt;= 135)), tavg[[5]], NA)
+
+sorghum_second_tjun = ifel((sorghum_second_plant &lt;= 166 &amp; sorghum_second_harvest &gt;=
+    166) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    166 | sorghum_second_harvest &gt;= 166)), tavg[[6]], NA)
+
+sorghum_second_tjul = ifel((sorghum_second_plant &lt;= 196 &amp; sorghum_second_harvest &gt;=
+    196) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    196 | sorghum_second_harvest &gt;= 196)), tavg[[7]], NA)
+
+sorghum_second_taug = ifel((sorghum_second_plant &lt;= 227 &amp; sorghum_second_harvest &gt;=
+    227) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    227 | sorghum_second_harvest &gt;= 227)), tavg[[8]], NA)
+
+sorghum_second_tsep = ifel((sorghum_second_plant &lt;= 258 &amp; sorghum_second_harvest &gt;=
+    258) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    258 | sorghum_second_harvest &gt;= 258)), tavg[[9]], NA)
+
+sorghum_second_toct = ifel((sorghum_second_plant &lt;= 288 &amp; sorghum_second_harvest &gt;=
+    288) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    288 | sorghum_second_harvest &gt;= 288)), tavg[[10]], NA)
+
+sorghum_second_tnov = ifel((sorghum_second_plant &lt;= 319 &amp; sorghum_second_harvest &gt;=
+    319) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    319 | sorghum_second_harvest &gt;= 319)), tavg[[11]], NA)
+
+sorghum_second_tdec = ifel((sorghum_second_plant &lt;= 349 &amp; sorghum_second_harvest &gt;=
+    349) | (sorghum_second_harvest &lt; sorghum_second_plant &amp; (sorghum_second_plant &lt;=
+    349 | sorghum_second_harvest &gt;= 349)), tavg[[12]], NA)
+
+sorghum_second_tmean = app(c(sorghum_second_tjan, sorghum_second_tfeb, sorghum_second_tmar,
+    sorghum_second_tapr, sorghum_second_tmay, sorghum_second_tjun, sorghum_second_tjul,
+    sorghum_second_taug, sorghum_second_tsep, sorghum_second_toct, sorghum_second_tnov,
+    sorghum_second_tdec), mean, na.rm = TRUE)
+
+sorghum_second_tmean = mask(sorghum_second_tmean, sorghum_second_valid)
+
+names(sorghum_second_tmean) = &quot;sorghum_second_tmean&quot;
+
+plot(sorghum_second_tmean, main = &quot;Mean teamperature during the second growing season of sorghum&quot;)
+plot(ssa, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-223-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="fuzzy-suitability-functions" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Fuzzy suitability functions<a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="temperature-suitability" class="section level3 hasAnchor" number="12.3.1">
+<h3><span class="header-section-number">12.3.1</span> Temperature suitability<a href="crop-eco-physiological-suitability.html#temperature-suitability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Temperature suitability is calculated separately for each crop and season. The trapezoidal membership function has four thresholds:</p>
+<ul>
+<li>the lower absolute limit, below which suitability is 0;</li>
+<li>the lower optimum limit, above which suitability increases to 1;</li>
+<li>the upper optimum limit, within which suitability remains 1;</li>
+<li>the upper absolute limit, beyond which suitability decreases to 0.</li>
+</ul>
+<p>Between the absolute and optimum limits, membership changes linearly. Thus, the fuzzy score is not a probability; it is a normalized representation of how closely a temperature value matches the specified suitability range.</p>
+<p>The thresholds used here are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Crop</th>
+<th align="right">Absolute range (°C)</th>
+<th align="right">Optimum range (°C)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Maize</td>
+<td align="right">10–47</td>
+<td align="right">18–33</td>
+</tr>
+<tr class="even">
+<td>Sorghum</td>
+<td align="right">8–40</td>
+<td align="right">22–35</td>
+</tr>
+</tbody>
+</table>
+<p>These values are the parameters adopted in this exercise from the crop-requirement information used to configure the script. Their suitability should be checked against the intended crop types and production environments before using the maps for decision-making.</p>
+<pre class="text"><code>maize_main_temp_fuzzy = ifel(maize_main_tmean &lt;= 10, 0, ifel(maize_main_tmean &lt; 18,
+    (maize_main_tmean - 10)/(18 - 10), ifel(maize_main_tmean &lt;= 33, 1, ifel(maize_main_tmean &lt;
+        47, (47 - maize_main_tmean)/(47 - 33), 0))))
+
+
+maize_second_temp_fuzzy = ifel(maize_second_tmean &lt;= 10, 0, ifel(maize_second_tmean &lt;
+    18, (maize_second_tmean - 10)/(18 - 10), ifel(maize_second_tmean &lt;= 33, 1, ifel(maize_second_tmean &lt;
+    47, (47 - maize_second_tmean)/(47 - 33), 0))))
+
+
+sorghum_main_temp_fuzzy = ifel(sorghum_main_tmean &lt;= 8, 0, ifel(sorghum_main_tmean &lt;
+    22, (sorghum_main_tmean - 8)/(22 - 8), ifel(sorghum_main_tmean &lt;= 35, 1, ifel(sorghum_main_tmean &lt;
+    40, (40 - sorghum_main_tmean)/(40 - 35), 0))))
+
+sorghum_second_temp_fuzzy = ifel(sorghum_second_tmean &lt;= 8, 0, ifel(sorghum_second_tmean &lt;
+    22, (sorghum_second_tmean - 8)/(22 - 8), ifel(sorghum_second_tmean &lt;= 35, 1,
+    ifel(sorghum_second_tmean &lt; 40, (40 - sorghum_second_tmean)/(40 - 35), 0))))
+
+
+# Plot trapezoidal temperature suitability functions
+temp = seq(0, 50, by = 0.1)
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+# Maize
+maize_fuzzy = pmax(0, pmin(1, (temp - 10)/(18 - 10), (47 - temp)/(47 - 33)))
+plot(temp, maize_fuzzy, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(0, 50), ylim = c(0,
+    1), xlab = &quot;Mean temperature (°C)&quot;, ylab = &quot;Suitability&quot;, main = &quot;Maize&quot;)
+abline(v = c(10, 18, 33, 47), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)
+
+# Sorghum
+sorghum_fuzzy = pmax(0, pmin(1, (temp - 8)/(22 - 8), (40 - temp)/(40 - 35)))
+plot(temp, sorghum_fuzzy, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(0, 50), ylim = c(0,
+    1), xlab = &quot;Mean temperature (°C)&quot;, ylab = &quot;Suitability&quot;, main = &quot;Sorghum&quot;)
+abline(v = c(8, 22, 35, 40), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-224-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>par(mfrow = c(1, 1))</code></pre>
+</div>
+<div id="precipitation-suitability" class="section level3 hasAnchor" number="12.3.2">
+<h3><span class="header-section-number">12.3.2</span> Precipitation suitability<a href="crop-eco-physiological-suitability.html#precipitation-suitability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Rainfall suitability is based on annual precipitation. The thresholds are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Crop</th>
+<th align="right">Absolute range (mm/year)</th>
+<th align="right">Optimum range (mm/year)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Maize</td>
+<td align="right">400–1,800</td>
+<td align="right">600–1,200</td>
+</tr>
+<tr class="even">
+<td>Sorghum</td>
+<td align="right">300–700</td>
+<td align="right">400–600</td>
+</tr>
+</tbody>
+</table>
+<p>The same trapezoidal logic is used: suitability increases linearly from the lower absolute limit to the lower optimum limit, remains at 1 within the optimum range, and decreases linearly to 0 between the upper optimum and upper absolute limits.</p>
+<p>Annual precipitation is a broad indicator. It does not account for the timing of rainfall, within-season dry spells, runoff, soil water-holding capacity or irrigation. These limitations are particularly relevant in semi-arid environments.</p>
+<pre class="text"><code>maize_rain_fuzzy = ifel(prec_annual &lt;= 400, 0, ifel(prec_annual &lt; 600, (prec_annual -
+    400)/(600 - 400), ifel(prec_annual &lt;= 1200, 1, ifel(prec_annual &lt; 1800, (1800 -
+    prec_annual)/(1800 - 1200), 0))))
+
+
+sorghum_rain_fuzzy = ifel(prec_annual &lt;= 300, 0, ifel(prec_annual &lt; 400, (prec_annual -
+    300)/(400 - 300), ifel(prec_annual &lt;= 600, 1, ifel(prec_annual &lt; 700, (700 -
+    prec_annual)/(700 - 600), 0))))
+
+
+# Plot trapezoidal rainfall suitability functions
+prec = seq(0, 2000, by = 1)
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+# Maize
+maize_rain_curve = pmax(0, pmin(1, (prec - 400)/(600 - 400), (1800 - prec)/(1800 -
+    1200)))
+plot(prec, maize_rain_curve, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(0, 2000),
+    ylim = c(0, 1), xlab = &quot;Annual precipitation (mm)&quot;, ylab = &quot;Suitability&quot;, main = &quot;Maize&quot;)
+abline(v = c(400, 600, 1200, 1800), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)
+
+# Sorghum
+sorghum_rain_curve = pmax(0, pmin(1, (prec - 300)/(400 - 300), (700 - prec)/(700 -
+    600)))
+plot(prec, sorghum_rain_curve, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(0, 2000),
+    ylim = c(0, 1), xlab = &quot;Annual precipitation (mm)&quot;, ylab = &quot;Suitability&quot;, main = &quot;Sorghum&quot;)
+abline(v = c(300, 400, 600, 700), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-225-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>par(mfrow = c(1, 1))</code></pre>
+</div>
+<div id="soil-ph-suitability" class="section level3 hasAnchor" number="12.3.3">
+<h3><span class="header-section-number">12.3.3</span> Soil pH suitability<a href="crop-eco-physiological-suitability.html#soil-ph-suitability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The soil pH thresholds are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Crop</th>
+<th align="right">Absolute range</th>
+<th align="right">Optimum range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Maize</td>
+<td align="right">4.5–8.5</td>
+<td align="right">5.0–7.0</td>
+</tr>
+<tr class="even">
+<td>Sorghum</td>
+<td align="right">5.0–8.0</td>
+<td align="right">5.5–7.5</td>
+</tr>
+</tbody>
+</table>
+<p>As with temperature and precipitation, the membership score ranges from 0 to 1. The thresholds describe a simplified response to soil pH and do not represent the full range of soil constraints that may affect crop growth.</p>
+<pre class="text"><code>maize_ph_fuzzy = ifel(ph &lt;= 4.5, 0, ifel(ph &lt; 5, (ph - 4.5)/(5 - 4.5), ifel(ph &lt;=
+    7, 1, ifel(ph &lt; 8.5, (8.5 - ph)/(8.5 - 7), 0))))
+
+
+sorghum_ph_fuzzy = ifel(ph &lt;= 5, 0, ifel(ph &lt; 5.5, (ph - 5)/(5.5 - 5), ifel(ph &lt;=
+    7.5, 1, ifel(ph &lt; 8, (8 - ph)/(8 - 7.5), 0))))
+
+
+# Plot trapezoidal pH suitability functions
+ph_values = seq(3, 10, by = 0.01)
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+# Maize
+maize_ph_curve = pmax(0, pmin(1, (ph_values - 4.5)/(5 - 4.5), (8.5 - ph_values)/(8.5 -
+    7)))
+plot(ph_values, maize_ph_curve, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(3,
+    10), ylim = c(0, 1), xlab = &quot;Soil pH&quot;, ylab = &quot;Suitability&quot;, main = &quot;Maize&quot;)
+abline(v = c(4.5, 5, 7, 8.5), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)
+
+# Sorghum
+sorghum_ph_curve = pmax(0, pmin(1, (ph_values - 5)/(5.5 - 5), (8 - ph_values)/(8 -
+    7.5)))
+plot(ph_values, sorghum_ph_curve, type = &quot;l&quot;, lwd = 2, col = &quot;tomato&quot;, xlim = c(3,
+    10), ylim = c(0, 1), xlab = &quot;Soil pH&quot;, ylab = &quot;Suitability&quot;, main = &quot;Sorghum&quot;)
+abline(v = c(5, 5.5, 7.5, 8), lty = c(2, 3, 3, 2), col = &quot;grey50&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-226-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>par(mfrow = c(1, 1))</code></pre>
+</div>
+</div>
+<div id="combining-suitability-components" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Combining suitability components<a href="crop-eco-physiological-suitability.html#combining-suitability-components" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="maize" class="section level3 hasAnchor" number="12.4.1">
+<h3><span class="header-section-number">12.4.1</span> Maize<a href="crop-eco-physiological-suitability.html#maize" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For each maize season, the three fuzzy scores—temperature, precipitation and soil pH—are combined using an equal-weight arithmetic mean. <code>na.rm = FALSE</code> is used so that a final score is produced only where all three components are available.</p>
+<p>The seasonal validity mask is applied after aggregation. Finally, the main- and second-season suitability surfaces are combined. If both seasons are available, the higher score is retained. If only one season is available, its score is retained.</p>
+<p>This maximum rule represents the most suitable of the mapped growing seasons. It does not imply that farmers necessarily cultivate both seasons, or that the highest-scoring season is the one actually used.</p>
+<pre class="text"><code>maize_main_suitability = app(c(maize_main_temp_fuzzy, maize_rain_fuzzy, maize_ph_fuzzy),
+    mean, na.rm = FALSE)
+
+maize_second_suitability = app(c(maize_second_temp_fuzzy, maize_rain_fuzzy, maize_ph_fuzzy),
+    mean, na.rm = FALSE)
+
+# Apply seasonal calendar masks
+maize_main_suitability = mask(maize_main_suitability, maize_main_valid)
+
+maize_second_suitability = mask(maize_second_suitability, maize_second_valid)
+
+# Combine seasons: retain the maximum suitability across available seasons
+maize_suitability_ssa = ifel(is.na(maize_main_suitability), maize_second_suitability,
+    ifel(is.na(maize_second_suitability), maize_main_suitability, ifel(maize_main_suitability &gt;=
+        maize_second_suitability, maize_main_suitability, maize_second_suitability)))
+
+names(maize_main_suitability) = &quot;maize_main_suitability&quot;
+names(maize_second_suitability) = &quot;maize_second_suitability&quot;
+names(maize_suitability_ssa) = &quot;maize_suitability&quot;</code></pre>
+<pre class="text"><code>ggplot() + geom_spatraster(data = maize_suitability_ssa) + geom_spatvector(data = ssa,
+    fill = NA, color = &quot;black&quot;, linewidth = 0.3) + scale_fill_viridis_c(option = &quot;inferno&quot;,
+    limits = c(0, 1), name = &quot;Suitability&quot;, na.value = &quot;transparent&quot;) + coord_sf() +
+    labs(title = &quot;Maize eco-physiological suitability&quot;) + theme_bw() + theme(plot.title = element_text(size = 14,
+    face = &quot;bold&quot;), legend.position = &quot;right&quot;, legend.title = element_text(size = 11),
+    legend.text = element_text(size = 10), axis.title = element_blank(), panel.background = element_rect(fill = &quot;white&quot;,
+        color = NA), plot.background = element_rect(fill = &quot;white&quot;, color = NA)) +
+    annotation_scale(location = &quot;br&quot;, width_hint = 0.3) + annotation_north_arrow(location = &quot;tl&quot;,
+    which_north = &quot;true&quot;, style = north_arrow_fancy_orienteering())</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-228-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sorghum" class="section level3 hasAnchor" number="12.4.2">
+<h3><span class="header-section-number">12.4.2</span> Sorghum<a href="crop-eco-physiological-suitability.html#sorghum" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The same aggregation procedure is applied to sorghum, using its own temperature suitability layers and crop-specific precipitation and pH membership functions.</p>
+<pre class="text"><code>sorghum_main_suitability = app(c(sorghum_main_temp_fuzzy, sorghum_rain_fuzzy, sorghum_ph_fuzzy),
+    mean, na.rm = FALSE)
+
+sorghum_second_suitability = app(c(sorghum_second_temp_fuzzy, sorghum_rain_fuzzy,
+    sorghum_ph_fuzzy), mean, na.rm = FALSE)
+
+# Apply seasonal calendar masks
+sorghum_main_suitability = mask(sorghum_main_suitability, sorghum_main_valid)
+
+sorghum_second_suitability = mask(sorghum_second_suitability, sorghum_second_valid)
+
+# Combine seasons
+sorghum_suitability_ssa = ifel(is.na(sorghum_main_suitability), sorghum_second_suitability,
+    ifel(is.na(sorghum_second_suitability), sorghum_main_suitability, ifel(sorghum_main_suitability &gt;=
+        sorghum_second_suitability, sorghum_main_suitability, sorghum_second_suitability)))
+
+names(sorghum_main_suitability) = &quot;sorghum_main_suitability&quot;
+names(sorghum_second_suitability) = &quot;sorghum_second_suitability&quot;
+names(sorghum_suitability_ssa) = &quot;sorghum_suitability&quot;</code></pre>
+<pre class="text"><code>ggplot() + geom_spatraster(data = sorghum_suitability_ssa) + geom_spatvector(data = ssa,
+    fill = NA, color = &quot;black&quot;, linewidth = 0.3) + scale_fill_viridis_c(option = &quot;inferno&quot;,
+    limits = c(0, 1), name = &quot;Suitability&quot;, na.value = &quot;transparent&quot;) + coord_sf() +
+    labs(title = &quot;Sorghum eco-physiological suitability&quot;) + theme_bw() + theme(plot.title = element_text(size = 14,
+    face = &quot;bold&quot;), legend.position = &quot;right&quot;, legend.title = element_text(size = 11),
+    legend.text = element_text(size = 10), axis.title = element_blank(), panel.background = element_rect(fill = &quot;white&quot;,
+        color = NA), plot.background = element_rect(fill = &quot;white&quot;, color = NA)) +
+    annotation_scale(location = &quot;br&quot;, width_hint = 0.3) + annotation_north_arrow(location = &quot;tl&quot;,
+    which_north = &quot;true&quot;, style = north_arrow_fancy_orienteering())</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-230-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Ahamed2000" class="csl-entry">
+Ahamed, T R Nisar, K Gopal Rao, and J S R Murthy. 2000. <span>“GIS-Based Fuzzy Membership Model for Crop-Land Suitability Analysis.”</span> <em>Agricultural Systems</em>. Vol. 63. <a href="https://www.elsevier.com/locate/agsy">www.elsevier.com/locate/agsy</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-recommendation-domains.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="soil-and-climate-representativeness-of-trials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/11-ecophysiological-niches.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

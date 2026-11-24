@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 14 Technology extrapolation domains | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 14 Technology extrapolation domains | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Technology extrapolation domains | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="soil-and-climate-representativeness-of-trials.html"/>
+<link rel="next" href="conclusions.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="technology-extrapolation-domains" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Technology extrapolation domains<a href="technology-extrapolation-domains.html#technology-extrapolation-domains" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a spatial approach to assessing the potential transferability of technologies from reference sites to other areas with similar environmental and socioeconomic characteristics.</p>
+<div id="introduction-7" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Introduction<a href="technology-extrapolation-domains.html#introduction-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Areas sharing similar farming system, environmental, and socio-economic characteristics with a given project site are assumed to have high potential for technology transfer, following the approach of <span class="citation">Václavík et al. (<a href="#ref-Vclavk2016">2016</a>)</span>. The underlying assumption is that technologies developed or tested in a particular context are more likely to be relevant in other areas with similar characteristics. Identifying such areas can help assess the potential geographical reach of research results and inform the scaling-up of agricultural technologies and innovations.</p>
+<p>In this example, we assess the transferability potential of technologies in the african Living Labs of the CGIAR Science Program on Multi-Functional Landscapes. The analysis uses a set of biophysical and socio-economic indicators to characterize the conditions surrounding each Living Lab and identify other cropland areas with similar characteristics.</p>
+<p>This chapter describes a spatial workflow for assessing the transferability of technologies from reference sites to other cropland areas. It combines environmental, soil, livestock, agricultural production and accessibility indicators to characterize the conditions surrounding each reference site. The similarity between each reference site and other cropland areas is quantified using Euclidean distances between their standardized indicator profiles. These distances are then converted into a transferability index, with higher values indicating greater similarity to the reference site.</p>
+<p>The workflow has three main stages:</p>
+<ol style="list-style-type: decimal">
+<li>prepare and harmonize the spatial datasets;</li>
+<li>calculate a transferability index for each reference site;</li>
+<li>estimate the cumulative cropland and rural population potentially reached at different transferability thresholds.</li>
+</ol>
+<p>The final stage provides an indication of the potential geographical reach of technologies associated with each reference site. It allows the extent of potentially relevant cropland and the population living in these areas to be assessed at different levels of similarity. The transferability index is an indicator of similarity to the conditions of a reference site. It is not, by itself, evidence that a technology will perform equally well elsewhere. Agronomic validation remains necessary.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/14-technology_extrapolation_domains/technology_extrapolation_domains.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/14-technology_extrapolation_domains/technology_extrapolation_domains.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;geodata&quot;)) install.packages(&quot;geodata&quot;)
+if (!require(&quot;sf&quot;)) install.packages(&quot;sf&quot;)
+if (!require(&quot;dplyr&quot;)) install.packages(&quot;dplyr&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;ggspatial&quot;)) install.packages(&quot;ggspatial&quot;)
+if (!require(&quot;tidyterra&quot;)) install.packages(&quot;tidyterra&quot;)
+
+library(terra)
+library(geodata)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(ggspatial)
+library(tidyterra)
+
+path = &quot;Data&quot;</code></pre>
+</div>
+<div id="preparing-the-data-5" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Preparing the data<a href="technology-extrapolation-domains.html#preparing-the-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sections 14.2.1 and 14.2.2 are the same as sections 11.2.1 and 11.2.2 in Chapter 11.</p>
+<p>The shapefiles and rasters required for the analysis were produced in Chapter 3. They can also be downloaded here: <a href="https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0" class="uri">https://www.dropbox.com/scl/fo/hdfjnxt05c7tyf2rkgm23/AMkKt6PRDyLops16iksFk68?rlkey=ppdlzleowakrd6apn666retvw&amp;st=ul9fo7p3&amp;dl=0</a>.</p>
+<div id="indicator-stack-1" class="section level3 hasAnchor" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Indicator stack<a href="technology-extrapolation-domains.html#indicator-stack-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre class="text"><code>ssa = vect(&quot;Data/Spatial/Processed/ssa.shp&quot;)
+
+cropland_fraction = rast(&quot;Data/Spatial/Processed/cropland.tif&quot;)
+cropmask = rast(&quot;Data/Spatial/Processed/cropmask.tif&quot;)
+
+sand = rast(&quot;Data/Spatial/Processed/sand.tif&quot;)
+soil_n = rast(&quot;Data/Spatial/Processed/soil_n.tif&quot;)
+awc = rast(&quot;Data/Spatial/Processed/pawc.tif&quot;)
+mean_temperature = rast(&quot;Data/Spatial/Processed/tavg.tif&quot;)
+annual_precipitation = rast(&quot;Data/Spatial/Processed/prec.tif&quot;)
+tlu = rast(&quot;Data/Spatial/Processed/tlu.tif&quot;)
+rural_population = rast(&quot;Data/Spatial/Processed/rural_population.tif&quot;)
+value_food_crops = rast(&quot;Data/Spatial/Processed/value_food_crops.tif&quot;)
+value_nonfood_crops = rast(&quot;Data/Spatial/Processed/value_nonfood_crops.tif&quot;)
+travel_time = rast(&quot;Data/Spatial/Processed/travel_time.tif&quot;)
+
+indicator_stack = c(sand, soil_n, awc, mean_temperature, annual_precipitation, tlu,
+    rural_population, value_food_crops, value_nonfood_crops, travel_time)
+
+names(indicator_stack) = c(&quot;sand&quot;, &quot;soil_n&quot;, &quot;awc&quot;, &quot;mean_temperature&quot;, &quot;annual_precipitation&quot;,
+    &quot;tlu&quot;, &quot;rural_population&quot;, &quot;value_food_crops&quot;, &quot;value_nonfood_crops&quot;, &quot;travel_time&quot;)
+
+plot(indicator_stack)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-244-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="transformation-and-standardisation-of-the-data-1" class="section level3 hasAnchor" number="14.2.2">
+<h3><span class="header-section-number">14.2.2</span> Transformation and standardisation of the data<a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To reduce the influence of extreme values, we plot histograms of continuous variables, and when distribution departs too much from a Gaussian distribution, we log-transform the variable.</p>
+<p>In our case, soil_n, tlu, rural_population, value_food_crops, value_nonfood_crops, and travel_time have distributions that depart markedly from a Gaussian ones.</p>
+<pre class="text"><code>terra::hist(indicator_stack, main = &quot;Indicator distributions&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-245-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>We log-transform strongly right-skewed indicators, using log1p(), which handles zero values without requiring an arbitrary offset. We create first a copy of the raster stack before data transformation.</p>
+<pre class="text"><code>indicator_transformed = indicator_stack
+
+vars_log = c(&quot;soil_n&quot;, &quot;tlu&quot;, &quot;rural_population&quot;, &quot;value_food_crops&quot;, &quot;value_nonfood_crops&quot;,
+    &quot;travel_time&quot;)
+
+for (v in vars_log) {
+    indicator_transformed[[v]] = log1p(indicator_transformed[[v]])
+}</code></pre>
+<p>We inspect transformed variables to verify that the transformations behaved as expected.</p>
+<pre class="text"><code>terra::hist(indicator_transformed, main = &quot;Indicator distributions after transformation&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-247-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The indicators are measured in different units and have different numerical ranges. They are therefore standardized using Z-scores before clustering.</p>
+<p>For each indicator <span class="math inline">\(k\)</span>, the standardized value is:</p>
+<p><span class="math display">\[
+z_{pk} = \frac{x_{pk} - \mu_k}{\sigma_k}
+\]</span></p>
+<p>where <span class="math inline">\(x_{pk}\)</span> is the value of indicator <span class="math inline">\(k\)</span> in pixel <span class="math inline">\(p\)</span>, and <span class="math inline">\(\mu_k\)</span> and <span class="math inline">\(\sigma_k\)</span> are the mean and standard deviation of that indicator across the analysis domain.</p>
+<pre class="text"><code>indicator_means = global(indicator_transformed, &quot;mean&quot;, na.rm = TRUE)
+indicator_sds = global(indicator_transformed, &quot;sd&quot;, na.rm = TRUE)
+
+indicator_means = as.numeric(indicator_means[, 1])
+indicator_sds = as.numeric(indicator_sds[, 1])
+
+indicator_z = (indicator_transformed - indicator_means)/indicator_sds
+
+names(indicator_z) = paste0(names(indicator_transformed), &quot;_z&quot;)</code></pre>
+</div>
+<div id="reference-sites" class="section level3 hasAnchor" number="14.2.3">
+<h3><span class="header-section-number">14.2.3</span> Reference sites<a href="technology-extrapolation-domains.html#reference-sites" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The reference sites are provided as a GeoPackage and can be downloaded here <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/14-technology_extrapolation_domains/ll_mfl.gpkg" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/14-technology_extrapolation_domains/ll_mfl.gpkg</a> In this example, the layer contains polygons of the Living Labs in sub-Saharan Africa from the CGIAR Science Program Multi-Functional Landscapes, and a <em>district</em> attribute identifying each reference site.</p>
+<pre class="text"><code>reference_sites = vect(&quot;Data/ll_mfl.gpkg&quot;)
+
+reference_sites = reference_sites[reference_sites$district %in% c(&quot;Senegal&quot;, &quot;Ethiopia&quot;,
+    &quot;Kenya1&quot;, &quot;Kenya2&quot;, &quot;Zimbabwe&quot;, &quot;Ivory Coast&quot;), ]
+
+plot(ssa, main = &quot;CGIAR MFL LL in sub-Saharan Africa&quot;)
+plot(reference_sites, add = TRUE, col = &quot;blue&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-249-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>Each reference site is characterized by the mean value of each standardized indicator within its polygon. The resulting site profile represents the environmental and socioeconomic conditions associated with that site.</p>
+<p>The <code>district</code> attribute identifies the reference sites.</p>
+<pre class="text"><code>site_names = unique(reference_sites$district)
+site_names = site_names[!is.na(site_names)]
+
+site_profiles = data.frame(site = site_names, matrix(NA_real_, nrow = length(site_names),
+    ncol = nlyr(indicator_z)))
+
+names(site_profiles)[-1] = names(indicator_z)
+
+for (i in seq_along(site_names)) {
+    site_polygon = reference_sites[reference_sites$district == site_names[i], ]
+    # Dissolve polygons belonging to the same reference site
+    site_polygon = terra::aggregate(site_polygon, by = &quot;district&quot;, dissolve = TRUE)
+    # Calculate the mean of each indicator within the site
+    site_values = terra::extract(indicator_z, site_polygon, fun = mean, na.rm = TRUE)
+    site_profiles[i, -1] = as.numeric(site_values[1, -1])
+}
+
+# Transpose site profiles: indicators in rows, reference sites in columns
+site_profiles_t = as.data.frame(t(site_profiles[, -1]))
+
+names(site_profiles_t) = site_profiles$site
+
+site_profiles_t = data.frame(Indicator = rownames(site_profiles_t), site_profiles_t,
+    row.names = NULL, check.names = FALSE)
+
+site_profiles_t %&gt;%
+    knitr::kable(digits = 2, booktabs = TRUE, caption = &quot;Mean standardized indicator values across reference sites&quot;)</code></pre>
+<table>
+<caption><span id="tab:reference-site-profiles">Table 14.1: </span>Mean standardized indicator values across reference sites</caption>
+<colgroup>
+<col width="30%" />
+<col width="10%" />
+<col width="12%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Indicator</th>
+<th align="right">Senegal</th>
+<th align="right">Ethiopia</th>
+<th align="right">Kenya1</th>
+<th align="right">Kenya2</th>
+<th align="right">Zimbabwe</th>
+<th align="right">Ivory Coast</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">sand_z</td>
+<td align="right">0.93</td>
+<td align="right">-1.40</td>
+<td align="right">-1.44</td>
+<td align="right">-0.66</td>
+<td align="right">0.97</td>
+<td align="right">0.49</td>
+</tr>
+<tr class="even">
+<td align="left">soil_n_z</td>
+<td align="right">0.07</td>
+<td align="right">1.72</td>
+<td align="right">1.70</td>
+<td align="right">0.53</td>
+<td align="right">-0.31</td>
+<td align="right">-0.18</td>
+</tr>
+<tr class="odd">
+<td align="left">awc_z</td>
+<td align="right">-0.75</td>
+<td align="right">0.61</td>
+<td align="right">0.23</td>
+<td align="right">0.22</td>
+<td align="right">-0.26</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="even">
+<td align="left">mean_temperature_z</td>
+<td align="right">0.84</td>
+<td align="right">-0.91</td>
+<td align="right">-0.78</td>
+<td align="right">-1.08</td>
+<td align="right">-0.35</td>
+<td align="right">0.63</td>
+</tr>
+<tr class="odd">
+<td align="left">annual_precipitation_z</td>
+<td align="right">-0.88</td>
+<td align="right">0.48</td>
+<td align="right">0.85</td>
+<td align="right">-0.59</td>
+<td align="right">-0.57</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">tlu_z</td>
+<td align="right">0.89</td>
+<td align="right">1.28</td>
+<td align="right">0.91</td>
+<td align="right">0.89</td>
+<td align="right">0.12</td>
+<td align="right">-0.10</td>
+</tr>
+<tr class="odd">
+<td align="left">rural_population_z</td>
+<td align="right">1.17</td>
+<td align="right">1.22</td>
+<td align="right">1.05</td>
+<td align="right">0.51</td>
+<td align="right">-0.27</td>
+<td align="right">0.20</td>
+</tr>
+<tr class="even">
+<td align="left">value_food_crops_z</td>
+<td align="right">0.63</td>
+<td align="right">0.60</td>
+<td align="right">0.59</td>
+<td align="right">0.24</td>
+<td align="right">-0.84</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="odd">
+<td align="left">value_nonfood_crops_z</td>
+<td align="right">-0.18</td>
+<td align="right">0.86</td>
+<td align="right">1.16</td>
+<td align="right">0.13</td>
+<td align="right">0.29</td>
+<td align="right">1.06</td>
+</tr>
+<tr class="even">
+<td align="left">travel_time_z</td>
+<td align="right">-0.97</td>
+<td align="right">-0.79</td>
+<td align="right">-1.63</td>
+<td align="right">-0.63</td>
+<td align="right">0.09</td>
+<td align="right">-0.62</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="calculate-technology-transferability" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> Calculate technology transferability<a href="technology-extrapolation-domains.html#calculate-technology-transferability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For each reference site, the Euclidean distance between the site’s mean standardized profile and every cropland pixel is calculated.</p>
+<p><span class="math display">\[
+d_{pi} = \sqrt{\sum_{k=1}^{K}(z_{pk}-\bar{z}_{ik})^2}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(d_{pi}\)</span> is the distance between pixel <span class="math inline">\(p\)</span> and reference site <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(z_{pk}\)</span> is the standardized value of indicator <span class="math inline">\(k\)</span> in pixel <span class="math inline">\(p\)</span>;</li>
+<li><span class="math inline">\(\bar{z}_{ik}\)</span> is the mean standardized value of indicator <span class="math inline">\(k\)</span> at reference site <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(K\)</span> is the number of indicators.</li>
+</ul>
+<p>Distance is converted into a transferability index using an exponential decay function:</p>
+<p><span class="math display">\[
+Pr_{pi} = \exp(-\lambda d_{pi})
+\]</span></p>
+<p>The parameter <span class="math inline">\(\lambda\)</span> controls how rapidly transferability decreases as distance increases. A larger value produces a more restrictive transferability surface.</p>
+<p>The value used in the original script is 0.4. This parameter should be treated as an analytical choice and tested through sensitivity analysis.</p>
+<pre class="text"><code>lambda = 0.4
+
+transferability_stack = rast()
+
+for (i in seq_along(site_names)) {
+    site_profile = as.numeric(site_profiles[i, -1])
+    distance_squared = (indicator_z - site_profile)^2
+    distance_to_site = sqrt(sum(distance_squared))
+    transferability = exp(-lambda * distance_to_site)
+    names(transferability) = site_names[i]
+    transferability_stack = c(transferability_stack, transferability)
+}</code></pre>
+<p>The maps show the geographical distribution of pixels with different degrees of similarity to each reference site.</p>
+<pre class="text"><code>plot(transferability_stack, range = c(0, 1), main = names(transferability_stack))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-251-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>A transferability value close to one indicates high similarity to the reference site’s profile. A value close to zero indicates low similarity.</p>
+</div>
+<div id="calculate-cumulative-reach" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> Calculate cumulative reach<a href="technology-extrapolation-domains.html#calculate-cumulative-reach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The cumulative reach analysis estimates the cropland area and rural population located in pixels with transferability values equal to or greater than a given threshold.</p>
+<p>The physical area of each pixel is calculated in hectares. Cropland fraction is then used to estimate the cropland area within each pixel.</p>
+<p>The following code accommodates cropland fractions expressed either as proportions or percentages.</p>
+<pre class="text"><code>maximum_cropland_fraction = global(cropland_fraction, &quot;max&quot;, na.rm = TRUE)[1, 1]
+
+cropland_divisor = ifelse(maximum_cropland_fraction &gt; 1, 100, 1)
+
+pixel_area_ha = cellSize(cropmask, unit = &quot;ha&quot;)
+
+cropland_area_ha = pixel_area_ha * (cropland_fraction/cropland_divisor)
+
+cropland_area_ha = mask(cropland_area_ha, cropmask)</code></pre>
+<p>The cumulative reach is calculated at thresholds from 1 to 0, in increments of 0.05. For each threshold, the cropland area and rural population in pixels meeting or exceeding the threshold are summed.</p>
+<pre class="text"><code>transferability_thresholds = seq(1, 0, by = -0.05)
+
+total_cropland_ha = global(cropland_area_ha, &quot;sum&quot;, na.rm = TRUE)[1, 1]
+
+total_rural_population = global(rural_population, &quot;sum&quot;, na.rm = TRUE)[1, 1]</code></pre>
+<p>Calculate cumulative reach for each reference site</p>
+<pre class="text"><code>cumulative_reach = data.frame()
+
+for (i in seq_along(site_names)) {
+    site_transferability = transferability_stack[[i]]
+    cumulative_cropland = numeric(length(transferability_thresholds))
+    cumulative_population = numeric(length(transferability_thresholds))
+    for (j in seq_along(transferability_thresholds)) {
+        threshold_mask = site_transferability &gt;= transferability_thresholds[j]
+        cumulative_cropland[j] = global(cropland_area_ha * threshold_mask, &quot;sum&quot;,
+            na.rm = TRUE)[1, 1]
+        cumulative_population[j] = global(rural_population * threshold_mask, &quot;sum&quot;,
+            na.rm = TRUE)[1, 1]
+    }
+
+    site_reach = data.frame(reference_site = site_names[i], transferability_threshold = transferability_thresholds,
+        cumulative_cropland_ha = cumulative_cropland, share_cropland_pct = 100 *
+            cumulative_cropland/total_cropland_ha, cumulative_rural_population = cumulative_population,
+        share_rural_population_pct = 100 * cumulative_population/total_rural_population)
+
+    cumulative_reach = rbind(cumulative_reach, site_reach)
+}</code></pre>
+<p>The cumulative reach curves show how the share of cropland and rural population increases as the transferability threshold becomes less restrictive.</p>
+<pre class="text"><code>ggplot(cumulative_reach, aes(x = transferability_threshold, y = share_cropland_pct,
+    colour = reference_site)) + geom_line(linewidth = 1) + scale_x_reverse(breaks = seq(0,
+    1, by = 0.1)) + labs(x = &quot;Transferability threshold&quot;, y = &quot;Cumulative cropland share (%)&quot;,
+    colour = &quot;Reference site&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-255-1.png" alt="" width="70%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>ggplot(cumulative_reach, aes(x = transferability_threshold, y = share_rural_population_pct,
+    colour = reference_site)) + geom_line(linewidth = 1) + scale_x_reverse(breaks = seq(0,
+    1, by = 0.1)) + labs(x = &quot;Transferability threshold&quot;, y = &quot;Cumulative rural population share (%)&quot;,
+    colour = &quot;Reference site&quot;) + theme_bw()</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-256-1.png" alt="" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calculate-combined-portfolio-reach." class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Calculate combined portfolio reach.<a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Individual transferability maps can overlap geographically. To calculate the combined reach of the portfolio, the maximum transferability value across all reference sites is calculated for each pixel.</p>
+<p>This creates an envelope representing the best match to at least one reference site.</p>
+<pre class="text"><code>maximum_transferability = app(transferability_stack, fun = max, na.rm = TRUE)
+
+# Visual stretch: 1st–99th percentiles
+stretch_limits = quantile(terra::values(maximum_transferability), probs = c(0.05,
+    0.95), na.rm = TRUE)
+
+ggplot() + geom_spatraster(data = maximum_transferability) + geom_spatvector(data = ssa,
+    fill = NA, color = &quot;black&quot;, linewidth = 0.3) + scale_fill_viridis_c(option = &quot;inferno&quot;,
+    limits = stretch_limits, oob = scales::squish, name = &quot;Transferability&quot;, na.value = &quot;transparent&quot;) +
+    coord_sf() + labs(title = &quot;Maximum transferability across reference sites&quot;) +
+    theme_bw() + theme(plot.title = element_text(size = 14, face = &quot;bold&quot;), legend.position = &quot;right&quot;,
+    legend.title = element_text(size = 11), legend.text = element_text(size = 10),
+    axis.title = element_blank(), panel.background = element_rect(fill = &quot;white&quot;,
+        color = NA), plot.background = element_rect(fill = &quot;white&quot;, color = NA)) +
+    annotation_scale(location = &quot;br&quot;, width_hint = 0.3) + annotation_north_arrow(location = &quot;tl&quot;,
+    which_north = &quot;true&quot;, style = north_arrow_fancy_orienteering())</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-257-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>Below, we use a threshold of 0.6, but it can be changed depending on the desired level of similarity.</p>
+<pre class="text"><code>selected_threshold = 0.6
+
+combined_reach_mask = ifel(maximum_transferability &gt;= selected_threshold, 1, NA)
+
+combined_cropland = mask(cropland_area_ha, combined_reach_mask)
+combined_population = mask(rural_population, combined_reach_mask)
+
+combined_cropland_ha = global(combined_cropland, &quot;sum&quot;, na.rm = TRUE)[1, 1]
+
+combined_rural_population = global(combined_population, &quot;sum&quot;, na.rm = TRUE)[1, 1]
+
+combined_reach_summary = data.frame(transferability_threshold = selected_threshold,
+    unique_cropland_ha = combined_cropland_ha, share_cropland_pct = 100 * combined_cropland_ha/total_cropland_ha,
+    unique_rural_population = combined_rural_population, share_rural_population_pct = 100 *
+        combined_rural_population/total_rural_population)
+
+# Transpose summary table for a vertical layout
+combined_reach_summary_t = data.frame(Indicator = names(combined_reach_summary),
+    Value = as.numeric(combined_reach_summary[1, ]))
+
+combined_reach_summary_t$Indicator = c(&quot;Transferability threshold&quot;, &quot;Unique cropland area (ha)&quot;,
+    &quot;Share of total cropland (%)&quot;, &quot;Rural population reached&quot;, &quot;Share of total rural population (%)&quot;)
+
+combined_reach_summary_t %&gt;%
+    knitr::kable(digits = 2, booktabs = TRUE, col.names = c(&quot;Indicator&quot;, &quot;Value&quot;),
+        caption = &quot;Cropland and rural population within the combined reach area&quot;)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-258">Table 14.2: </span>Cropland and rural population within the combined reach area</caption>
+<thead>
+<tr class="header">
+<th align="left">Indicator</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Transferability threshold</td>
+<td align="right">0.60</td>
+</tr>
+<tr class="even">
+<td align="left">Unique cropland area (ha)</td>
+<td align="right">776459548.13</td>
+</tr>
+<tr class="odd">
+<td align="left">Share of total cropland (%)</td>
+<td align="right">4.30</td>
+</tr>
+<tr class="even">
+<td align="left">Rural population reached</td>
+<td align="right">19653337.22</td>
+</tr>
+<tr class="odd">
+<td align="left">Share of total rural population (%)</td>
+<td align="right">3.85</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Vclavk2016" class="csl-entry">
+Václavík, Tomáš, Fanny Langerwisch, Marc Cotter, Johanna Fick, Inga Häuser, Stefan Hotes, Johannes Kamp, Josef Settele, Joachim H. Spangenberg, and Ralf Seppelt. 2016. <span>“Investigating Potential Transferability of Place-Based Research in Land System Science.”</span> <em>Environmental Research Letters</em> 11 (August). <a href="https://doi.org/10.1088/1748-9326/11/9/095002">https://doi.org/10.1088/1748-9326/11/9/095002</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="soil-and-climate-representativeness-of-trials.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/13-extrapolation-domains.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

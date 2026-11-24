@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Potential manure production under current land use | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Potential manure production under current land use | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Potential manure production under current land use | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-prediction-of-crop-damage.html"/>
+<link rel="next" href="spatial-recommendation-domains.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="potential-manure-production-under-current-land-use" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Potential manure production under current land use<a href="potential-manure-production-under-current-land-use.html#potential-manure-production-under-current-land-use" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a spatial approach to estimating livestock carrying capacity and potential manure production, accounting for the interactions between grazing resources, crop residues and nutrient flows.</p>
+<div id="introduction-3" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Introduction<a href="potential-manure-production-under-current-land-use.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In mixed crop–livestock systems, crop and livestock production are closely interconnected. Livestock depend on natural grazing resources and crop residues for feed, while manure provides nutrients that can contribute to crop production. Legumes can further contribute to soil fertility through biological nitrogen fixation. Understanding these interactions is important for assessing the potential of mixed farming systems to sustain livestock populations while maintaining crop production and nutrient availability.</p>
+<p>This chapter presents a spatial workflow for assessing livestock carrying capacity and the interactions between grazing resources, crop residues and nutrient flows. It considers two main sources of livestock feed: natural grassland during the wet season and crop residues during the dry season. Crop production, in turn, depends partly on nutrient inputs from manure and biological nitrogen fixation by legumes. These interactions are considered together to estimate the livestock population that can be supported by available feed resources.</p>
+<p>The workflow combines spatial data on rainfall, land cover and cropland with assumptions about livestock feed requirements, crop allocation, residue production, manure collection and nutrient content. It also incorporates a crop yield response function to estimate how nutrient availability influences maize production and, consequently, crop residue availability.</p>
+<p>An important simplifying assumption is that the calculations are conducted independently for each raster cell. Livestock assigned to a cell are assumed to rely on the grazing resources and crop residues available in that cell, and manure collected from these animals is assumed to be returned to cropland within the same cell. The workflow therefore does not represent movements of cattle between cells, access to grazing resources beyond a cell’s boundaries, or the transport of manure between locations. The resulting estimates should be interpreted as local, cell-based carrying capacities rather than as a spatially explicit representation of herd movements across the landscape.</p>
+<p>The workflow comprises four main stages:</p>
+<ol style="list-style-type: decimal">
+<li>Preparing the spatial data, including rainfall, grassland and cropland area;</li>
+<li>Estimating wet-season grazing carrying capacity from grassland biomass and livestock feed requirements;</li>
+<li>Estimating dry-season feed availability from crop residues, while accounting for nutrient inputs from manure and biological nitrogen fixation by legumes;</li>
+<li>Integrating grazing and crop-residue constraints through an iterative calculation to estimate the livestock population that can be supported, identify the limiting factor and map the resulting stocking density.</li>
+</ol>
+<p>The approach is demonstrated for Mbire District, Zimbabwe. The resulting estimates are also compared with gridded livestock data from the FAO Gridded Livestock of the World (GLW) to provide an indication of their consistency with an independently derived livestock distribution.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/10-potential_manure_production/potential_manure_production.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/10-potential_manure_production/potential_manure_production.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;geodata&quot;)) install.packages(&quot;geodata&quot;)
+
+library(terra)
+library(geodata)
+
+path = &quot;Data&quot;</code></pre>
+</div>
+<div id="preparing-the-data-1" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Preparing the data<a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="define-the-study-area" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Define the study area<a href="potential-manure-production-under-current-land-use.html#define-the-study-area" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The analysis is conducted for Mbire District, Zimbabwe. The district boundary is retrieved from the GADM database at administrative level 2. The district name is used to select the corresponding polygon.</p>
+<pre class="text"><code>zwe_all = geodata::gadm(&quot;ZWE&quot;, level = 2, path = path)
+zwe = zwe_all[zwe_all$NAME_2 == &quot;Mbire&quot;, ]
+
+plot(zwe, main = &quot;Mbire District, Zimbabwe&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-170-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="define-model-parameters" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Define model parameters<a href="potential-manure-production-under-current-land-use.html#define-model-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The model combines spatial information with parameters describing livestock feed requirements, grassland biomass production, crop allocation, residue availability and nutrient flows. These parameters are defined at the beginning of the script so that they can be adapted to other study areas or production systems.</p>
+<pre class="text"><code>maize_share = 0.75
+legume_share = 0.25
+
+RUE = 2.35  # kg DM / ha / mm (Rufino 2011)
+wet_months = 6
+winter_months = 12 - wet_months
+grazing_utilisation = 1
+
+cattle_weight = 250  # kg per head
+cattle_daily_intake = 0.03  # fraction of body weight per day
+
+collection_rate = 0.4
+manure_t_per_TLU = 1.022
+N_content_manure = 0.014
+P_content_manure = 0.002
+
+NDFA_rate = 0.62
+HI_gdnuts = 0.4
+
+# PLACEHOLDERS: replace with locally appropriate values
+residue_to_grain_ratio = 1.5
+residue_degradation = 1
+residue_feed_share = 1
+
+max_iterations = 50
+tolerance = 0.01</code></pre>
+<p>The crop allocation parameters define the proportions of cropland allocated to maize and legumes. In this example, 75% of cropland is allocated to maize and 25% to legumes. The livestock parameters describe the assumed liveweight and daily feed intake of one animal, while the manure parameters determine the amount of manure collected and its nitrogen and phosphorus content.</p>
+<p>The residue-to-grain ratio, residue degradation and residue feed share are placeholders in the script and should be replaced with values appropriate to the production system being analysed. The iteration limit and convergence tolerance control the iterative calculation described later.</p>
+</div>
+<div id="prepare-the-spatial-data" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Prepare the spatial data<a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The spatial inputs include annual precipitation, grassland fraction and cropland fraction. The land-cover fractions are converted into areas using the area of each raster cell. All layers are aligned to the precipitation raster, which provides the reference grid for subsequent calculations.</p>
+<p>Monthly precipitation data are retrieved from WorldClim. Annual precipitation is calculated by summing the 12 monthly layers. The resulting raster is cropped and masked to the district boundary.</p>
+<pre class="text"><code>prec = geodata::worldclim_country(&quot;ZWE&quot;, var = &quot;prec&quot;, path = path)
+
+R = mask(crop(sum(prec), zwe), zwe)
+names(R) = &quot;rain_mm&quot;
+
+plot(R, main = &quot;Annual rainfall (mm)&quot;)
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-172-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>Grassland and cropland fractions are obtained from the ESA WorldCover land-cover products. These layers are resampled to the precipitation grid. Bilinear interpolation is used because the fractions are continuous variables.</p>
+<pre class="text"><code>grass_frac = geodata::landcover(&quot;grassland&quot;, path = path)
+
+grass_frac = crop(grass_frac, zwe)
+grass_frac = mask(grass_frac, zwe)
+
+names(grass_frac) = &quot;grassland_share&quot;
+
+plot(grass_frac, main = &quot;Grassland share&quot;)
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-173-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>crop_frac = geodata::landcover(&quot;cropland&quot;, path = path)
+
+crop_frac = crop(crop_frac, zwe)
+crop_frac = mask(crop_frac, zwe)
+
+names(crop_frac) = &quot;cropland_share&quot;
+
+plot(crop_frac, main = &quot;Cropland share&quot;)
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-174-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>We then calculate grassland and cropland areas. The area of each raster cell is calculated in hectares. Multiplying cell area by the grassland and cropland fractions gives the corresponding areas within each cell. The <code>cover()</code> function replaces missing values with zero within the district, so that cells with no mapped grassland or cropland can be retained in subsequent calculations.</p>
+<pre class="text"><code>cell_ha = cellSize(R, unit = &quot;ha&quot;)
+zero_in = R * 0
+
+Agrassland = cover(cell_ha * grass_frac, zero_in)
+Acropland = cover(cell_ha * crop_frac, zero_in)
+
+names(Agrassland) = &quot;grassland_ha&quot;
+names(Acropland) = &quot;cropland_ha&quot;</code></pre>
+</div>
+</div>
+<div id="estimation-of-wet-season-grazing-carrying-capacity" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Estimation of wet-season grazing carrying capacity<a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wet-season grazing carrying capacity is estimated from grassland biomass production and livestock feed requirements. Biomass production is estimated by multiplying annual rainfall by a rain-use efficiency (RUE) coefficient. The resulting biomass per hectare is multiplied by grassland area and the grazing utilisation parameter to estimate biomass available for grazing within each cell.</p>
+<p>This calculation is performed separately for every raster cell. The grassland area and estimated biomass within a cell determine how many TLU that cell can support during the wet season. No exchange of grazing resources or livestock between neighbouring cells is considered. In particular, a cell with little grassland is not assumed to be able to draw on more abundant grazing resources in an adjacent cell.</p>
+<p>Livestock feed requirements are calculated from assumed daily intake, animal liveweight and the duration of the wet season. In this example, the wet season is assumed to last six months.</p>
+<pre class="text"><code>daily_need_kg = cattle_daily_intake * cattle_weight
+days_wet = (365/12) * wet_months
+
+wet_feed_per_TLU = daily_need_kg * days_wet
+
+biomass_ha = RUE * R
+plot(biomass_ha, main = &quot;Grassland biomass (kg DM / ha)&quot;)
+lines(zwe)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-176-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="text"><code>biomass = biomass_ha * Agrassland * grazing_utilisation
+
+max_grazing_CC_TLU = biomass/wet_feed_per_TLU
+names(max_grazing_CC_TLU) = &quot;grazing_CC_TLU&quot;
+
+max_grazing_CC_TLU_ha = max_grazing_CC_TLU/cell_ha
+names(max_grazing_CC_TLU_ha) = &quot;grazing_CC_TLU_per_ha&quot;</code></pre>
+<p>The carrying capacity is first calculated as the total number of tropical livestock units (TLU) supported by the grassland in each cell. Dividing by cell area expresses the result as TLU per hectare.</p>
+<p>The following map uses quantile-based breaks calculated from the values within the district. This avoids applying fixed breaks that may have been defined for a different geographical area.</p>
+<pre class="text"><code>q_brk = unique(quantile(values(max_grazing_CC_TLU_ha), na.rm = TRUE))
+
+print(q_brk)</code></pre>
+<pre><code>[1] 0.00000000 0.02991415 0.12567843 0.28441292 1.19654256</code></pre>
+<pre class="text"><code>if (length(q_brk) &gt; 2) {
+    plot(max_grazing_CC_TLU_ha, breaks = q_brk, main = &quot;Grazing carrying capacity (TLU / ha)&quot;)
+} else {
+    plot(max_grazing_CC_TLU_ha, main = &quot;Grazing carrying capacity (TLU / ha)&quot;)
+}
+
+lines(zwe, col = &quot;black&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-177-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="estimation-of-dry-season-feed-and-nutrient-supply" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Estimation of dry-season feed and nutrient supply<a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>During the dry season, livestock feed availability is estimated from crop residues. The amount of crop residue produced depends on crop area, grain production and the residue-to-grain ratio. In this workflow, cropland is divided between maize and legumes. Legumes also contribute nitrogen through biological nitrogen fixation, while livestock manure provides nitrogen and phosphorus to maize production.</p>
+<div id="allocate-cropland-to-maize-and-legumes" class="section level3 hasAnchor" number="10.4.1">
+<h3><span class="header-section-number">10.4.1</span> Allocate cropland to maize and legumes<a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The total cropland area in each cell is divided between maize and legumes according to the proportions defined in the model parameters.</p>
+<pre class="text"><code>winter_feed_per_TLU_tons = (daily_need_kg/1000) * (365/12) * winter_months
+
+maize_ha = Acropland * maize_share
+legume_ha = Acropland * legume_share
+
+names(maize_ha) = &quot;maize_ha&quot;
+names(legume_ha) = &quot;legume_ha&quot;</code></pre>
+</div>
+<div id="estimate-nitrogen-fixation-by-legumes" class="section level3 hasAnchor" number="10.4.2">
+<h3><span class="header-section-number">10.4.2</span> Estimate nitrogen fixation by legumes<a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nitrogen contributed by legumes is estimated from aboveground biomass, grain yield, root biomass and nitrogen concentrations in residues and grain. The proportion of nitrogen derived from the atmosphere (NDFA) is then used to estimate biological nitrogen fixation. Nitrogen exported in harvested grain is subtracted to estimate the amount of fixed nitrogen remaining in the system.</p>
+<p>The values for groundnut biomass and grain yield in this example are fixed values taken from the groundnut monitoring data referred to in the source script. They should be adapted when applying the workflow to another context.</p>
+<pre class="text"><code># Aboveground biomass and grain yield (kg/ha)
+above = 2907
+grain = 688
+
+roots = 0.3 * above
+residues = above + roots
+
+N_residues = residues * 0.02
+N_grains = grain * 0.038
+
+N_uptake = N_residues + N_grains
+NDFA = N_uptake * NDFA_rate
+N_exported = NDFA * HI_gdnuts
+N_fixed = NDFA - N_exported
+
+# N available per ha of maize, scaled by the legume:maize area ratio
+N_legumes_per_ha_maize = N_fixed * (legume_share/maize_share)
+
+total_gdnut_grain_prod = grain * legume_ha
+total_N_legumes = N_legumes_per_ha_maize * maize_ha
+
+names(total_gdnut_grain_prod) = &quot;total_gdnut_grain_kg&quot;
+names(total_N_legumes) = &quot;total_N_legumes_kg&quot;</code></pre>
+<p>The nitrogen remaining in the system is expressed per hectare of maize by scaling the fixed nitrogen according to the legume-to-maize area ratio. This provides an estimate of the nitrogen contribution from legumes to the maize area under the assumed crop allocation.</p>
+</div>
+<div id="define-the-maize-yield-response-to-nutrient-inputs" class="section level3 hasAnchor" number="10.4.3">
+<h3><span class="header-section-number">10.4.3</span> Define the maize yield response to nutrient inputs<a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Maize yield response is represented using polynomial functions fitted to experimental data from sandy soils in Murehwa, Zimbabwe, as indicated in the source script. Separate response functions are fitted for two phosphorus conditions: at least 30 kg P/ha and below 30 kg P/ha.</p>
+<p>The fitted functions are used to predict maize yield from nitrogen and phosphorus inputs. Nitrogen input is capped at 120 kg/ha, corresponding to the upper limit of the experimental data used to fit the response functions.</p>
+<pre class="text"><code>data_sandy_p_ge_30 = data.frame(x = c(0, 30, 60, 90, 120), y = c(1.19, 2.7, 2.97,
+    3.24, 3.73))
+
+data_sandy_p_lt_30 = data.frame(x = c(0, 30, 60, 90, 120), y = c(0.645, 1.79, 1.823,
+    2.193, 2.016))
+
+cf_ge = coef(lm(y ~ x + I(x^2), data = data_sandy_p_ge_30))
+cf_lt = coef(lm(y ~ x + I(x^2), data = data_sandy_p_lt_30))
+
+predict_yield = function(N_kg_ha, P_kg_ha) {
+    N_c = terra::clamp(N_kg_ha, 0, 120)
+    y_ge = cf_ge[1] + cf_ge[2] * N_c + cf_ge[3] * N_c^2
+    y_lt = cf_lt[1] + cf_lt[2] * N_c + cf_lt[3] * N_c^2
+    ifel(P_kg_ha &gt;= 30, y_ge, y_lt)
+}</code></pre>
+</div>
+</div>
+<div id="integrate-grazing-and-crop-residue-constraints" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Integrate grazing and crop-residue constraints<a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The final livestock carrying capacity is constrained by the availability of feed during both the wet and dry seasons. Wet-season grazing capacity is estimated from grassland biomass, while dry-season carrying capacity is estimated from crop residues. Crop residue availability depends on maize production, which in turn depends on nutrient inputs from manure and legumes.</p>
+<p>This creates a feedback between livestock numbers and crop production: livestock numbers determine manure availability; manure contributes nutrients to maize; maize yield determines residue production; and residues constrain the livestock population that can be supported during the dry season.</p>
+<p>The script addresses this feedback through an iterative calculation. Starting from the grazing-based carrying capacity, it estimates manure-derived nitrogen and phosphorus, predicts maize yield, calculates crop residue production and derives the corresponding residue-based carrying capacity. Livestock numbers are then constrained by the lower of the grazing-based and residue-based capacities. The process is repeated until the change in livestock numbers between iterations falls below the specified tolerance.</p>
+<div id="initialize-the-iterative-calculation" class="section level3 hasAnchor" number="10.5.1">
+<h3><span class="header-section-number">10.5.1</span> Initialize the iterative calculation<a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The initial livestock population is set to the grazing-based carrying capacity. Cells without maize area are identified because manure nutrients are expressed per hectare of maize.</p>
+<pre class="text"><code>CC_grazing = max_grazing_CC_TLU
+
+has_maize = maize_ha &gt; 0
+maize_safe = ifel(has_maize, maize_ha, NA)
+
+n_inside = global(!is.na(R), &quot;sum&quot;)[1, 1]
+
+current_TLU = CC_grazing
+convergence_iteration = R * NA
+max_change = rep(NA_real_, max_iterations)
+actual_iterations = max_iterations</code></pre>
+</div>
+<div id="iterate-between-manure-supply-maize-production-and-residue-availability" class="section level3 hasAnchor" number="10.5.2">
+<h3><span class="header-section-number">10.5.2</span> Iterate between manure supply, maize production and residue availability<a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>At each iteration, manure-derived nitrogen and phosphorus per hectare of maize are calculated from the current livestock population. These nutrients are added to the estimated nitrogen contribution from legumes. The resulting nutrient inputs are used to predict maize yield, which is converted into total crop residue production. The amount of residue available is then translated into a dry-season carrying capacity.</p>
+<p>The livestock population is updated using the more restrictive of the grazing-based and residue-based carrying capacities. The iteration stops when all valid cells have converged or when the maximum number of iterations is reached.</p>
+<pre class="text"><code>for (iter in seq_len(max_iterations)) {
+    N_manure_per_ha = (current_TLU * manure_t_per_TLU * collection_rate * N_content_manure *
+        1000)/maize_safe
+    P_manure_per_ha = (current_TLU * manure_t_per_TLU * collection_rate * P_content_manure *
+        1000)/maize_safe
+    N_total_per_ha = N_manure_per_ha + N_legumes_per_ha_maize
+    P_total_per_ha = P_manure_per_ha
+    sandy_yield = predict_yield(N_total_per_ha, P_total_per_ha)
+    total_maize_prod = maize_ha * sandy_yield
+    total_residues = total_maize_prod * residue_to_grain_ratio * residue_degradation *
+        residue_feed_share
+    CC_residues = total_residues/winter_feed_per_TLU_tons
+    CC_residues = ifel(has_maize, CC_residues, 0)
+    # Cell-wise minimum of grazing- and residue-based carrying capacity
+    new_TLU = ifel(CC_grazing &lt; CC_residues, CC_grazing, CC_residues)
+    change = abs(new_TLU - current_TLU)
+    max_change[iter] = global(change, &quot;max&quot;, na.rm = TRUE)[1, 1]
+    if (iter &gt; 1) {
+        newly_converged = is.na(convergence_iteration) &amp; (change &lt; tolerance)
+        convergence_iteration = ifel(newly_converged, iter, convergence_iteration)
+    }
+    current_TLU = new_TLU
+    n_conv = global(!is.na(convergence_iteration), &quot;sum&quot;)[1, 1]
+    if (n_conv == n_inside) {
+        actual_iterations = iter
+        break
+    }
+}</code></pre>
+<p>A cell-wise minimum is used, so that the constraint is determined separately for every raster cell. The convergence raster records the iteration at which the change in estimated livestock numbers first falls below the specified tolerance.</p>
+<p>Because the calculation is cell-based, this iterative process does not redistribute livestock in response to differences in carrying capacity between cells. For example, livestock numbers are reduced in a cell where crop residues are limiting, even if neighbouring cells have a surplus of residues or grazing biomass. Similarly, manure generated by the livestock population in a cell contributes to the estimated nutrient supply of cropland in that same cell. Representing livestock mobility would require an additional spatial allocation component, for example one that defines the areas accessible to each herd and allows animals to use resources across cell boundaries.</p>
+</div>
+<div id="calculate-final-stocking-density-and-limiting-factor" class="section level3 hasAnchor" number="10.5.3">
+<h3><span class="header-section-number">10.5.3</span> Calculate final stocking density and limiting factor<a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The final livestock population is the result of the iterative calculation. Dividing it by cell area expresses the estimate as a stocking density. The limiting-factor raster identifies whether grazing resources or crop residues impose the lower carrying capacity.</p>
+<pre class="text"><code>final_TLU = current_TLU
+names(final_TLU) = &quot;final_TLU&quot;
+
+TLU_per_ha = final_TLU/cell_ha
+names(TLU_per_ha) = &quot;TLU_per_ha&quot;
+
+limiting_factor = ifel(CC_residues &lt; CC_grazing, 2, 1)
+names(limiting_factor) = &quot;limiting_factor&quot;
+
+names(convergence_iteration) = &quot;convergence_iteration&quot;
+
+plot(limiting_factor, main = &quot;Limiting factor&quot;)
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-183-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The limiting-factor raster is coded as follows:</p>
+<ul>
+<li>1: grazing land is the limiting factor;</li>
+<li>2: crop residues are the limiting factor.</li>
+</ul>
+</div>
+</div>
+<div id="map-outputs" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Map outputs<a href="potential-manure-production-under-current-land-use.html#map-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The workflow produces four complementary spatial outputs:</p>
+<ol style="list-style-type: decimal">
+<li>Grazing-based carrying capacity shows the number of TLU per hectare that could be supported by wet-season grassland resources, before accounting for the dry-season feed constraint.</li>
+<li>Final stocking density shows the estimated number of TLU per hectare after integrating wet-season grazing and dry-season crop-residue constraints through the iterative calculation.</li>
+<li>Limiting factor identifies which of the two seasonal feed resources imposes the lower carrying capacity in each cell: wet-season grazing or dry-season crop residues.</li>
+<li>Nitrogen supplied by manure shows the estimated manure-derived nitrogen input per hectare of maize under the livestock population obtained at the end of the iterative calculation.</li>
+</ol>
+<p>The first and fourth maps use a capped colour scale to improve the visibility of spatial variation. The cap is set at the 98th percentile of the values in the district. This affects only the displayed colour scale; it does not modify the raster values used in the analysis. The final stocking-density map is displayed using its full range. The limiting-factor map is categorical and is therefore displayed using discrete colours.</p>
+<div id="grazing-based-carrying-capacity" class="section level3 hasAnchor" number="10.6.1">
+<h3><span class="header-section-number">10.6.1</span> Grazing-based carrying capacity<a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This map represents the wet-season constraint alone. It is useful for identifying areas where grassland resources could support relatively high livestock densities, independently of the availability of crop residues during the dry season.</p>
+<pre class="text"><code># Calculate the 98th percentile for the display scale
+grazing_CC_max = quantile(values(max_grazing_CC_TLU_ha, mat = FALSE), probs = 0.98,
+    na.rm = TRUE)
+
+# Cap values above the 98th percentile for visualisation
+max_grazing_CC_TLU_ha_plot = terra::clamp(max_grazing_CC_TLU_ha, lower = 0, upper = grazing_CC_max)
+
+plot(max_grazing_CC_TLU_ha_plot, main = &quot;Grazing-based carrying capacity (TLU/ha)&quot;,
+    col = hcl.colors(100, &quot;YlGnBu&quot;, rev = TRUE))
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-184-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="final-stocking-density" class="section level3 hasAnchor" number="10.6.2">
+<h3><span class="header-section-number">10.6.2</span> Final stocking density<a href="potential-manure-production-under-current-land-use.html#final-stocking-density" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This map shows the estimated stocking density after accounting for both wet- and dry-season feed availability and the feedback between livestock numbers, manure inputs, maize yield and crop-residue production. It is therefore the main carrying-capacity output of the workflow.</p>
+<pre class="text"><code>plot(TLU_per_ha, main = &quot;Final stocking density (TLU / ha)&quot;, col = hcl.colors(100,
+    &quot;YlGnBu&quot;, rev = TRUE))
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-185-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="limiting-factor" class="section level3 hasAnchor" number="10.6.3">
+<h3><span class="header-section-number">10.6.3</span> Limiting factor<a href="potential-manure-production-under-current-land-use.html#limiting-factor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The limiting-factor map indicates which seasonal feed resource determines the final carrying capacity in each cell. A value of 1 indicates that wet-season grazing is more limiting; a value of 2 indicates that dry-season crop residues are more limiting. Unlike the other outputs, this is a categorical map, so it is displayed with discrete colours rather than a continuous, percentile-capped colour scale.</p>
+<pre class="text"><code>plot(as.factor(limiting_factor), main = &quot;Limiting factor&quot;, col = c(&quot;#2C7BB6&quot;, &quot;#D7191C&quot;),
+    levels = c(&quot;Grazing land&quot;, &quot;Crop residues&quot;), plg = list(title = &quot;Limiting resource&quot;))
+plot(zwe, add = T)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-186-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="nitrogen-supplied-by-manure" class="section level3 hasAnchor" number="10.6.4">
+<h3><span class="header-section-number">10.6.4</span> Nitrogen supplied by manure<a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This map shows the estimated nitrogen supplied by collected manure per hectare of maize, based on the livestock population at the end of the iterative calculation. It illustrates the spatial pattern of manure-derived nitrogen inputs implied by the model. These estimates depend on the assumed manure production, collection rate and nutrient content, as well as on the cell-based assumption that manure is returned to cropland within the same cell.</p>
+<pre class="text"><code># Calculate the 98th percentile for the display scale
+N_manure_max = quantile(values(N_manure_per_ha, mat = FALSE), probs = 0.98, na.rm = TRUE)
+
+# Cap values above the 98th percentile for visualisation
+N_manure_per_ha_plot = terra::clamp(N_manure_per_ha, lower = 0, upper = N_manure_max)
+
+plot(N_manure_per_ha_plot, main = (&quot;N from manure (kg/ha) at final stocking density, kg/ha&quot;),
+    col = hcl.colors(100, &quot;YlGnBu&quot;, rev = TRUE))
+plot(zwe, add = TRUE, col = NA, border = &quot;black&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-187-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="compare-modelled-stocking-density-with-gridded-livestock-data" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> Compare modelled stocking density with gridded livestock data<a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The modelled stocking density can be compared with an independently produced livestock distribution dataset. Here, the FAO Gridded Livestock of the World (GLW) dataset is used for comparison. It can be downloaded here: <a href="https://www.dropbox.com/scl/fi/1p9h4l2s3sswru71teq3y/GLW4-2020.D-DA.CTL.tif?rlkey=37r1hydf2ep527j0lvm0wrwez&amp;st=f8b5sjsf&amp;dl=0" class="uri">https://www.dropbox.com/scl/fi/1p9h4l2s3sswru71teq3y/GLW4-2020.D-DA.CTL.tif?rlkey=37r1hydf2ep527j0lvm0wrwez&amp;st=f8b5sjsf&amp;dl=0</a>.</p>
+<p>The GLW raster represents cattle density in heads per square kilometre. It is cropped and masked to Mbire District. Cattle numbers are converted to tropical livestock units using the conversion factor specified in the script (one head = 0.7 TLU).</p>
+<p>The modelled livestock population is converted to TLU per square kilometre and resampled to the GLW grid using average resampling. The two datasets can then be compared at the GLW spatial resolution.</p>
+<pre class="text"><code>glw = rast(&quot;Data/Spatial/Raw/GLW4-2020.D-DA.CTL.tif&quot;)
+
+# GLW cells are approximately 10 km; retain cells that partly overlap the
+# district
+glw = mask(crop(glw, zwe, snap = &quot;out&quot;), zwe, touches = TRUE)
+
+# Convert cattle heads to TLU
+glw = glw * 0.7
+
+# Modelled livestock density (TLU / km2)
+mine_km2 = final_TLU/(cell_ha/100)
+
+# Aggregate modelled density to the GLW grid
+mine_glw = resample(mine_km2, glw, method = &quot;average&quot;)
+
+compare = c(mine_glw, glw)
+names(compare) = c(&quot;model_TLU_km2&quot;, &quot;GLW_cattle_km2&quot;)
+
+plot(compare)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-188-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The spatial correspondence between the two datasets can be examined using a scatterplot and Spearman rank correlation. The 1:1 line indicates where the modelled and GLW values are equal.</p>
+<pre class="text"><code>d = as.data.frame(compare, na.rm = TRUE)
+
+cor(d$model_TLU_km2, d$GLW_cattle_km2, method = &quot;spearman&quot;)</code></pre>
+<pre><code>[1] 0.7135009</code></pre>
+<pre class="text"><code>lim = range(c(d$model_TLU_km2, d$GLW_cattle_km2), na.rm = TRUE)
+
+plot(d$model_TLU_km2, d$GLW_cattle_km2, xlim = lim, ylim = lim, xlab = &quot;Modelled livestock density (TLU/km2)&quot;,
+    ylab = &quot;GLW cattle density (TLU/km2)&quot;)
+abline(0, 1)
+abline(lm(GLW_cattle_km2 ~ model_TLU_km2, data = d), col = &quot;blue&quot;, lty = 1)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-189-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-prediction-of-crop-damage.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-recommendation-domains.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/09-landscape-manure.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

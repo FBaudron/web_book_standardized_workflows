@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Baselining | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Baselining | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Baselining | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="evaluating-on-farm-experiments.html"/>
+<link rel="next" href="farm-typologies.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="baselining" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Baselining<a href="baselining.html#baselining" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter presents a workflow for preparing, summarizing and visualizing data collected through farm surveys (using KoboToolBox), providing an initial characterization of the farming systems under study.</p>
+<p>Download a sample of the data generated from the questionnaire presented in the previous chapter here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/BASELINE%20DATA.xlsx" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/BASELINE%20DATA.xlsx</a>. This dataset will be used in the following workflow.</p>
+<p>A standalone R script containing the full workflow is available at the following link: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/baseline.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/baseline.R</a>.</p>
+<div id="data-preparation" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Data preparation<a href="baselining.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We load the necessary packages and import the data in R.</p>
+<pre class="text"><code>if (!require(&quot;openxlsx&quot;)) install.packages(&quot;openxlsx&quot;)
+if (!require(&quot;janitor&quot;)) install.packages(&quot;janitor&quot;)
+if (!require(&quot;dplyr&quot;)) install.packages(&quot;dplyr&quot;)
+if (!require(&quot;geodata&quot;)) install.packages(&quot;geodata&quot;)
+if (!require(&quot;terra&quot;)) install.packages(&quot;terra&quot;)
+if (!require(&quot;ggspatial&quot;)) install.packages(&quot;ggspatial&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;tidyterra&quot;)) install.packages(&quot;tidyterra&quot;)
+if (!require(&quot;data.table&quot;)) install.packages(&quot;data.table&quot;)
+if (!require(&quot;tidyr&quot;)) install.packages(&quot;tidyr&quot;)
+if (!require(&quot;gtsummary&quot;)) install.packages(&quot;gtsummary&quot;)
+
+library(openxlsx)
+library(janitor)
+library(dplyr)
+library(geodata)
+library(terra)
+library(ggspatial)
+library(ggplot2)
+library(tidyterra)
+library(data.table)
+library(tidyr)
+library(gtsummary)
+
+path = &quot;Data&quot;
+
+data = read.xlsx(&quot;BASELINE DATA.xlsx&quot;)</code></pre>
+<div id="data-cleaning" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Data cleaning<a href="baselining.html#data-cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This section provides a number of steps to clean the data extracted from KoboToolBox and produce a dataset that can be used for analysis.</p>
+<p>We first pass the dataframe through the function <em>clean_names()</em> of the R package <strong>janitor</strong> <span class="citation">(<a href="#ref-janitor">Firke 2024</a>)</span>, which makes names unique, converts names to lower cases, replaces spaces, special characters, and punctuation with underscores, etc.</p>
+<pre class="text"><code>data = clean_names(data)</code></pre>
+<p>District and wards were recorded separately for farms previously interviewed and for farms newly interviewed. Therefore, we merge the 2 District variables and the 2 Ward variables, keep the merged columns only, and remove the row ‘Has this farm already been interviewed earlier or is this a new farm?’</p>
+<pre class="text"><code>data$district = ifelse(is.na(data$district), data$district_2, data$district)
+data$ward = ifelse(is.na(data$ward), data$ward_2, data$ward)
+
+data = data[, -c(3, 6:7)]</code></pre>
+<p>We merge the factors ‘Ward 3’ and ‘Ward 3 9 12 17’ of the variable ‘ward’.</p>
+<pre class="text"><code>data$ward = ifelse(data$ward == &quot;Ward 3&quot;, &quot;Ward 3 9 12 17&quot;, data$ward)
+
+table(data$ward)</code></pre>
+<pre><code>
+        Ward 2 Ward 3 9 12 17 
+           134            136 </code></pre>
+<p>For some variables, we extract the last part of the variable name and make it the new variable name.</p>
+<pre class="text"><code># names(data)[c(7:10, 54:62, 68:85, 95:112)]
+names(data)[c(7:10, 54:62, 68:85, 95:112)] = sub(&quot;.*_&quot;, &quot;&quot;, names(data)[c(7:10, 54:62,
+    68:85, 95:112)])
+names(data)[c(7:10, 54:62, 68:85, 95:112)]</code></pre>
+<pre><code> [1] &quot;latitude&quot;   &quot;longitude&quot;  &quot;altitude&quot;   &quot;precision&quot;  &quot;bean&quot;      
+ [6] &quot;cowpea&quot;     &quot;groundnut&quot;  &quot;lablab&quot;     &quot;pigeonpea&quot;  &quot;bean&quot;      
+[11] &quot;pumpkin&quot;    &quot;watermelon&quot; &quot;cucumber&quot;   &quot;maize&quot;      &quot;bean&quot;      
+[16] &quot;potato&quot;     &quot;tomato&quot;     &quot;onion&quot;      &quot;garlic&quot;     &quot;cabbage&quot;   
+[21] &quot;rape&quot;       &quot;kovo&quot;       &quot;carrot&quot;     &quot;occra&quot;      &quot;watermelon&quot;
+[26] &quot;cucumber&quot;   &quot;butternut&quot;  &quot;cane&quot;       &quot;banana&quot;     &quot;pawpaw&quot;    
+[31] &quot;nartje&quot;     &quot;maize&quot;      &quot;bean&quot;       &quot;potato&quot;     &quot;tomato&quot;    
+[36] &quot;onion&quot;      &quot;garlic&quot;     &quot;cabbage&quot;    &quot;rape&quot;       &quot;kovo&quot;      
+[41] &quot;carrot&quot;     &quot;occra&quot;      &quot;watermelon&quot; &quot;cucumber&quot;   &quot;butternut&quot; 
+[46] &quot;cane&quot;       &quot;banana&quot;     &quot;pawpaw&quot;     &quot;nartje&quot;    </code></pre>
+<p>We correct the names for those variables with a composed name, to avoid problems later.</p>
+<pre class="text"><code>names(data)[54] = &quot;common_bean&quot;
+names(data)[59] = &quot;velvet_bean&quot;
+names(data)[69] = &quot;common_bean&quot;
+names(data)[70] = &quot;sweet_potato&quot;
+names(data)[82] = &quot;sugar_cane&quot;
+names(data)[96] = &quot;common_bean&quot;
+names(data)[97] = &quot;sweet_potato&quot;
+names(data)[109] = &quot;sugar_cane&quot;</code></pre>
+<p>We rename manually other long variables.</p>
+<pre class="text"><code>names(data)[c(33:49, 65, 92, 173, 177, 187:188, 210, 243)] = c(&quot;cropped_area&quot;, &quot;fallow&quot;,
+    &quot;maize&quot;, &quot;sorghum&quot;, &quot;pearl_millet&quot;, &quot;finger_millet&quot;, &quot;sesame&quot;, &quot;groundnut&quot;, &quot;tobacco&quot;,
+    &quot;cotton&quot;, &quot;potato&quot;, &quot;sweet_potato&quot;, &quot;sunflower&quot;, &quot;soybean&quot;, &quot;common_bean&quot;, &quot;cowpea&quot;,
+    &quot;roundnut&quot;, &quot;ind_garden&quot;, &quot;com_garden&quot;, &quot;donkeys&quot;, &quot;pigs&quot;, &quot;bee_hives&quot;, &quot;fish_pond&quot;,
+    &quot;main_food_source&quot;, &quot;main_income_source&quot;)</code></pre>
+<p>We turn No/Yes columns into 0/1.</p>
+<pre class="text"><code># str(data[c(65, 92, 154:168, 188, 192:208, 225:241)])
+data[c(65, 92, 154:168, 188, 192:208, 225:241)] = lapply(data[c(65, 92, 154:168,
+    187, 192:208, 225:241)], function(x) ifelse(x == &quot;Yes&quot;, 1, 0))
+# str(data[c(65, 92, 154:168, 188, 192:208, 225:241)])</code></pre>
+<p>We turn some continuous variables into binary ones (0/1).</p>
+<pre class="text"><code>data$bee_hives = ifelse(data$bee_hives &gt; 0, 1, 0)
+
+table(data$bee_hives)</code></pre>
+<pre><code>
+  0   1 
+242  28 </code></pre>
+</div>
+<div id="calculation-of-new-variables" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Calculation of new variables<a href="baselining.html#calculation-of-new-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>After cleaning the dataset, we calculate a number of variables we will use in further analyses.</p>
+<p>First, we calculate the number of elderly family members, the number of adults, the number of young family members, and the family size.</p>
+<pre class="text"><code>data$elderly = data$total_number_of_adult_males_aged_61_or_more + data$total_number_of_adult_females_aged_61_or_more
+
+data$adult = data$total_number_of_adult_males_aged_25_60 + data$total_number_of_adult_females_aged_25_60
+
+data$youth = data$total_number_of_young_males_aged_15_25 + data$total_number_of_young_females_aged_15_25
+
+data$family_size = data$elderly + data$adult + data$youth + data$total_number_of_children_and_teens_aged_3_14 +
+    data$total_number_of_infants_of_age_0_to_2</code></pre>
+<p>We then calculate the total equipment value, assuming a value of 10,000 USD for a tractor, 2,000 USD for a two-wheel tractor, 100 USD for a plough, 150 USD for a cultivator, 500 USD for a scotch cart, 50 USD for a wheelbarrow, 50 USD for a solar panel, and 300 USD for a motorized grinding mill.</p>
+<pre class="text"><code>data$eq_value = 10000 * data$nb_of_tractors + 2000 * data$nb_of_two_wheel_tractors +
+    100 * data$nb_of_ploughs + 150 * data$nb_of_cultivators + 500 * data$nb_of_scotchcarts +
+    50 * data$nb_of_wheelbarows + 50 * data$nb_of_solar_panels + 300 * data$nb_of_motorized_grinding_mill
+
+summary(data$eq_value)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    50.0   100.0   360.4   337.5 20000.0 </code></pre>
+<p>We calculate the area cropped in small grains, in legume crops and in other crops.</p>
+<pre class="text"><code>data$small_grains_area = data$sorghum + data$pearl_millet + data$finger_millet
+
+data$legumes = data$groundnut + data$soybean + data$common_bean + data$cowpea + data$roundnut
+
+data$other = data$sesame + data$tobacco + data$cotton + data$potato + data$sweet_potato +
+    data$sunflower</code></pre>
+<p>We ensure that the sum of the areas cropped in maize, in small grains, in legumes crops and in other crops area doesn’t exceed the total cropped area.</p>
+<pre class="text"><code>data$other = ifelse(data$other &gt; data$cropped_area - data$maize - data$small_grains_area -
+    data$legumes, data$other, data$cropped_area - data$maize - data$small_grains_area -
+    data$legumes)</code></pre>
+<p>We calculate the percentage of total land operated represented by fallow land.</p>
+<pre class="text"><code>data$prop_fallow = data$fallow * 100/(data$cropped_area + data$fallow + 0.001)
+
+summary(data$prop_fallow)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   20.01   39.99   99.98 </code></pre>
+<p>We calculate the percentage of cropped area occupied by non-cereal crops.</p>
+<pre class="text"><code>data$prop_non_cereals = (data$legumes + data$other) * 100/(data$maize + data$small_grains_area +
+    data$legumes + data$other + 0.001)
+
+summary(data$prop_non_cereals)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   24.97   29.45   49.98   99.97 </code></pre>
+<p>We calculate the total cereal production as the sum of maize production and sorghum production, which are the main cereal crops in the area.</p>
+<pre class="text"><code>data[c(123, 136)][is.na(data[c(123, 136)])] = 0
+
+data$cereal_prod = data$total_maize_production_in_the_season_2021_22_kg + data$total_sorghum_production_in_the_season_2021_22_kg
+
+summary(data$cereal_prod)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   250.0   600.0   859.2  1087.5  6000.0 </code></pre>
+<p>We calculate the total quantity of fertilizer used, and the total quantity of organic amendments - manure and compost - used.</p>
+<pre class="text"><code>data[c(88:91, 119:123, 132:153)][is.na(data[c(88:91, 119:123, 132:153)])] = 0
+
+data$fertilizers = data$quantity_kg_of_basal_fertilizer_applied_to_cotton_in_the_season_2021_22 +
+    data$quantity_kg_of_basal_fertilizer_applied_to_groundnut_in_the_season_2021_22 +
+    data$quantity_kg_of_basal_fertilizer_applied_to_maize_in_the_season_2021_22 +
+    data$quantity_kg_of_basal_fertilizer_applied_to_sesame_in_the_season_2021_22 +
+    data$quantity_kg_of_basal_fertilizer_applied_to_sorghum_in_the_season_2021_22 +
+    data$quantity_kg_of_basal_fertilizer_applied_to_the_garden_in_the_last_12_months +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_cotton_in_the_season_2021_22 +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_groundnut_in_the_season_2021_22 +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_maize_in_the_season_2021_22 +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_sesame_in_the_season_2021_22 +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_sorghum_in_the_season_2021_22 +
+    data$quantity_kg_of_topdressing_fertilizer_applied_to_the_garden_in_the_last_12_months
+
+data$manure = data$quantity_kg_of_manure_applied_to_cotton_in_the_season_2021_22 +
+    data$quantity_kg_of_manure_applied_to_groundnut_in_the_season_2021_22 + data$quantity_kg_of_manure_applied_to_maize_in_the_season_2021_22 +
+    data$quantity_kg_of_manure_applied_to_sesame_in_the_season_2021_22 + data$quantity_kg_of_manure_applied_to_sorghum_in_the_season_2021_22 +
+    data$quantity_kg_of_manure_applied_to_the_garden_in_the_last_12_months
+
+data$compost = data$quantity_kg_of_compost_applied_to_cotton_in_the_season_2021_22 +
+    data$quantity_kg_of_compost_applied_to_groundnut_in_the_season_2021_22 + data$quantity_kg_of_compost_applied_to_maize_in_the_season_2021_22 +
+    data$quantity_kg_of_compost_applied_to_sesame_in_the_season_2021_22 + data$quantity_kg_of_compost_applied_to_sorghum_in_the_season_2021_22 +
+    data$quantity_kg_of_compost_applied_to_the_garden_in_the_last_12_months
+
+data$amendment = data$manure + data$compost</code></pre>
+<p>We calculate the total number of cattle, goats, small ruminants (sheep and goats) and poultry owned.</p>
+<pre class="text"><code>data$cattle = data$how_many_adult_indigenous_cattle_do_you_currently_own + data$how_many_improved_beef_cattle_do_you_currently_own +
+    data$how_many_improved_dairy_cattle_do_you_currently_own + data$how_many_juvenile_cattle_3_yr_old_indigenous_and_improved_do_you_currently_own
+
+data$goats = data$how_many_indigenous_goats_do_you_currently_own + data$how_many_improved_goats_do_you_currently_own
+
+data$small_rum = data$goats + data$how_many_sheep_do_you_currently_own
+
+data$poultry = data$how_many_indigenous_chickens_do_you_currently_own + data$how_many_layer_chickens_do_you_currently_own +
+    data$how_many_broiler_chickens_do_you_currently_own + data$how_many_guinea_fowls_do_you_currently_own +
+    data$how_many_turkeys_do_you_currently_own + data$how_many_ducks_do_you_currently_own +
+    data$how_many_geese_do_you_currently_own</code></pre>
+<p>We convert livestock numbers into Tropical Livestock Units, using a 250 kg live weight value for one TLU <span class="citation">(<a href="#ref-Houérou1977">Houérou and Hoste 1977</a>)</span>, and assuming poultry to be equivalent to 0.01 TLU, sheep and goats to 0.1 TLU, pigs to 0.2 TLU, donkeys to 0.5 TLU, and all types of cattle to 0.7 TLU <span class="citation">(<a href="#ref-Jahnke1982">Jahnke 1982</a>)</span>.</p>
+<pre class="text"><code>data$TLU = 0.7 * data$cattle + 0.5 * data$donkeys + 0.1 * data$small_rum + 0.2 *
+    data$pigs + 0.01 * data$poultry
+
+summary(data$TLU)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.200   1.280   4.264   5.588  69.590 </code></pre>
+<p>Similarly, we calculate the total livestock offtake in TLU.</p>
+<pre class="text"><code>data[c(189:191)][is.na(data[c(189:191)])] = 0
+
+data$offtake = 0.7 * data$number_of_cattle_sold_or_slaughtered_in_the_past_12_months +
+    0.1 * data$number_of_goats_sold_or_slaughtered_in_the_past_12_months + 0.01 *
+    data$number_of_indigenous_chicken_sold_or_slaughtered_in_the_past_12_months
+
+summary(data$offtake)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0300  0.3817  0.3000 16.0000 </code></pre>
+<p>We calculate the consumption (0/1) of vegetables, fruits and meat in the 24 hours preceding the interview, and calculte a Household Dietary Diversity Score (HDDS) based on 12 food groups: (1) cereals; (2) white tubers and roots; (3) vegetables; (4) fruits; (5) meat; (6) eggs; (7) fish and other seafood; (8) legumes, nuts and seeds; (9) milk and milk products; (10) oils and fats; (11) sweats; and (12) spices, condiments and beverages <span class="citation">(<a href="#ref-Kennedy2010">Kennedy et al. 2010</a>)</span>.</p>
+<p>We replace zero values for HDDS (an impossibility) with missing values.</p>
+<pre class="text"><code>data$vegetables = data$vitamin_a_rich_vegetables_and_tubers + data$dark_green_leafy_vegetables +
+    data$other_vegetables
+data$vegetables = ifelse(data$vegetables &gt; 0, 1, 0)
+
+data$fruits = data$vitamin_a_rich_fruits + data$other_fruits
+data$fruits = ifelse(data$fruits &gt; 0, 1, 0)
+
+data$meat = data$organ_meat + data$flesh_meat
+data$meat = ifelse(data$meat &gt; 0, 1, 0)
+
+data$hdds = data$cereals + data$white_roots_and_tubers + data$vegetables + data$fruits +
+    data$meat + data$eggs + data$fish_and_seafood + data$legumes_nuts_and_seeds +
+    data$milk_and_milk_products + data$oils_and_fats + data$sweets + data$spices_condiments_beverages
+
+data[which(data$hdds == 0), ] = NA
+
+summary(data$hdds)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  1.000   2.000   3.000   3.147   4.000   8.000       4 </code></pre>
+<p>We calculate the proportion of the year the monthly food security is moderate or high, as a proxy of food security.</p>
+<pre class="text"><code>data$food_security = rowMeans(data[212:223] != &quot;Low&quot;)
+
+summary(data$food_security)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.4167  0.5833  0.5583  0.7500  1.0000       4 </code></pre>
+<p>We then calculate crop diversity. We need to ensure that crop species that may have been grown as a main crop and an intercrop, and/or an individual garden crop, and/or a communal garden crop are only counted once.</p>
+<p>We first add columns for crops that were listed as additional, in case they were not already included as crop variables.</p>
+<pre class="text"><code>data$cowpea.w = ifelse(data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Cowpeas&quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Cowpeas, lablab&quot;, 1, 0)
+
+data$lablab.w = ifelse(data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Cowpeas, lablab&quot;, 1, 0)
+
+data$runinga.w = ifelse(data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Runinga, rossella&quot;, 1, 0)
+
+data$rosella.w = ifelse(data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;rosella&quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Rosella&quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;rosella &quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Rosella &quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Rossella&quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Rotella&quot; | data$list_other_main_crops_you_grew_during_the_season_2021_22_separated_by_commas ==
+    &quot;Runinga, rossella&quot;, 1, 0)
+
+
+data$maize.x = ifelse(data$list_other_intercrops_separated_by_commas == &quot;Maize,rosella&quot;,
+    1, 0)
+
+data$rosella.x = ifelse(data$list_other_intercrops_separated_by_commas == &quot;Maize,rosella&quot;,
+    1, 0)
+
+data$sweet_sorghum.x = ifelse(data$list_other_intercrops_separated_by_commas == &quot;Sweetsoughum,milet&quot;,
+    1, 0)
+
+data$pearl_millet.x = ifelse(data$list_other_intercrops_separated_by_commas == &quot;Sweetsoughum,milet&quot;,
+    1, 0)
+
+
+data$chilli.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Chill,potato&quot;, 1, 0)
+
+data$potato.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Chill,potato&quot;, 1, 0)
+
+data$katarina.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Katarina&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf, katarina&quot;, 1, 0)
+
+data$muboora.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Muboora&quot;, 1, 0)
+
+data$shoeshine.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Shoeshine&quot;, 1, 0)
+
+data$sugarloaf.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;sugarloaf&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;sugarloaf &quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf &quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf, katarina&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf, tsunga&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Tsunga,sugarloaf&quot;, 1, 0)
+
+data$tsunga.y = ifelse(data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Sugarloaf, tsunga&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Tsunga&quot; | data$list_other_crops_you_grew_in_your_individual_garden_separated_by_commas ==
+    &quot;Tsunga,sugarloaf&quot;, 1, 0)</code></pre>
+<p>We replace missing values by zeros.</p>
+<p>We then clean crop species names to strip off dots and numbers at the end.</p>
+<p>We collapse duplicates and retain the maximum value across columns of the same crop.</p>
+<p>We finally compute the crop diversity as the number of crop species present.</p>
+<pre class="text"><code>data[c(35:49, 54:62, 68:85, 95:112, 280:294)][is.na(data[c(35:49, 54:62, 68:85, 95:112,
+    280:294)])] = 0
+
+base_names = sub(&quot;\\..*&quot;, &quot;&quot;, names(data)[c(35:49, 54:62, 68:85, 95:112, 280:294)])
+
+collapsed = data[c(35:49, 54:62, 68:85, 95:112, 280:294)] %&gt;%
+    mutate(row_id = row_number()) %&gt;%
+    group_by(row_id) %&gt;%
+    summarise(across(everything(), ~.x, .names = &quot;{.col}&quot;)) %&gt;%
+    select(-row_id)
+
+collapsed = as.data.frame(lapply(split.default(data[c(35:49, 54:62, 68:85, 95:112,
+    280:294)], base_names), function(df) rowSums(df &gt; 0)))
+
+data$crop_diversity = rowSums(collapsed &gt; 0)
+
+summary(data$crop_diversity)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   2.000   4.000   4.348   6.000  14.000 </code></pre>
+<p>Livestock diversity can be calculated in a similar, but simpler way (as there is only one variable per livestock species)</p>
+<pre class="text"><code>data[c(269:270, 272, 173, 177, 181:188)][is.na(data[c(269:270, 272, 173, 177, 181:188)])] = 0
+
+data$livestock_diversity = rowSums(data[c(269:270, 272, 173, 177, 181:188)] &gt; 0)
+
+summary(data$livestock_diversity)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   2.000   2.396   3.000   8.000 </code></pre>
+<p>We calculate the total diversity of species present on the farm, as the sum of crop diversity and livestock diversity.</p>
+<pre class="text"><code>data$tot_div = data$crop_diversity + data$livestock_diversity
+
+summary(data$tot_div)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   4.000   6.000   6.744   9.000  22.000 </code></pre>
+<p>Create a small dataset</p>
+<pre class="text"><code>small_dataset = data[, c(253, 4, 3, 11:13, 257, 33:34, 263, 265, 268:269, 271:272,
+    187, 65, 92, 210, 243, 279, 278, 155, 157, 159:164, 167:168, 202:205, 297, 264,
+    274, 258)]
+
+saveRDS(small_dataset, &quot;small_dataset.rds&quot;)</code></pre>
+</div>
+</div>
+<div id="preliminary-analyses" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Preliminary analyses<a href="baselining.html#preliminary-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="map-of-surveyed-farms" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Map of surveyed farms<a href="baselining.html#map-of-surveyed-farms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First, we download the shapefile of Zimbabwe, at the administrative level 3 (i.e., at the ward-level). Such shapefiles can be downloaded through the function <em>gadm()</em> of the R package <strong>geodata</strong> <span class="citation">(<a href="#ref-geodata">Hijmans et al. 2024</a>)</span>.</p>
+<pre class="text"><code>zwe3 = gadm(country = &quot;ZWE&quot;, level = 3, path = path)
+plot(zwe3)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-64-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>We then subset this shapefile to the district of Mbire.</p>
+<pre class="text"><code>mbire = zwe3[zwe3$NAME_2 == &quot;Mbire&quot;, ]
+plot(mbire)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-65-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>Next, we download a raster of elevation, which we will use as background for the map, again from the R package <strong>geodata</strong>.</p>
+<p>We download the tile corresponding to the study area, using the coordinates of the center of the extent of Mbire.</p>
+<p>We give the name ‘elevation’ to that raster.</p>
+<pre class="text"><code>elevation = elevation_3s(lon = (30.04626 + 31.14537)/2, lat = (-16.41686 + -15.61071)/2,
+    path = &quot;Geodata&quot;)
+
+names(elevation) = &quot;elevation&quot;
+
+plot(elevation)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-66-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+<p>We use the R package <strong>terra</strong> <span class="citation">(<a href="#ref-terra">Hijmans 2024</a>)</span> for all spatial calculations below.</p>
+<p>We use EPSG:4326 coordinate system, and crop our raster to the extent of the area that was surveyed.</p>
+<pre class="text"><code>elevation = project(elevation, &quot;EPSG:4326&quot;)
+
+elevation = crop(elevation, ext(30.2, 30.65, -16.23, -15.97))
+
+plot(elevation)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-67-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+<p>We use the coordinates in the dataframe to produce a shapefile of farm locations.</p>
+<p>We ensure to use the same coordinate system as for the elevation raster.</p>
+<pre class="text"><code>data_vect = vect(data, geom = c(&quot;longitude&quot;, &quot;latitude&quot;), crs = &quot;EPSG:4326&quot;)</code></pre>
+<p>We extract a shapefile of the 5 wards included in the survey.</p>
+<pre class="text"><code>wards = mbire[mbire$NAME_3 == &quot;Ward 2&quot; | mbire$NAME_3 == &quot;Ward 3&quot; | mbire$NAME_3 ==
+    &quot;Ward 9&quot; | mbire$NAME_3 == &quot;Ward 12&quot; | mbire$NAME_3 == &quot;Ward 17&quot;, ]
+
+plot(wards)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-69-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+<p>We get the coordinates of the centroid of each of these 5 wards, to use them in our map for the labels of the wards.</p>
+<p>We jitter the coordinates of the centroid of Ward 2 (to avoid overlap with surveyed points).</p>
+<pre class="text"><code>ward_centroids = centroids(wards)
+
+ward_centroids = data.frame(x = crds(ward_centroids)[, 1], y = crds(ward_centroids)[,
+    2], ward = wards$NAME_3)
+
+ward_centroids$y[ward_centroids$ward == &quot;Ward 2&quot;] = ward_centroids$y[ward_centroids$ward ==
+    &quot;Ward 2&quot;] - 0.05
+
+ward_centroids$x[ward_centroids$ward == &quot;Ward 2&quot;] = ward_centroids$x[ward_centroids$ward ==
+    &quot;Ward 2&quot;] + 0.05</code></pre>
+<p>We enter manually coordinates for a label “MOZAMBIQUE”.</p>
+<pre class="text"><code>mozambique = data.frame(x = 30.55, y = -15.99, label = &quot;MOZAMBIQUE&quot;)</code></pre>
+<p>We plot the map using the R package <strong>ggplot2</strong> <span class="citation">(<a href="#ref-ggplot2">Wickham 2016</a>)</span>. Before that, we convert the elevation raster into a dataframe.</p>
+<p>We use <em>annotation_scale()</em> and <em>annotation_north_arrow()</em> from the R package <strong>ggspatial</strong> <span class="citation">(<a href="#ref-ggspatial">Dunnington 2023</a>)</span>.</p>
+<pre class="text"><code>elevation_df = as.data.frame(elevation, xy = TRUE)
+
+ggplot() + theme_bw() + geom_raster(data = na.omit(elevation_df), aes(x = x, y = y,
+    fill = elevation)) + geom_spatvector(data = mbire, fill = NA, linewidth = 1,
+    color = &quot;grey30&quot;) + geom_spatvector(data = data_vect, shape = 16, color = &quot;#781C6DFF&quot;,
+    alpha = 0.5, size = 3) + geom_text(data = ward_centroids, aes(x = x, y = y, label = ward),
+    color = &quot;black&quot;, size = 4, fontface = &quot;bold&quot;) + geom_text(data = mozambique,
+    aes(x = x, y = y, label = label), color = &quot;black&quot;, size = 5, fontface = &quot;italic&quot;) +
+    scale_fill_distiller(palette = &quot;RdYlGn&quot;, limits = c(350, 650), breaks = seq(350,
+        650, by = 75)) + scale_y_continuous(breaks = seq(-16.22, -15.97, by = 0.1)) +
+    coord_sf(xlim = c(30.2, 30.65), ylim = c(-15.97, -16.23), expand = FALSE) + labs(fill = &quot;Elevation (m.a.s.l.)&quot;) +
+    theme(plot.title = element_blank(), axis.title = element_blank(), axis.text.y = element_text(angle = 90,
+        hjust = 0.5, size = 12), axis.text.x = element_text(size = 12), legend.title = element_text(size = 14),
+        legend.text = element_text(size = 12), legend.position = &quot;right&quot;, plot.margin = margin(10,
+            10, 10, 10)) + annotation_scale(location = &quot;bl&quot;, width_hint = 0.5, height = unit(0.25,
+    &quot;cm&quot;), text_cex = 1, pad_x = unit(0.15, &quot;cm&quot;), pad_y = unit(0.15, &quot;cm&quot;)) + annotation_north_arrow(location = &quot;tl&quot;,
+    which_north = &quot;true&quot;, height = unit(1, &quot;cm&quot;), width = unit(1, &quot;cm&quot;), pad_x = unit(0.15,
+        &quot;cm&quot;), pad_y = unit(0.15, &quot;cm&quot;), style = north_arrow_fancy_orienteering(text_size = 10))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-72-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>Next, we present key visualizations of survey data: stacked bar chart, lollipop diagram, bubble chart, and pie chart, all using the R package <strong>ggplot2</strong>.</p>
+</div>
+<div id="stacked-bar-chart" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Stacked bar chart<a href="baselining.html#stacked-bar-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will plot perceptions of trends in soil compaction, soil erosion, soil fertility and tree cover.</p>
+<p>We create a subset of the dataset, rename variables to have nice labels for the plot, and remove empty rows.</p>
+<pre class="text"><code>land_mgt = data[, c(115:118)]
+
+names(land_mgt) = c(&quot;Soil fertility&quot;, &quot;Soil erosion&quot;, &quot;Soil compaction&quot;, &quot;Tree cover&quot;)
+
+land_mgt = na.omit(land_mgt)</code></pre>
+<p>We transform the dataset from wide to long format using the function <em>gather()</em> from the R package <strong>tidyr</strong> <span class="citation">(<a href="#ref-tidyr">Wickham, Vaughan, and Girlich 2024</a>)</span>, calculate percentages for each characteristic in each status (‘deteriorating’, ‘stable’, ‘improving’), and reorder the levels of the factor ‘status’ (from ‘deteriorating’ to ‘improving’).</p>
+<pre class="text"><code>land_mgt = gather(land_mgt, Characteristic, Status, &quot;Soil fertility&quot;:&quot;Tree cover&quot;)
+
+land_mgt = land_mgt %&gt;%
+    group_by(Characteristic, Status) %&gt;%
+    summarise(n = n()) %&gt;%
+    mutate(Percentage = n/sum(n) * 100) %&gt;%
+    select(-n) %&gt;%
+    ungroup()
+
+land_mgt$Status = factor(land_mgt$Status, levels = c(&quot;Improving&quot;, &quot;Stable&quot;, &quot;Deteriorating&quot;))</code></pre>
+<p>Finally, we plot the stack bar chart.</p>
+<p>Note the use of <em>coord_flip()</em>.</p>
+<pre class="text"><code>ggplot(data = land_mgt, aes(x = Characteristic, y = Percentage, fill = Status)) +
+    geom_bar(stat = &quot;identity&quot;, width = 0.7, color = &quot;black&quot;) + coord_flip() + theme_bw() +
+    scale_fill_manual(values = c(&quot;#FCFFA4FF&quot;, &quot;#ED6925FF&quot;, &quot;#781C6DFF&quot;)) + theme(axis.title.x = element_text(size = 14,
+    face = &quot;bold&quot;, margin = margin(10, 0, 0, 0)), axis.title.y = element_blank(),
+    axis.text.x = element_text(size = 10, face = &quot;bold&quot;), axis.text.y = element_text(size = 12,
+        face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.text = element_text(size = 12))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-75-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="more-complex-stacked-bar-chart" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> More complex stacked bar chart<a href="baselining.html#more-complex-stacked-bar-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will plot crop area distribution per farm, for all farm surveyed, ordering farms by decreasing total cropped area.</p>
+<p>We create a subset of the dataset, correct an abnormal value for area cropped in legume, calculate total cropped area, order the dataset by decreasing cropped area and add an ID.</p>
+<pre class="text"><code>crop = data[, c(35, 259:261)]
+
+crop$legumes = ifelse(crop$legumes &gt; 5, 0, crop$legumes)
+
+crop$cropped_area = crop$maize + crop$small_grains_area + crop$legumes + crop$other
+
+crop = crop[order(-crop$cropped_area), ]
+
+crop$ID = 1:nrow(crop)</code></pre>
+<p>Next, we apply a rolling average to the different variables we will use in the plot with subsets of 10 farms to smooth the curves for better visualization/easier interpretation.</p>
+<pre class="text"><code>crop$maize = frollmean(crop$maize, 10)
+crop$small_grains_area = frollmean(crop$small_grains_area, 10)
+crop$legumes = frollmean(crop$legumes, 10)
+crop$other = frollmean(crop$other, 10)</code></pre>
+<p>Next, we transform the dataset from wide to long format, and we reorder the levels of the factor crop, for ‘maize’ to appear at the bottom of our plot, and ‘other crops’ at the top.</p>
+<pre class="text"><code>crop = gather(crop, crop, area, &quot;maize&quot;:&quot;other&quot;)
+
+crop$crop = factor(crop$crop, levels = c(&quot;maize&quot;, &quot;small_grains_area&quot;, &quot;legumes&quot;,
+    &quot;other&quot;))</code></pre>
+<p>Finally, we plot the stack bar chart.</p>
+<pre class="text"><code>crop %&gt;%
+    ggplot(aes(x = ID, y = area, fill = as.factor(crop))) + geom_bar(stat = &quot;identity&quot;,
+    width = 1, alpha = 0.9, position = position_stack(reverse = TRUE)) + scale_fill_manual(values = c(&quot;#FCA50AFF&quot;,
+    &quot;#DD513AFF&quot;, &quot;#932667FF&quot;, &quot;#420A68FF&quot;), labels = c(&quot;Maize&quot;, &quot;Small grains&quot;, &quot;Legumes&quot;,
+    &quot;Other crops&quot;)) + xlab(&quot;Farms&quot;) + ylab(&quot;Area (ha)&quot;) + theme_bw() + scale_x_continuous(expand = c(0,
+    0)) + scale_y_continuous(expand = c(0, 0)) + theme(axis.text.x = element_blank(),
+    axis.text.y = element_text(size = 12, face = &quot;bold&quot;), axis.title.x = element_text(size = 14,
+        face = &quot;bold&quot;, margin = margin(10, 0, 0, 0)), axis.title.y = element_text(size = 14,
+        face = &quot;bold&quot;, margin = margin(0, 10, 0, 0)), axis.ticks.x = element_blank(),
+    legend.background = element_rect(color = &quot;black&quot;), legend.title = element_blank(),
+    legend.text = element_text(size = 12), legend.position = c(0.9, 0.9), legend.justification = c(0.9,
+        0.9))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-79-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="lollipop-diagram" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> Lollipop diagram<a href="baselining.html#lollipop-diagram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will plot the frequency of species used as intercrops.</p>
+<p>We create a subset of the dataset, and rename variables to have nice labels for the plot.</p>
+<pre class="text"><code>inter = data[, c(54:62, 284:287)]
+
+names(inter) = c(&quot;Common bean&quot;, &quot;Cowpea&quot;, &quot;Groundnut&quot;, &quot;Lablab&quot;, &quot;Pigeonpea&quot;, &quot;Velvet bean&quot;,
+    &quot;Pumpkin&quot;, &quot;Watermelon&quot;, &quot;Local cucumber&quot;, &quot;Maize&quot;, &quot;Rosella&quot;, &quot;Sweet sorghum&quot;,
+    &quot;Pearl millet&quot;)</code></pre>
+<p>We transform our dataset from wide to long format, sum the number of occurences by intercrops, and remove zeros.</p>
+<pre class="text"><code>inter = gather(inter, intercrop, presence, &quot;Common bean&quot;:&quot;Pearl millet&quot;)
+
+inter = aggregate(presence ~ intercrop, FUN = sum, na.rm = TRUE, data = inter)
+
+inter = subset(inter, presence &gt; 0)</code></pre>
+<p>Finally, we plot the lollipop diagram.</p>
+<p>Note the use of <em>arrange()</em> and <em>coord_flip()</em>.</p>
+<pre class="text"><code>inter %&gt;%
+    arrange(presence) %&gt;%
+    mutate(order = factor(intercrop, intercrop)) %&gt;%
+    ggplot(aes(x = intercrop, y = presence)) + geom_segment(aes(x = order, xend = intercrop,
+    y = 0, yend = presence), color = &quot;#ED6925FF&quot;, linewidth = 1) + geom_point(color = &quot;#ED6925FF&quot;,
+    size = 8, alpha = 0.5) + xlab(&quot;Intercrop species&quot;) + ylab(&quot;Nb of farms&quot;) + theme_bw() +
+    coord_flip() + theme(axis.title.x = element_text(size = 14, face = &quot;bold&quot;, margin = margin(10,
+    0, 0, 0)), axis.title.y = element_text(size = 14, face = &quot;bold&quot;, margin = margin(0,
+    10, 0, 0)), axis.text.x = element_text(size = 12, face = &quot;bold&quot;), axis.text.y = element_text(size = 10,
+    face = &quot;bold&quot;))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-82-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="bubble-chart" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> Bubble chart<a href="baselining.html#bubble-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will plot the food security status by month of the population of farms surveyed.</p>
+<p>We create a subset of the dataset, rename variables to have nice labels for the plot, and remove empty rows.</p>
+<pre class="text"><code>fsec = data[, c(212:223)]
+
+names(fsec) = c(&quot;Nov 2022&quot;, &quot;Oct 2022&quot;, &quot;Sep 2022&quot;, &quot;Aug 2022&quot;, &quot;Jul 2022&quot;, &quot;Jun 2022&quot;,
+    &quot;May 2022&quot;, &quot;Apr 2022&quot;, &quot;Mar 2022&quot;, &quot;Feb 2022&quot;, &quot;Jan 2022&quot;, &quot;Dec 2021&quot;)
+
+fsec = na.omit(fsec)</code></pre>
+<p>We transform the dataset from wide to long format, and reorder the levels of the factor ‘status’ and ‘months’ (the former for the data to be displayed from low to high food security, and the latter for data to be displayed in chronological order).</p>
+<pre class="text"><code>fsec = gather(fsec, month, status, &quot;Nov 2022&quot;:&quot;Dec 2021&quot;)
+
+fsec$status = factor(fsec$status, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;))
+
+fsec$month = factor(fsec$month, levels = c(&quot;Dec 2021&quot;, &quot;Jan 2022&quot;, &quot;Feb 2022&quot;, &quot;Mar 2022&quot;,
+    &quot;Apr 2022&quot;, &quot;May 2022&quot;, &quot;Jun 2022&quot;, &quot;Jul 2022&quot;, &quot;Aug 2022&quot;, &quot;Sep 2022&quot;, &quot;Oct 2022&quot;,
+    &quot;Nov 2022&quot;))</code></pre>
+<p>Finally, we plot the bubble chart.</p>
+<pre class="text"><code>ggplot(data = fsec) + geom_count(mapping = aes(x = month, y = status), color = &quot;#ED6925FF&quot;,
+    alpha = 0.5) + scale_size_area(max_size = 10) + theme_bw() + xlab(&quot;&quot;) + ylab(&quot;Food security status&quot;) +
+    theme(axis.title.x = element_blank(), axis.title.y = element_text(size = 14,
+        face = &quot;bold&quot;, margin = margin(0, 10, 0, 0)), axis.text.x = element_text(size = 12,
+        face = &quot;bold&quot;, angle = 90, hjust = 1, vjust = 0.5), axis.text.y = element_text(size = 12,
+        face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.text = element_text(size = 12))</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-85-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pie-chart" class="section level3 hasAnchor" number="6.2.6">
+<h3><span class="header-section-number">6.2.6</span> Pie chart<a href="baselining.html#pie-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will plot the average use of maize residues.</p>
+<p>We create a subset of the dataset, and rename variables to have nice labels for the plot.</p>
+<pre class="text"><code>maiz_res = data[, c(125:131)]
+
+names(maiz_res) = c(&quot;Burnt&quot;, &quot;Retained in the field&quot;, &quot;Grazed in the field&quot;, &quot;Harvested for feed&quot;,
+    &quot;Harvested for compost&quot;, &quot;Harvested for fuel&quot;, &quot;Harvested for fencing&quot;)</code></pre>
+<p>We transform the dataset from wide to long format, turn percentage values (then characters) as numeric, calculate the mean percentage for each use, and remove uses for which the percentage is zero.</p>
+<pre class="text"><code>maiz_res = gather(maiz_res, use, perc, &quot;Burnt&quot;:&quot;Harvested for fencing&quot;)
+
+maiz_res$perc = as.numeric(sub(&quot;%&quot;, &quot;&quot;, maiz_res$perc))
+
+maiz_res = aggregate(perc ~ use, FUN = mean, na.rm = TRUE, data = maiz_res)
+
+maiz_res = maiz_res[maiz_res$perc &gt; 0, ]</code></pre>
+<p>Finally, we plot the pie chart.</p>
+<p>Note the use of <em>coord_polar()</em> and <em>theme_void()</em>.</p>
+<pre class="text"><code>ggplot(maiz_res, aes(x = &quot;&quot;, y = perc, fill = use)) + geom_bar(alpha = 0.5, width = 1,
+    stat = &quot;identity&quot;, color = &quot;black&quot;) + coord_polar(&quot;y&quot;, start = 0) + theme_void() +
+    scale_fill_viridis_d(option = &quot;B&quot;, name = &quot;Maize residue use&quot;) + theme(legend.text = element_text(size = 12),
+    legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.position = &quot;right&quot;)</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-88-1.png" alt="" width="65%" style="display: block; margin: auto;" /></p>
+<p>Now that we have built a number of exploratory graphs, we will generate a summary table.</p>
+</div>
+<div id="summary-table" class="section level3 hasAnchor" number="6.2.7">
+<h3><span class="header-section-number">6.2.7</span> Summary table<a href="baselining.html#summary-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many R packages can be used to generate tables. Here, we will use the R package <strong>gtsummary</strong> <span class="citation">(<a href="#ref-gtsummary">Sjoberg et al. 2021</a>)</span>, in part for the nice rendering on RMarkdown (see below)</p>
+<p>We will produce a summary table comparing the two wards from the small dataset created above, using the function <em>tbl_summary()</em>.</p>
+<p>We display means and standard deviations for continuous variables, with one decimal only, and percentages for categorical variables.</p>
+<pre class="text"><code>small_dataset[, -c(1, 3)] %&gt;%
+    tbl_summary(by = ward, statistic = list(all_continuous() ~ &quot;{mean} ({sd})&quot;, all_categorical() ~
+        &quot;{p}%&quot;), digits = all_continuous() ~ 1) %&gt;%
+    add_overall()</code></pre>
+<div id="encjvzearo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#encjvzearo table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#encjvzearo thead, #encjvzearo tbody, #encjvzearo tfoot, #encjvzearo tr, #encjvzearo td, #encjvzearo th {
+  border-style: none;
+}
+
+#encjvzearo p {
+  margin: 0;
+  padding: 0;
+}
+
+#encjvzearo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#encjvzearo .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#encjvzearo .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#encjvzearo .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#encjvzearo .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#encjvzearo .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#encjvzearo .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#encjvzearo .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#encjvzearo .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#encjvzearo .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#encjvzearo .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#encjvzearo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#encjvzearo .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#encjvzearo .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#encjvzearo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#encjvzearo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#encjvzearo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#encjvzearo .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#encjvzearo .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#encjvzearo .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#encjvzearo .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#encjvzearo .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#encjvzearo .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#encjvzearo .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#encjvzearo .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#encjvzearo .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#encjvzearo .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#encjvzearo .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#encjvzearo .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#encjvzearo .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#encjvzearo .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#encjvzearo .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#encjvzearo .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#encjvzearo .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#encjvzearo .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#encjvzearo .gt_left {
+  text-align: left;
+}
+
+#encjvzearo .gt_center {
+  text-align: center;
+}
+
+#encjvzearo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#encjvzearo .gt_font_normal {
+  font-weight: normal;
+}
+
+#encjvzearo .gt_font_bold {
+  font-weight: bold;
+}
+
+#encjvzearo .gt_font_italic {
+  font-style: italic;
+}
+
+#encjvzearo .gt_super {
+  font-size: 65%;
+}
+
+#encjvzearo .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#encjvzearo .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#encjvzearo .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#encjvzearo .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#encjvzearo .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#encjvzearo .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#encjvzearo .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#encjvzearo .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#encjvzearo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class='gt_from_md'><strong>Characteristic</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0"><span class='gt_from_md'><strong>Overall</strong><br />
+N = 266</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"><span class='gt_from_md'><strong>Ward 2</strong><br />
+N = 132</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"><span class='gt_from_md'><strong>Ward 3 9 12 17</strong><br />
+N = 134</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">how_old_is_the_head_of_the_household</td>
+<td headers="stat_0" class="gt_row gt_center">51.4 (15.7)</td>
+<td headers="stat_1" class="gt_row gt_center">49.7 (16.0)</td>
+<td headers="stat_2" class="gt_row gt_center">53.1 (15.3)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">what_is_the_sex_of_the_head_of_the_household</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Female</td>
+<td headers="stat_0" class="gt_row gt_center">23%</td>
+<td headers="stat_1" class="gt_row gt_center">21%</td>
+<td headers="stat_2" class="gt_row gt_center">25%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Male</td>
+<td headers="stat_0" class="gt_row gt_center">77%</td>
+<td headers="stat_1" class="gt_row gt_center">79%</td>
+<td headers="stat_2" class="gt_row gt_center">75%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">what_is_the_education_level_of_the_head_of_the_household</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Primary level</td>
+<td headers="stat_0" class="gt_row gt_center">60%</td>
+<td headers="stat_1" class="gt_row gt_center">55%</td>
+<td headers="stat_2" class="gt_row gt_center">65%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Secondary level</td>
+<td headers="stat_0" class="gt_row gt_center">36%</td>
+<td headers="stat_1" class="gt_row gt_center">40%</td>
+<td headers="stat_2" class="gt_row gt_center">32%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Tertiary level</td>
+<td headers="stat_0" class="gt_row gt_center">1.1%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">2.2%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Vocational school</td>
+<td headers="stat_0" class="gt_row gt_center">2.6%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">family_size</td>
+<td headers="stat_0" class="gt_row gt_center">5.6 (3.2)</td>
+<td headers="stat_1" class="gt_row gt_center">6.0 (3.6)</td>
+<td headers="stat_2" class="gt_row gt_center">5.3 (2.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">cropped_area</td>
+<td headers="stat_0" class="gt_row gt_center">1.8 (1.5)</td>
+<td headers="stat_1" class="gt_row gt_center">1.5 (1.3)</td>
+<td headers="stat_2" class="gt_row gt_center">2.1 (1.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">fallow</td>
+<td headers="stat_0" class="gt_row gt_center">0.7 (1.4)</td>
+<td headers="stat_1" class="gt_row gt_center">0.6 (1.0)</td>
+<td headers="stat_2" class="gt_row gt_center">0.9 (1.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">prop_non_cereals</td>
+<td headers="stat_0" class="gt_row gt_center">29.9 (29.1)</td>
+<td headers="stat_1" class="gt_row gt_center">30.0 (30.8)</td>
+<td headers="stat_2" class="gt_row gt_center">29.8 (27.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">fertilizers</td>
+<td headers="stat_0" class="gt_row gt_center">87.0 (115.2)</td>
+<td headers="stat_1" class="gt_row gt_center">72.9 (90.9)</td>
+<td headers="stat_2" class="gt_row gt_center">101.0 (133.9)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">amendment</td>
+<td headers="stat_0" class="gt_row gt_center">304.5 (626.1)</td>
+<td headers="stat_1" class="gt_row gt_center">294.1 (653.2)</td>
+<td headers="stat_2" class="gt_row gt_center">314.8 (600.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">cattle</td>
+<td headers="stat_0" class="gt_row gt_center">4.3 (8.9)</td>
+<td headers="stat_1" class="gt_row gt_center">3.5 (8.7)</td>
+<td headers="stat_2" class="gt_row gt_center">5.2 (9.1)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">small_rum</td>
+<td headers="stat_0" class="gt_row gt_center">10.4 (20.1)</td>
+<td headers="stat_1" class="gt_row gt_center">9.4 (17.4)</td>
+<td headers="stat_2" class="gt_row gt_center">11.4 (22.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">poultry</td>
+<td headers="stat_0" class="gt_row gt_center">11.7 (29.9)</td>
+<td headers="stat_1" class="gt_row gt_center">10.0 (11.3)</td>
+<td headers="stat_2" class="gt_row gt_center">13.3 (40.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">bee_hives</td>
+<td headers="stat_0" class="gt_row gt_center">11%</td>
+<td headers="stat_1" class="gt_row gt_center">7.6%</td>
+<td headers="stat_2" class="gt_row gt_center">13%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">ind_garden</td>
+<td headers="stat_0" class="gt_row gt_center">48%</td>
+<td headers="stat_1" class="gt_row gt_center">55%</td>
+<td headers="stat_2" class="gt_row gt_center">40%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">com_garden</td>
+<td headers="stat_0" class="gt_row gt_center">2.3%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">main_food_source</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Cash purchase from income</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Casual labour for food</td>
+<td headers="stat_0" class="gt_row gt_center">18%</td>
+<td headers="stat_1" class="gt_row gt_center">30%</td>
+<td headers="stat_2" class="gt_row gt_center">6.0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Food aid</td>
+<td headers="stat_0" class="gt_row gt_center">3.0%</td>
+<td headers="stat_1" class="gt_row gt_center">5.3%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Own production</td>
+<td headers="stat_0" class="gt_row gt_center">75%</td>
+<td headers="stat_1" class="gt_row gt_center">61%</td>
+<td headers="stat_2" class="gt_row gt_center">90%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Purchase from cash transfer</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Remittances</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">main_income_source</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Artisan</td>
+<td headers="stat_0" class="gt_row gt_center">0.8%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Casual labour</td>
+<td headers="stat_0" class="gt_row gt_center">35%</td>
+<td headers="stat_1" class="gt_row gt_center">43%</td>
+<td headers="stat_2" class="gt_row gt_center">28%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Crop sales</td>
+<td headers="stat_0" class="gt_row gt_center">36%</td>
+<td headers="stat_1" class="gt_row gt_center">28%</td>
+<td headers="stat_2" class="gt_row gt_center">44%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Livestock sales</td>
+<td headers="stat_0" class="gt_row gt_center">15%</td>
+<td headers="stat_1" class="gt_row gt_center">9.8%</td>
+<td headers="stat_2" class="gt_row gt_center">20%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Pension</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Remittances</td>
+<td headers="stat_0" class="gt_row gt_center">5.3%</td>
+<td headers="stat_1" class="gt_row gt_center">7.6%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Salary or wages</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">5.3%</td>
+<td headers="stat_2" class="gt_row gt_center">1.5%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Smallscale mining</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Trade</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">food_security</td>
+<td headers="stat_0" class="gt_row gt_center">0.6 (0.3)</td>
+<td headers="stat_1" class="gt_row gt_center">0.5 (0.3)</td>
+<td headers="stat_2" class="gt_row gt_center">0.6 (0.3)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">hdds</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    1</td>
+<td headers="stat_0" class="gt_row gt_center">1.1%</td>
+<td headers="stat_1" class="gt_row gt_center">2.3%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    2</td>
+<td headers="stat_0" class="gt_row gt_center">30%</td>
+<td headers="stat_1" class="gt_row gt_center">12%</td>
+<td headers="stat_2" class="gt_row gt_center">47%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    3</td>
+<td headers="stat_0" class="gt_row gt_center">36%</td>
+<td headers="stat_1" class="gt_row gt_center">47%</td>
+<td headers="stat_2" class="gt_row gt_center">25%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    4</td>
+<td headers="stat_0" class="gt_row gt_center">23%</td>
+<td headers="stat_1" class="gt_row gt_center">28%</td>
+<td headers="stat_2" class="gt_row gt_center">18%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    5</td>
+<td headers="stat_0" class="gt_row gt_center">8.6%</td>
+<td headers="stat_1" class="gt_row gt_center">9.8%</td>
+<td headers="stat_2" class="gt_row gt_center">7.5%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    6</td>
+<td headers="stat_0" class="gt_row gt_center">1.5%</td>
+<td headers="stat_1" class="gt_row gt_center">0.8%</td>
+<td headers="stat_2" class="gt_row gt_center">2.2%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    8</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">community_seed_banks</td>
+<td headers="stat_0" class="gt_row gt_center">12%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">22%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">small_grains</td>
+<td headers="stat_0" class="gt_row gt_center">87%</td>
+<td headers="stat_1" class="gt_row gt_center">86%</td>
+<td headers="stat_2" class="gt_row gt_center">87%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">crop_rotation</td>
+<td headers="stat_0" class="gt_row gt_center">51%</td>
+<td headers="stat_1" class="gt_row gt_center">49%</td>
+<td headers="stat_2" class="gt_row gt_center">53%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">intercropping</td>
+<td headers="stat_0" class="gt_row gt_center">17%</td>
+<td headers="stat_1" class="gt_row gt_center">11%</td>
+<td headers="stat_2" class="gt_row gt_center">23%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">cover_crops_for_erosion_control_and_or_soil_fertility</td>
+<td headers="stat_0" class="gt_row gt_center">8.6%</td>
+<td headers="stat_1" class="gt_row gt_center">6.8%</td>
+<td headers="stat_2" class="gt_row gt_center">10%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">mulching</td>
+<td headers="stat_0" class="gt_row gt_center">9.8%</td>
+<td headers="stat_1" class="gt_row gt_center">9.8%</td>
+<td headers="stat_2" class="gt_row gt_center">9.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">integrated_pest_management_i_e_scouting_etc</td>
+<td headers="stat_0" class="gt_row gt_center">50%</td>
+<td headers="stat_1" class="gt_row gt_center">43%</td>
+<td headers="stat_2" class="gt_row gt_center">57%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">compost_manure</td>
+<td headers="stat_0" class="gt_row gt_center">17%</td>
+<td headers="stat_1" class="gt_row gt_center">17%</td>
+<td headers="stat_2" class="gt_row gt_center">17%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">tree_planting_on_farm</td>
+<td headers="stat_0" class="gt_row gt_center">14%</td>
+<td headers="stat_1" class="gt_row gt_center">9.1%</td>
+<td headers="stat_2" class="gt_row gt_center">19%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">tree_retention_natural_regeneration_on_farm</td>
+<td headers="stat_0" class="gt_row gt_center">37%</td>
+<td headers="stat_1" class="gt_row gt_center">44%</td>
+<td headers="stat_2" class="gt_row gt_center">30%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">homemade_animal_feeds_made_with_locally_available_ingredients</td>
+<td headers="stat_0" class="gt_row gt_center">26%</td>
+<td headers="stat_1" class="gt_row gt_center">28%</td>
+<td headers="stat_2" class="gt_row gt_center">23%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">fodder_production_for_ruminants_e_g_velvet_bean_lablab</td>
+<td headers="stat_0" class="gt_row gt_center">4.5%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">4.5%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">fodder_preservation_for_ruminants_e_g_silage_making</td>
+<td headers="stat_0" class="gt_row gt_center">4.1%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">6.7%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">survival_feeding_feeding_of_productive_livestock_in_lean_season</td>
+<td headers="stat_0" class="gt_row gt_center">4.5%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">4.5%</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">tot_div</td>
+<td headers="stat_0" class="gt_row gt_center">6.8 (3.7)</td>
+<td headers="stat_1" class="gt_row gt_center">6.7 (3.4)</td>
+<td headers="stat_2" class="gt_row gt_center">7.0 (3.9)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">cereal_prod</td>
+<td headers="stat_0" class="gt_row gt_center">867.0 (962.0)</td>
+<td headers="stat_1" class="gt_row gt_center">548.5 (464.6)</td>
+<td headers="stat_2" class="gt_row gt_center">1,180.8 (1,196.4)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">offtake</td>
+<td headers="stat_0" class="gt_row gt_center">0.4 (1.3)</td>
+<td headers="stat_1" class="gt_row gt_center">0.3 (1.0)</td>
+<td headers="stat_2" class="gt_row gt_center">0.4 (1.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">eq_value</td>
+<td headers="stat_0" class="gt_row gt_center">290.0 (689.5)</td>
+<td headers="stat_1" class="gt_row gt_center">206.4 (308.1)</td>
+<td headers="stat_2" class="gt_row gt_center">372.4 (916.5)</td></tr>
+  </tbody>
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>Mean (SD); %</span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<p>We add a line ‘type’ to force hdds to be read as a continuous variable.</p>
+<p>We add ‘label’ lines to recode variable labels into nicer labels.</p>
+<p>We add a column with a statistical test comparing values between the two wards - through the function <em>add_p()</em> - and a column with values for the overall population - with the function <em>add_overall()</em>. We use the option ‘strip’ for the pdf rendering.</p>
+<pre class="text"><code>small_dataset[, -c(1, 3)] %&gt;%
+    tbl_summary(by = ward, statistic = list(all_continuous() ~ &quot;{mean} ({sd})&quot;, all_categorical() ~
+        &quot;{p}%&quot;), type = list(hdds ~ &quot;continuous&quot;), digits = all_continuous() ~ 1,
+        label = list(how_old_is_the_head_of_the_household ~ &quot;Age of the head of the household&quot;,
+            what_is_the_sex_of_the_head_of_the_household ~ &quot;Female-headed households&quot;,
+            what_is_the_education_level_of_the_head_of_the_household ~ &quot;Education of the head of the household higher than primary&quot;,
+            what_is_the_education_level_of_the_head_of_the_household ~ &quot;Family size&quot;,
+            eq_value ~ &quot;Equipment value (USD)&quot;, cropped_area ~ &quot;Total cropped area (ha)&quot;,
+            fallow ~ &quot;Fallow land (ha)&quot;, prop_non_cereals ~ &quot;Non-cereal crops (% total cropped area)&quot;,
+            fertilizers ~ &quot;Total fertilizer used (kg)&quot;, amendment ~ &quot;Total manure + compost used (kg)&quot;,
+            cattle ~ &quot;Cattle (n)&quot;, small_rum ~ &quot;Small ruminants (n)&quot;, poultry ~ &quot;Poultry (n)&quot;,
+            bee_hives ~ &quot;Bee keeping&quot;, ind_garden ~ &quot;Owning an individual garden&quot;,
+            com_garden ~ &quot;Having access to a communal garden&quot;, main_food_source ~
+                &quot;Own production as main source of food&quot;, main_income_source ~ &quot;Farming as main source of income&quot;,
+            food_security ~ &quot;Proportion of the year being food secured&quot;, hdds ~ &quot;24H household dietary diversity score (0-12)&quot;,
+            community_seed_banks ~ &quot;Using a community seed bank&quot;, small_grains ~
+                &quot;Using small grains&quot;, crop_rotation ~ &quot;Using crop rotation&quot;, intercropping ~
+                &quot;Using intercropping&quot;, cover_crops_for_erosion_control_and_or_soil_fertility ~
+                &quot;Using cover crops&quot;, mulching ~ &quot;Using mulching&quot;, integrated_pest_management_i_e_scouting_etc ~
+                &quot;Using integrated pest management&quot;, compost_manure ~ &quot;Using compost and manure&quot;,
+            tree_planting_on_farm ~ &quot;Planting trees on-farm&quot;, tree_retention_natural_regeneration_on_farm ~
+                &quot;Retaining naturally regenerated trees on-farm&quot;, homemade_animal_feeds_made_with_locally_available_ingredients ~
+                &quot;Using homemade animal feed&quot;, fodder_production_for_ruminants_e_g_velvet_bean_lablab ~
+                &quot;Produccing fodder&quot;, fodder_preservation_for_ruminants_e_g_silage_making ~
+                &quot;Preserving fodder&quot;, survival_feeding_feeding_of_productive_livestock_in_lean_season ~
+                &quot;Using survival feeding&quot;, tot_div ~ &quot;Total farm diversity (n species)&quot;,
+            cereal_prod ~ &quot;Total cereal production (kg/yr)&quot;, offtake ~ &quot;Total livestock offtake (TLU/yr)&quot;)) %&gt;%
+    add_p(test = list(all_continuous() ~ &quot;kruskal.test&quot;, all_categorical() ~ &quot;chisq.test&quot;)) %&gt;%
+    add_overall()</code></pre>
+<div id="bvcyomvwaq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bvcyomvwaq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#bvcyomvwaq thead, #bvcyomvwaq tbody, #bvcyomvwaq tfoot, #bvcyomvwaq tr, #bvcyomvwaq td, #bvcyomvwaq th {
+  border-style: none;
+}
+
+#bvcyomvwaq p {
+  margin: 0;
+  padding: 0;
+}
+
+#bvcyomvwaq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#bvcyomvwaq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bvcyomvwaq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bvcyomvwaq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bvcyomvwaq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bvcyomvwaq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bvcyomvwaq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bvcyomvwaq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bvcyomvwaq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#bvcyomvwaq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#bvcyomvwaq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bvcyomvwaq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bvcyomvwaq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bvcyomvwaq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bvcyomvwaq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bvcyomvwaq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#bvcyomvwaq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#bvcyomvwaq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#bvcyomvwaq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bvcyomvwaq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#bvcyomvwaq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bvcyomvwaq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bvcyomvwaq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bvcyomvwaq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bvcyomvwaq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bvcyomvwaq .gt_left {
+  text-align: left;
+}
+
+#bvcyomvwaq .gt_center {
+  text-align: center;
+}
+
+#bvcyomvwaq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bvcyomvwaq .gt_font_normal {
+  font-weight: normal;
+}
+
+#bvcyomvwaq .gt_font_bold {
+  font-weight: bold;
+}
+
+#bvcyomvwaq .gt_font_italic {
+  font-style: italic;
+}
+
+#bvcyomvwaq .gt_super {
+  font-size: 65%;
+}
+
+#bvcyomvwaq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#bvcyomvwaq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#bvcyomvwaq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#bvcyomvwaq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#bvcyomvwaq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#bvcyomvwaq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#bvcyomvwaq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#bvcyomvwaq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#bvcyomvwaq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class='gt_from_md'><strong>Characteristic</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0"><span class='gt_from_md'><strong>Overall</strong><br />
+N = 266</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"><span class='gt_from_md'><strong>Ward 2</strong><br />
+N = 132</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"><span class='gt_from_md'><strong>Ward 3 9 12 17</strong><br />
+N = 134</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span class='gt_from_md'><strong>p-value</strong></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">Age of the head of the household</td>
+<td headers="stat_0" class="gt_row gt_center">51.4 (15.7)</td>
+<td headers="stat_1" class="gt_row gt_center">49.7 (16.0)</td>
+<td headers="stat_2" class="gt_row gt_center">53.1 (15.3)</td>
+<td headers="p.value" class="gt_row gt_center">0.036</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Female-headed households</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td>
+<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Female</td>
+<td headers="stat_0" class="gt_row gt_center">23%</td>
+<td headers="stat_1" class="gt_row gt_center">21%</td>
+<td headers="stat_2" class="gt_row gt_center">25%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Male</td>
+<td headers="stat_0" class="gt_row gt_center">77%</td>
+<td headers="stat_1" class="gt_row gt_center">79%</td>
+<td headers="stat_2" class="gt_row gt_center">75%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Family size</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td>
+<td headers="p.value" class="gt_row gt_center">0.032</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Primary level</td>
+<td headers="stat_0" class="gt_row gt_center">60%</td>
+<td headers="stat_1" class="gt_row gt_center">55%</td>
+<td headers="stat_2" class="gt_row gt_center">65%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Secondary level</td>
+<td headers="stat_0" class="gt_row gt_center">36%</td>
+<td headers="stat_1" class="gt_row gt_center">40%</td>
+<td headers="stat_2" class="gt_row gt_center">32%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Tertiary level</td>
+<td headers="stat_0" class="gt_row gt_center">1.1%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">2.2%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Vocational school</td>
+<td headers="stat_0" class="gt_row gt_center">2.6%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">family_size</td>
+<td headers="stat_0" class="gt_row gt_center">5.6 (3.2)</td>
+<td headers="stat_1" class="gt_row gt_center">6.0 (3.6)</td>
+<td headers="stat_2" class="gt_row gt_center">5.3 (2.6)</td>
+<td headers="p.value" class="gt_row gt_center">0.10</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total cropped area (ha)</td>
+<td headers="stat_0" class="gt_row gt_center">1.8 (1.5)</td>
+<td headers="stat_1" class="gt_row gt_center">1.5 (1.3)</td>
+<td headers="stat_2" class="gt_row gt_center">2.1 (1.6)</td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Fallow land (ha)</td>
+<td headers="stat_0" class="gt_row gt_center">0.7 (1.4)</td>
+<td headers="stat_1" class="gt_row gt_center">0.6 (1.0)</td>
+<td headers="stat_2" class="gt_row gt_center">0.9 (1.6)</td>
+<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Non-cereal crops (% total cropped area)</td>
+<td headers="stat_0" class="gt_row gt_center">29.9 (29.1)</td>
+<td headers="stat_1" class="gt_row gt_center">30.0 (30.8)</td>
+<td headers="stat_2" class="gt_row gt_center">29.8 (27.5)</td>
+<td headers="p.value" class="gt_row gt_center">0.7</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total fertilizer used (kg)</td>
+<td headers="stat_0" class="gt_row gt_center">87.0 (115.2)</td>
+<td headers="stat_1" class="gt_row gt_center">72.9 (90.9)</td>
+<td headers="stat_2" class="gt_row gt_center">101.0 (133.9)</td>
+<td headers="p.value" class="gt_row gt_center">0.14</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total manure + compost used (kg)</td>
+<td headers="stat_0" class="gt_row gt_center">304.5 (626.1)</td>
+<td headers="stat_1" class="gt_row gt_center">294.1 (653.2)</td>
+<td headers="stat_2" class="gt_row gt_center">314.8 (600.5)</td>
+<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Cattle (n)</td>
+<td headers="stat_0" class="gt_row gt_center">4.3 (8.9)</td>
+<td headers="stat_1" class="gt_row gt_center">3.5 (8.7)</td>
+<td headers="stat_2" class="gt_row gt_center">5.2 (9.1)</td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Small ruminants (n)</td>
+<td headers="stat_0" class="gt_row gt_center">10.4 (20.1)</td>
+<td headers="stat_1" class="gt_row gt_center">9.4 (17.4)</td>
+<td headers="stat_2" class="gt_row gt_center">11.4 (22.5)</td>
+<td headers="p.value" class="gt_row gt_center">0.7</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Poultry (n)</td>
+<td headers="stat_0" class="gt_row gt_center">11.7 (29.9)</td>
+<td headers="stat_1" class="gt_row gt_center">10.0 (11.3)</td>
+<td headers="stat_2" class="gt_row gt_center">13.3 (40.6)</td>
+<td headers="p.value" class="gt_row gt_center">0.4</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Bee keeping</td>
+<td headers="stat_0" class="gt_row gt_center">11%</td>
+<td headers="stat_1" class="gt_row gt_center">7.6%</td>
+<td headers="stat_2" class="gt_row gt_center">13%</td>
+<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Owning an individual garden</td>
+<td headers="stat_0" class="gt_row gt_center">48%</td>
+<td headers="stat_1" class="gt_row gt_center">55%</td>
+<td headers="stat_2" class="gt_row gt_center">40%</td>
+<td headers="p.value" class="gt_row gt_center">0.020</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Having access to a communal garden</td>
+<td headers="stat_0" class="gt_row gt_center">2.3%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td>
+<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Own production as main source of food</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Cash purchase from income</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Casual labour for food</td>
+<td headers="stat_0" class="gt_row gt_center">18%</td>
+<td headers="stat_1" class="gt_row gt_center">30%</td>
+<td headers="stat_2" class="gt_row gt_center">6.0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Food aid</td>
+<td headers="stat_0" class="gt_row gt_center">3.0%</td>
+<td headers="stat_1" class="gt_row gt_center">5.3%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Own production</td>
+<td headers="stat_0" class="gt_row gt_center">75%</td>
+<td headers="stat_1" class="gt_row gt_center">61%</td>
+<td headers="stat_2" class="gt_row gt_center">90%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Purchase from cash transfer</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Remittances</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Farming as main source of income</td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td>
+<td headers="p.value" class="gt_row gt_center">0.003</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Artisan</td>
+<td headers="stat_0" class="gt_row gt_center">0.8%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Casual labour</td>
+<td headers="stat_0" class="gt_row gt_center">35%</td>
+<td headers="stat_1" class="gt_row gt_center">43%</td>
+<td headers="stat_2" class="gt_row gt_center">28%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Crop sales</td>
+<td headers="stat_0" class="gt_row gt_center">36%</td>
+<td headers="stat_1" class="gt_row gt_center">28%</td>
+<td headers="stat_2" class="gt_row gt_center">44%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Livestock sales</td>
+<td headers="stat_0" class="gt_row gt_center">15%</td>
+<td headers="stat_1" class="gt_row gt_center">9.8%</td>
+<td headers="stat_2" class="gt_row gt_center">20%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Pension</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0.8%</td>
+<td headers="stat_2" class="gt_row gt_center">0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Remittances</td>
+<td headers="stat_0" class="gt_row gt_center">5.3%</td>
+<td headers="stat_1" class="gt_row gt_center">7.6%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Salary or wages</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">5.3%</td>
+<td headers="stat_2" class="gt_row gt_center">1.5%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Smallscale mining</td>
+<td headers="stat_0" class="gt_row gt_center">0.4%</td>
+<td headers="stat_1" class="gt_row gt_center">0%</td>
+<td headers="stat_2" class="gt_row gt_center">0.7%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Trade</td>
+<td headers="stat_0" class="gt_row gt_center">3.4%</td>
+<td headers="stat_1" class="gt_row gt_center">3.8%</td>
+<td headers="stat_2" class="gt_row gt_center">3.0%</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Proportion of the year being food secured</td>
+<td headers="stat_0" class="gt_row gt_center">0.6 (0.3)</td>
+<td headers="stat_1" class="gt_row gt_center">0.5 (0.3)</td>
+<td headers="stat_2" class="gt_row gt_center">0.6 (0.3)</td>
+<td headers="p.value" class="gt_row gt_center">0.022</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">24H household dietary diversity score (0-12)</td>
+<td headers="stat_0" class="gt_row gt_center">3.1 (1.1)</td>
+<td headers="stat_1" class="gt_row gt_center">3.3 (0.9)</td>
+<td headers="stat_2" class="gt_row gt_center">3.0 (1.2)</td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using a community seed bank</td>
+<td headers="stat_0" class="gt_row gt_center">12%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">22%</td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using small grains</td>
+<td headers="stat_0" class="gt_row gt_center">87%</td>
+<td headers="stat_1" class="gt_row gt_center">86%</td>
+<td headers="stat_2" class="gt_row gt_center">87%</td>
+<td headers="p.value" class="gt_row gt_center">>0.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using crop rotation</td>
+<td headers="stat_0" class="gt_row gt_center">51%</td>
+<td headers="stat_1" class="gt_row gt_center">49%</td>
+<td headers="stat_2" class="gt_row gt_center">53%</td>
+<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using intercropping</td>
+<td headers="stat_0" class="gt_row gt_center">17%</td>
+<td headers="stat_1" class="gt_row gt_center">11%</td>
+<td headers="stat_2" class="gt_row gt_center">23%</td>
+<td headers="p.value" class="gt_row gt_center">0.018</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using cover crops</td>
+<td headers="stat_0" class="gt_row gt_center">8.6%</td>
+<td headers="stat_1" class="gt_row gt_center">6.8%</td>
+<td headers="stat_2" class="gt_row gt_center">10%</td>
+<td headers="p.value" class="gt_row gt_center">0.4</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using mulching</td>
+<td headers="stat_0" class="gt_row gt_center">9.8%</td>
+<td headers="stat_1" class="gt_row gt_center">9.8%</td>
+<td headers="stat_2" class="gt_row gt_center">9.7%</td>
+<td headers="p.value" class="gt_row gt_center">>0.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using integrated pest management</td>
+<td headers="stat_0" class="gt_row gt_center">50%</td>
+<td headers="stat_1" class="gt_row gt_center">43%</td>
+<td headers="stat_2" class="gt_row gt_center">57%</td>
+<td headers="p.value" class="gt_row gt_center">0.027</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using compost and manure</td>
+<td headers="stat_0" class="gt_row gt_center">17%</td>
+<td headers="stat_1" class="gt_row gt_center">17%</td>
+<td headers="stat_2" class="gt_row gt_center">17%</td>
+<td headers="p.value" class="gt_row gt_center">>0.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Planting trees on-farm</td>
+<td headers="stat_0" class="gt_row gt_center">14%</td>
+<td headers="stat_1" class="gt_row gt_center">9.1%</td>
+<td headers="stat_2" class="gt_row gt_center">19%</td>
+<td headers="p.value" class="gt_row gt_center">0.026</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Retaining naturally regenerated trees on-farm</td>
+<td headers="stat_0" class="gt_row gt_center">37%</td>
+<td headers="stat_1" class="gt_row gt_center">44%</td>
+<td headers="stat_2" class="gt_row gt_center">30%</td>
+<td headers="p.value" class="gt_row gt_center">0.024</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using homemade animal feed</td>
+<td headers="stat_0" class="gt_row gt_center">26%</td>
+<td headers="stat_1" class="gt_row gt_center">28%</td>
+<td headers="stat_2" class="gt_row gt_center">23%</td>
+<td headers="p.value" class="gt_row gt_center">0.4</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Produccing fodder</td>
+<td headers="stat_0" class="gt_row gt_center">4.5%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">4.5%</td>
+<td headers="p.value" class="gt_row gt_center">>0.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Preserving fodder</td>
+<td headers="stat_0" class="gt_row gt_center">4.1%</td>
+<td headers="stat_1" class="gt_row gt_center">1.5%</td>
+<td headers="stat_2" class="gt_row gt_center">6.7%</td>
+<td headers="p.value" class="gt_row gt_center">0.068</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Using survival feeding</td>
+<td headers="stat_0" class="gt_row gt_center">4.5%</td>
+<td headers="stat_1" class="gt_row gt_center">4.5%</td>
+<td headers="stat_2" class="gt_row gt_center">4.5%</td>
+<td headers="p.value" class="gt_row gt_center">>0.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total farm diversity (n species)</td>
+<td headers="stat_0" class="gt_row gt_center">6.8 (3.7)</td>
+<td headers="stat_1" class="gt_row gt_center">6.7 (3.4)</td>
+<td headers="stat_2" class="gt_row gt_center">7.0 (3.9)</td>
+<td headers="p.value" class="gt_row gt_center">0.7</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total cereal production (kg/yr)</td>
+<td headers="stat_0" class="gt_row gt_center">867.0 (962.0)</td>
+<td headers="stat_1" class="gt_row gt_center">548.5 (464.6)</td>
+<td headers="stat_2" class="gt_row gt_center">1,180.8 (1,196.4)</td>
+<td headers="p.value" class="gt_row gt_center"><0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total livestock offtake (TLU/yr)</td>
+<td headers="stat_0" class="gt_row gt_center">0.4 (1.3)</td>
+<td headers="stat_1" class="gt_row gt_center">0.3 (1.0)</td>
+<td headers="stat_2" class="gt_row gt_center">0.4 (1.5)</td>
+<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Equipment value (USD)</td>
+<td headers="stat_0" class="gt_row gt_center">290.0 (689.5)</td>
+<td headers="stat_1" class="gt_row gt_center">206.4 (308.1)</td>
+<td headers="stat_2" class="gt_row gt_center">372.4 (916.5)</td>
+<td headers="p.value" class="gt_row gt_center">0.004</td></tr>
+  </tbody>
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td class="gt_footnote" colspan="5"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>Mean (SD); %</span></td>
+    </tr>
+    <tr class="gt_footnotes">
+      <td class="gt_footnote" colspan="5"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class='gt_from_md'>Kruskal-Wallis rank sum test; Pearson’s Chi-squared test</span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<div id="rmarkdown" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> RMarkdown<a href="baselining.html#rmarkdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>RMarkdown is an authoring framework supported by the R package <strong>rmarkdown</strong> <span class="citation">(<a href="#ref-rmarkdown">Allaire et al. 2024</a>)</span> that combines text, code, and outputs (e.g., tables, plots, and results) in a single document. It executes codes (R, Python, etc) and generates high quality reports (pdf, word, html, etc).</p>
+<p>You can develop a RMarkdown baseline report while your survey is ongoing: tables, plots and results will update as the dataset gets populated. And you can produce your final baseline report and share it with your partners and donors the same day the last farm is being interviewed!</p>
+<p>Here are the codes to generate a simple RMarkdown baseline report with the figures we generated earlier: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/simple_rmarkdown_baseline_report.Rmd" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/simple_rmarkdown_baseline_report.Rmd</a>.</p>
+<p>And here is the pdf rendered by these codes: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/simple_rmarkdown_baseline_report.pdf" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/06-baselining/simple_rmarkdown_baseline_report.pdf</a>.</p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-rmarkdown" class="csl-entry">
+Allaire, JJ, Yihui Xie, Christophe Dervieux, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, et al. 2024. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.
+</div>
+<div id="ref-ggspatial" class="csl-entry">
+Dunnington, Dewey. 2023. <em>Ggspatial: Spatial Data Framework for Ggplot2</em>. <a href="https://CRAN.R-project.org/package=ggspatial">https://CRAN.R-project.org/package=ggspatial</a>.
+</div>
+<div id="ref-janitor" class="csl-entry">
+Firke, Sam. 2024. <em>Janitor: Simple Tools for Examining and Cleaning Dirty Data</em>. <a href="https://CRAN.R-project.org/package=janitor">https://CRAN.R-project.org/package=janitor</a>.
+</div>
+<div id="ref-terra" class="csl-entry">
+Hijmans, Robert J. 2024. <em>Terra: Spatial Data Analysis</em>. <a href="https://CRAN.R-project.org/package=terra">https://CRAN.R-project.org/package=terra</a>.
+</div>
+<div id="ref-geodata" class="csl-entry">
+Hijmans, Robert J., Márcia Barbosa, Aniruddha Ghosh, and Alex Mandel. 2024. <em>Geodata: Download Geographic Data</em>. <a href="https://CRAN.R-project.org/package=geodata">https://CRAN.R-project.org/package=geodata</a>.
+</div>
+<div id="ref-Houérou1977" class="csl-entry">
+Houérou, H N Le, and C H Hoste. 1977. <span>“Rangeland Production and Annual Rainfall Relations in the Mediterranean Basin and in the African Sahelo-Sudanian Zone.”</span> <em>Journal of Range Management</em> 30: 181–89. <a href="https://doi.org/10.2307/3897463">https://doi.org/10.2307/3897463</a>.
+</div>
+<div id="ref-Jahnke1982" class="csl-entry">
+Jahnke, Hans E. 1982. <em>Livestock Production Systems and Livestock Development in Tropical Africa</em>. <em>American Journal of Agricultural Economics</em>. Kieler Wis. Vol. 65. <a href="https://doi.org/10.2307/1240913">https://doi.org/10.2307/1240913</a>.
+</div>
+<div id="ref-Kennedy2010" class="csl-entry">
+Kennedy, Gina, Andrea Berardo, Cinzia Papavero, Peter Horjus, Terri Ballard, MarieClaude Dop, Jan Delbaere, and Inge D Brouwer. 2010. <span>“Proxy Measures of Household Food Consumption for Food Security Assessment and Surveillance: Comparison of the Household Dietary Diversity and Food Consumption Scores.”</span> <em>Public Health Nutrition</em> 13: 2010–18. <a href="https://doi.org/10.1017/S136898001000145X">https://doi.org/10.1017/S136898001000145X</a>.
+</div>
+<div id="ref-gtsummary" class="csl-entry">
+Sjoberg, Daniel D., Karissa Whiting, Michael Curry, Jessica A. Lavery, and Joseph Larmarange. 2021. <span>“Reproducible Summary Tables with the Gtsummary Package.”</span> <em><span>The R Journal</span></em> 13: 570–80. <a href="https://doi.org/10.32614/RJ-2021-053">https://doi.org/10.32614/RJ-2021-053</a>.
+</div>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-tidyr" class="csl-entry">
+Wickham, Hadley, Davis Vaughan, and Maximilian Girlich. 2024. <em>Tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="evaluating-on-farm-experiments.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="farm-typologies.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/05-baseline.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

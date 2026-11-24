@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Ecological Network Analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+  <meta name="description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Ecological Network Analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Ecological Network Analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit" />
+  
+  <meta name="twitter:description" content="This book presents a set of reproducible, data-driven workflows developed by the CGIAR initiative Transformational Agroecology across Food, Land, and Water Systems and the CGIAR Multifunctional Landscapes (MFL) science program to strengthen the co-design process within Living Labs and Living Landscapes. The workflows combine KoboToolbox, an open-access digital platform for participatory data collection, with R, a powerful open-source environment for statistical computing and visualization. Drawing on the contrasting Living Landscapes of the MFL science program across sub-Saharan Africa, the book provides researchers and practitioners with clear, step-by-step guidance and practical examples of how data can be leveraged at different spatial scales - from the plot and farm to the landscape and region - and throughout the different stages of the co-design process." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="farm-typologies.html"/>
+<link rel="next" href="spatial-prediction-of-crop-damage.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Supporting Codesign in Living Labs with Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose-of-this-book"><i class="fa fa-check"></i><b>1.1</b> Purpose of this book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#kobotoolbox-and-r"><i class="fa fa-check"></i><b>1.2</b> KoboToolBox and R</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i><b>1.3</b> Structure of this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html"><i class="fa fa-check"></i><b>2</b> Learning KoboToolBox and R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#a-quick-tutorial-on-kobotoolbox"><i class="fa fa-check"></i><b>2.1</b> A quick tutorial on KoboToolbox</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#building-a-simple-form-manually"><i class="fa fa-check"></i><b>2.1.1</b> Building a simple form manually</a></li>
+<li class="chapter" data-level="2.1.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#filling-forms-on-your-android-device"><i class="fa fa-check"></i><b>2.1.2</b> Filling forms on your android device</a></li>
+<li class="chapter" data-level="2.1.3" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#visualizing-and-downloading-the-collected-data-on-your-computer"><i class="fa fa-check"></i><b>2.1.3</b> Visualizing and downloading the collected data on your computer</a></li>
+<li class="chapter" data-level="2.1.4" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#saving-a-pdf-of-your-questionnaire-to-share-with-colleagues"><i class="fa fa-check"></i><b>2.1.4</b> Saving a PDF of your questionnaire to share with colleagues</a></li>
+<li class="chapter" data-level="2.1.5" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#working-with-an-xlsform"><i class="fa fa-check"></i><b>2.1.5</b> Working with an XLSForm</a></li>
+<li class="chapter" data-level="2.1.6" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#adding-cascading-questions"><i class="fa fa-check"></i><b>2.1.6</b> Adding cascading questions</a></li>
+<li class="chapter" data-level="2.1.7" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#an-example-of-survey"><i class="fa fa-check"></i><b>2.1.7</b> An example of survey</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="learning-kobotoolbox-and-r.html"><a href="learning-kobotoolbox-and-r.html#resources-to-learn-r"><i class="fa fa-check"></i><b>2.2</b> Resources to learn R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-datasets.html"><a href="spatial-datasets.html"><i class="fa fa-check"></i><b>3</b> Spatial datasets</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="spatial-datasets.html"><a href="spatial-datasets.html#shapefile-of-sub-saharan-africa"><i class="fa fa-check"></i><b>3.0.1</b> Shapefile of sub-Saharan Africa</a></li>
+<li class="chapter" data-level="3.0.2" data-path="spatial-datasets.html"><a href="spatial-datasets.html#rasters-derived-from-spam"><i class="fa fa-check"></i><b>3.0.2</b> Rasters derived from SPAM</a></li>
+<li class="chapter" data-level="3.0.3" data-path="spatial-datasets.html"><a href="spatial-datasets.html#soil-data"><i class="fa fa-check"></i><b>3.0.3</b> Soil data</a></li>
+<li class="chapter" data-level="3.0.4" data-path="spatial-datasets.html"><a href="spatial-datasets.html#climate-data"><i class="fa fa-check"></i><b>3.0.4</b> Climate data</a></li>
+<li class="chapter" data-level="3.0.5" data-path="spatial-datasets.html"><a href="spatial-datasets.html#socio-economic-data"><i class="fa fa-check"></i><b>3.0.5</b> Socio-economic data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html"><i class="fa fa-check"></i><b>4</b> Managing on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes"><i class="fa fa-check"></i><b>4.1</b> Generating QR codes</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-farmerstrials"><i class="fa fa-check"></i><b>4.1.1</b> Generating QR codes for farmers/trials</a></li>
+<li class="chapter" data-level="4.1.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#generating-qr-codes-for-plotstreatments"><i class="fa fa-check"></i><b>4.1.2</b> Generating QR codes for plots/treatments</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#integrating-qr-codes-in-kobotoolbox-surveys"><i class="fa fa-check"></i><b>4.2</b> Integrating QR codes in KoboToolBox surveys</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#data-from-kobotoolbox-surveys-that-include-qr-codes"><i class="fa fa-check"></i><b>4.2.1</b> Data from KoboToolBox surveys that include QR codes</a></li>
+<li class="chapter" data-level="4.2.2" data-path="managing-on-farm-experiments.html"><a href="managing-on-farm-experiments.html#running-basic-statistical-models-on-the-cleaned-data"><i class="fa fa-check"></i><b>4.2.2</b> Running basic statistical models on the cleaned data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html"><i class="fa fa-check"></i><b>5</b> Evaluating on-farm experiments</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#visualization-of-treatments-performance"><i class="fa fa-check"></i><b>5.1</b> Visualization of treatments’ performance</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#pest-pressure-in-different-treatments"><i class="fa fa-check"></i><b>5.1.1</b> Pest pressure in different treatments</a></li>
+<li class="chapter" data-level="5.1.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#productivity-of-different-treatments"><i class="fa fa-check"></i><b>5.1.2</b> Productivity of different treatments</a></li>
+<li class="chapter" data-level="5.1.3" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#rating-of-treatments-by-different-demographic-groups"><i class="fa fa-check"></i><b>5.1.3</b> Rating of treatments by different demographic groups</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#shiny-app"><i class="fa fa-check"></i><b>5.2</b> Shiny app</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#decription-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.1</b> Decription of a Shiny app</a></li>
+<li class="chapter" data-level="5.2.2" data-path="evaluating-on-farm-experiments.html"><a href="evaluating-on-farm-experiments.html#example-of-a-shiny-app"><i class="fa fa-check"></i><b>5.2.2</b> Example of a Shiny app</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="baselining.html"><a href="baselining.html"><i class="fa fa-check"></i><b>6</b> Baselining</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="baselining.html"><a href="baselining.html#data-preparation"><i class="fa fa-check"></i><b>6.1</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="baselining.html"><a href="baselining.html#data-cleaning"><i class="fa fa-check"></i><b>6.1.1</b> Data cleaning</a></li>
+<li class="chapter" data-level="6.1.2" data-path="baselining.html"><a href="baselining.html#calculation-of-new-variables"><i class="fa fa-check"></i><b>6.1.2</b> Calculation of new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="baselining.html"><a href="baselining.html#preliminary-analyses"><i class="fa fa-check"></i><b>6.2</b> Preliminary analyses</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="baselining.html"><a href="baselining.html#map-of-surveyed-farms"><i class="fa fa-check"></i><b>6.2.1</b> Map of surveyed farms</a></li>
+<li class="chapter" data-level="6.2.2" data-path="baselining.html"><a href="baselining.html#stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.2</b> Stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.3" data-path="baselining.html"><a href="baselining.html#more-complex-stacked-bar-chart"><i class="fa fa-check"></i><b>6.2.3</b> More complex stacked bar chart</a></li>
+<li class="chapter" data-level="6.2.4" data-path="baselining.html"><a href="baselining.html#lollipop-diagram"><i class="fa fa-check"></i><b>6.2.4</b> Lollipop diagram</a></li>
+<li class="chapter" data-level="6.2.5" data-path="baselining.html"><a href="baselining.html#bubble-chart"><i class="fa fa-check"></i><b>6.2.5</b> Bubble chart</a></li>
+<li class="chapter" data-level="6.2.6" data-path="baselining.html"><a href="baselining.html#pie-chart"><i class="fa fa-check"></i><b>6.2.6</b> Pie chart</a></li>
+<li class="chapter" data-level="6.2.7" data-path="baselining.html"><a href="baselining.html#summary-table"><i class="fa fa-check"></i><b>6.2.7</b> Summary table</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="baselining.html"><a href="baselining.html#rmarkdown"><i class="fa fa-check"></i><b>6.3</b> RMarkdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="farm-typologies.html"><a href="farm-typologies.html"><i class="fa fa-check"></i><b>7</b> Farm typologies</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="farm-typologies.html"><a href="farm-typologies.html#concept-of-farm-typology"><i class="fa fa-check"></i><b>7.1</b> Concept of farm typology</a></li>
+<li class="chapter" data-level="7.2" data-path="farm-typologies.html"><a href="farm-typologies.html#data-preparation-1"><i class="fa fa-check"></i><b>7.2</b> Data preparation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="farm-typologies.html"><a href="farm-typologies.html#removing-outliers"><i class="fa fa-check"></i><b>7.2.1</b> Removing outliers</a></li>
+<li class="chapter" data-level="7.2.2" data-path="farm-typologies.html"><a href="farm-typologies.html#normalization-of-continuous-variables"><i class="fa fa-check"></i><b>7.2.2</b> Normalization of continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="farm-typologies.html"><a href="farm-typologies.html#delineation-of-farm-types"><i class="fa fa-check"></i><b>7.3</b> Delineation of farm types</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="farm-typologies.html"><a href="farm-typologies.html#preparing-the-typology-dataset"><i class="fa fa-check"></i><b>7.3.1</b> Preparing the typology dataset</a></li>
+<li class="chapter" data-level="7.3.2" data-path="farm-typologies.html"><a href="farm-typologies.html#calculating-gower-dissimilarities"><i class="fa fa-check"></i><b>7.3.2</b> Calculating Gower dissimilarities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="farm-typologies.html"><a href="farm-typologies.html#reducing-dimensionality-using-pcoa"><i class="fa fa-check"></i><b>7.3.3</b> Reducing dimensionality using PCoA</a></li>
+<li class="chapter" data-level="7.3.4" data-path="farm-typologies.html"><a href="farm-typologies.html#selecting-the-number-of-farm-types"><i class="fa fa-check"></i><b>7.3.4</b> Selecting the number of farm types</a></li>
+<li class="chapter" data-level="7.3.5" data-path="farm-typologies.html"><a href="farm-typologies.html#classifying-farms-using-pam"><i class="fa fa-check"></i><b>7.3.5</b> Classifying farms using PAM</a></li>
+<li class="chapter" data-level="7.3.6" data-path="farm-typologies.html"><a href="farm-typologies.html#visualising-farm-types-in-pcoa-space"><i class="fa fa-check"></i><b>7.3.6</b> Visualising farm types in PCoA space</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="farm-typologies.html"><a href="farm-typologies.html#interpretation-of-the-farm-typology"><i class="fa fa-check"></i><b>7.4</b> Interpretation of the farm typology</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="farm-typologies.html"><a href="farm-typologies.html#random-forest"><i class="fa fa-check"></i><b>7.4.1</b> Random forest</a></li>
+<li class="chapter" data-level="7.4.2" data-path="farm-typologies.html"><a href="farm-typologies.html#summary-table-1"><i class="fa fa-check"></i><b>7.4.2</b> Summary table</a></li>
+<li class="chapter" data-level="7.4.3" data-path="farm-typologies.html"><a href="farm-typologies.html#most-representative-farm-of-each-type"><i class="fa fa-check"></i><b>7.4.3</b> Most representative farm of each type</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="farm-typologies.html"><a href="farm-typologies.html#selection-of-stratified-samples"><i class="fa fa-check"></i><b>7.5</b> Selection of stratified samples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html"><i class="fa fa-check"></i><b>8</b> Ecological Network Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2</b> Preparing and balancing farm nitrogen accounts</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#preparing-the-data"><i class="fa fa-check"></i><b>8.2.1</b> Preparing the data</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts"><i class="fa fa-check"></i><b>8.2.2</b> Balancing farm nitrogen accounts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#running-the-ecological-network-analysis"><i class="fa fa-check"></i><b>8.3</b> Running the ecological network analysis</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#constructing-farm-level-networks"><i class="fa fa-check"></i><b>8.3.1</b> Constructing farm-level networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#classifying-nitrogen-flows"><i class="fa fa-check"></i><b>8.3.2</b> Classifying nitrogen flows</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators"><i class="fa fa-check"></i><b>8.3.3</b> Calculating TST and farm-level ENA indicators</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways"><i class="fa fa-check"></i><b>8.3.4</b> Summarising production and detailed flow pathways</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#interpreting-ena-indicators"><i class="fa fa-check"></i><b>8.3.5</b> Interpreting ENA indicators</a></li>
+<li class="chapter" data-level="8.3.6" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp"><i class="fa fa-check"></i><b>8.3.6</b> Expressing flow components relative to TST and TSTp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ecological-network-analysis.html"><a href="ecological-network-analysis.html#comparing-districts-and-farm-types"><i class="fa fa-check"></i><b>8.4</b> Comparing districts and farm types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html"><i class="fa fa-check"></i><b>9</b> Spatial prediction of crop damage</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#data-preparation-2"><i class="fa fa-check"></i><b>9.2</b> Data preparation</a></li>
+<li class="chapter" data-level="9.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3</b> Calculate landscape metrics</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#functions-to-calculate-landscape-metrics"><i class="fa fa-check"></i><b>9.3.1</b> Functions to calculate landscape metrics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#land-cover-map"><i class="fa fa-check"></i><b>9.3.2</b> Land-cover map</a></li>
+<li class="chapter" data-level="9.3.3" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#run-the-landscape-metric-workflow"><i class="fa fa-check"></i><b>9.3.3</b> Run the landscape-metric workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#explore-landscape-metrics"><i class="fa fa-check"></i><b>9.4</b> Explore landscape metrics</a></li>
+<li class="chapter" data-level="9.5" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#link-landscape-metrics-to-plot-year-observations"><i class="fa fa-check"></i><b>9.5</b> Link landscape metrics to plot-year observations</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="spatial-prediction-of-crop-damage.html"><a href="spatial-prediction-of-crop-damage.html#predict-stemborer-damage-using-random-forest"><i class="fa fa-check"></i><b>9.5.1</b> Predict stemborer damage using random forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html"><i class="fa fa-check"></i><b>10</b> Potential manure production under current land use</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#introduction-3"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#preparing-the-data-1"><i class="fa fa-check"></i><b>10.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-study-area"><i class="fa fa-check"></i><b>10.2.1</b> Define the study area</a></li>
+<li class="chapter" data-level="10.2.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-model-parameters"><i class="fa fa-check"></i><b>10.2.2</b> Define model parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#prepare-the-spatial-data"><i class="fa fa-check"></i><b>10.2.3</b> Prepare the spatial data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-wet-season-grazing-carrying-capacity"><i class="fa fa-check"></i><b>10.3</b> Estimation of wet-season grazing carrying capacity</a></li>
+<li class="chapter" data-level="10.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimation-of-dry-season-feed-and-nutrient-supply"><i class="fa fa-check"></i><b>10.4</b> Estimation of dry-season feed and nutrient supply</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#allocate-cropland-to-maize-and-legumes"><i class="fa fa-check"></i><b>10.4.1</b> Allocate cropland to maize and legumes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#estimate-nitrogen-fixation-by-legumes"><i class="fa fa-check"></i><b>10.4.2</b> Estimate nitrogen fixation by legumes</a></li>
+<li class="chapter" data-level="10.4.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#define-the-maize-yield-response-to-nutrient-inputs"><i class="fa fa-check"></i><b>10.4.3</b> Define the maize yield response to nutrient inputs</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#integrate-grazing-and-crop-residue-constraints"><i class="fa fa-check"></i><b>10.5</b> Integrate grazing and crop-residue constraints</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#initialize-the-iterative-calculation"><i class="fa fa-check"></i><b>10.5.1</b> Initialize the iterative calculation</a></li>
+<li class="chapter" data-level="10.5.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#iterate-between-manure-supply-maize-production-and-residue-availability"><i class="fa fa-check"></i><b>10.5.2</b> Iterate between manure supply, maize production and residue availability</a></li>
+<li class="chapter" data-level="10.5.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#calculate-final-stocking-density-and-limiting-factor"><i class="fa fa-check"></i><b>10.5.3</b> Calculate final stocking density and limiting factor</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#map-outputs"><i class="fa fa-check"></i><b>10.6</b> Map outputs</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#grazing-based-carrying-capacity"><i class="fa fa-check"></i><b>10.6.1</b> Grazing-based carrying capacity</a></li>
+<li class="chapter" data-level="10.6.2" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#final-stocking-density"><i class="fa fa-check"></i><b>10.6.2</b> Final stocking density</a></li>
+<li class="chapter" data-level="10.6.3" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#limiting-factor"><i class="fa fa-check"></i><b>10.6.3</b> Limiting factor</a></li>
+<li class="chapter" data-level="10.6.4" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#nitrogen-supplied-by-manure"><i class="fa fa-check"></i><b>10.6.4</b> Nitrogen supplied by manure</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="potential-manure-production-under-current-land-use.html"><a href="potential-manure-production-under-current-land-use.html#compare-modelled-stocking-density-with-gridded-livestock-data"><i class="fa fa-check"></i><b>10.7</b> Compare modelled stocking density with gridded livestock data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html"><i class="fa fa-check"></i><b>11</b> Spatial recommendation domains</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#introduction-4"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#preparing-the-data-2"><i class="fa fa-check"></i><b>11.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-stack"><i class="fa fa-check"></i><b>11.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="11.2.2" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#transformation-and-standardisation-of-the-data"><i class="fa fa-check"></i><b>11.2.2</b> Transformation and standardisation of the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#clustering"><i class="fa fa-check"></i><b>11.3</b> Clustering</a></li>
+<li class="chapter" data-level="11.4" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#train-a-random-forest-classifier"><i class="fa fa-check"></i><b>11.4</b> Train a random forest classifier</a></li>
+<li class="chapter" data-level="11.5" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#interpretation-of-the-domains"><i class="fa fa-check"></i><b>11.5</b> Interpretation of the domains</a></li>
+<li class="chapter" data-level="11.6" data-path="spatial-recommendation-domains.html"><a href="spatial-recommendation-domains.html#indicator-summaries-by-domain"><i class="fa fa-check"></i><b>11.6</b> Indicator summaries by domain</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html"><i class="fa fa-check"></i><b>12</b> Crop eco-physiological suitability</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#preparing-the-data-3"><i class="fa fa-check"></i><b>12.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#ssa-shapefile-cropland-mask-annual-precipitation-and-ph"><i class="fa fa-check"></i><b>12.2.1</b> SSA shapefile, cropland mask, annual precipitation and pH</a></li>
+<li class="chapter" data-level="12.2.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#deriving-growing-season-mean-temperature"><i class="fa fa-check"></i><b>12.2.2</b> Deriving growing-season mean temperature</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#fuzzy-suitability-functions"><i class="fa fa-check"></i><b>12.3</b> Fuzzy suitability functions</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#temperature-suitability"><i class="fa fa-check"></i><b>12.3.1</b> Temperature suitability</a></li>
+<li class="chapter" data-level="12.3.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#precipitation-suitability"><i class="fa fa-check"></i><b>12.3.2</b> Precipitation suitability</a></li>
+<li class="chapter" data-level="12.3.3" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#soil-ph-suitability"><i class="fa fa-check"></i><b>12.3.3</b> Soil pH suitability</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#combining-suitability-components"><i class="fa fa-check"></i><b>12.4</b> Combining suitability components</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#maize"><i class="fa fa-check"></i><b>12.4.1</b> Maize</a></li>
+<li class="chapter" data-level="12.4.2" data-path="crop-eco-physiological-suitability.html"><a href="crop-eco-physiological-suitability.html#sorghum"><i class="fa fa-check"></i><b>12.4.2</b> Sorghum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html"><i class="fa fa-check"></i><b>13</b> Soil and climate representativeness of trials</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#preparing-the-data-4"><i class="fa fa-check"></i><b>13.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#environmental-data-and-maize-harvested-area"><i class="fa fa-check"></i><b>13.2.1</b> Environmental data and maize harvested area</a></li>
+<li class="chapter" data-level="13.2.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#field-site-locations"><i class="fa fa-check"></i><b>13.2.2</b> Field-site locations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-of-maize-harvested-area-across-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3</b> Distribution of maize harvested area across climate and soil conditions</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-maize-harvested-area-and-field-sites"><i class="fa fa-check"></i><b>13.3.1</b> Mapping maize harvested area and field sites</a></li>
+<li class="chapter" data-level="13.3.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#classifying-climate-and-soil-conditions"><i class="fa fa-check"></i><b>13.3.2</b> Classifying climate and soil conditions</a></li>
+<li class="chapter" data-level="13.3.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-climate-conditions"><i class="fa fa-check"></i><b>13.3.3</b> Distribution across climate conditions</a></li>
+<li class="chapter" data-level="13.3.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#distribution-across-soil-conditions"><i class="fa fa-check"></i><b>13.3.4</b> Distribution across soil conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#representativity-of-the-environmental-classes-covered-by-field-sites"><i class="fa fa-check"></i><b>13.4</b> Representativity of the environmental classes covered by field sites</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#characterising-environmental-conditions-at-field-sites"><i class="fa fa-check"></i><b>13.4.1</b> Characterising environmental conditions at field sites</a></li>
+<li class="chapter" data-level="13.4.2" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#mapping-field-sites-within-the-environmental-envelopes"><i class="fa fa-check"></i><b>13.4.2</b> Mapping field sites within the environmental envelopes</a></li>
+<li class="chapter" data-level="13.4.3" data-path="soil-and-climate-representativeness-of-trials.html"><a href="soil-and-climate-representativeness-of-trials.html#calculating-environmental-coverage"><i class="fa fa-check"></i><b>13.4.3</b> Calculating environmental coverage</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html"><i class="fa fa-check"></i><b>14</b> Technology extrapolation domains</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#preparing-the-data-5"><i class="fa fa-check"></i><b>14.2</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#indicator-stack-1"><i class="fa fa-check"></i><b>14.2.1</b> Indicator stack</a></li>
+<li class="chapter" data-level="14.2.2" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#transformation-and-standardisation-of-the-data-1"><i class="fa fa-check"></i><b>14.2.2</b> Transformation and standardisation of the data</a></li>
+<li class="chapter" data-level="14.2.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#reference-sites"><i class="fa fa-check"></i><b>14.2.3</b> Reference sites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-technology-transferability"><i class="fa fa-check"></i><b>14.3</b> Calculate technology transferability</a></li>
+<li class="chapter" data-level="14.4" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-cumulative-reach"><i class="fa fa-check"></i><b>14.4</b> Calculate cumulative reach</a></li>
+<li class="chapter" data-level="14.5" data-path="technology-extrapolation-domains.html"><a href="technology-extrapolation-domains.html#calculate-combined-portfolio-reach."><i class="fa fa-check"></i><b>14.5</b> Calculate combined portfolio reach.</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>15</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ecological-network-analysis" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Ecological Network Analysis<a href="ecological-network-analysis.html#ecological-network-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter uses ecological network analysis to characterize nitrogen flows and assess the functioning of diverse farming systems at the farm level.</p>
+<div id="introduction-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction<a href="ecological-network-analysis.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ecological Network Analysis (ENA) provides a framework to examine how nutrients circulate within farming systems. Farms with similar nutrient inputs or nutrient-use efficiency may nevertheless differ substantially in how nutrient flows are distributed among compartments and internal pathways, and in the extent to which nutrients are recycled and retained within the system. ENA allows these differences to be examined by representing the farm as a network of compartments (nodes) connected by directed, quantified flows, and analysing the properties that emerge from their joint organization <span class="citation">(<a href="#ref-Rufino2009">Rufino et al. 2009</a>; <a href="#ref-Ulanowicz2009">Ulanowicz et al. 2009</a>)</span>.</p>
+<p>Applied to mixed crop–livestock systems, ENA thus provides a way to move beyond the analysis of individual practices or nutrient-use efficiency towards an assessment of the functioning of the farming system as a whole</p>
+<p>This chapter presents an ENA of annual nitrogen flows at farm level (kg N per farm per year) to analyse the functioning of diverse farming systems in two districts of Zimbabwe (Mbire and Murehwa). The workflow combines farm-level nitrogen accounting, network analysis and comparisons across districts and farm types.</p>
+<p>Nitrogen is the currency used to quantify flows. The network comprises nine internal compartments representing crop, livestock, manure-management and household components of the farming system, and three additional boundary terms representing inputs entering the farm system, outputs leaving it, and dissipation. This representation allows us to characterize not only the magnitude of nitrogen flows, but also the cycling, integration and organization of the farm network.</p>
+<p>The diagram below summarizes the internal compartments, the system boundary and the main pathways considered in the analysis. It is a conceptual representation of the flow structure, the quantitative network is built separately for each farm.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-116"></span>
+<img src="images/ENA_farm_nitrogen_network.png" alt="Conceptual representation of farms for the Ecological Network Analysis" width="80%" />
+<p class="caption">
+Figure 8.1: Conceptual representation of farms for the Ecological Network Analysis
+</p>
+</div>
+<p>The nine internal compartments are as follows:</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Compartment</th>
+<th>Role in the network</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cereals</td>
+<td>Aggregated cereal production</td>
+<td>Crop-specific details are aggregated into the cereal group.</td>
+</tr>
+<tr class="even">
+<td>Legumes</td>
+<td>Aggregated legume production</td>
+<td>Retains the functional distinction between legumes and other crop groups.</td>
+</tr>
+<tr class="odd">
+<td>Garden crops</td>
+<td>Garden-crop production</td>
+<td>A production category, not a separate system boundary.</td>
+</tr>
+<tr class="even">
+<td>Other crops</td>
+<td>Other crop production</td>
+<td>Crops not assigned to cereals, legumes or garden crops.</td>
+</tr>
+<tr class="odd">
+<td>Cattle</td>
+<td>Cattle production and associated feed, manure and product flows</td>
+<td>Kept separate from small ruminants to preserve pathway differences.</td>
+</tr>
+<tr class="even">
+<td>Small ruminants</td>
+<td>Small-ruminant production and associated feed, manure and product flows</td>
+<td>Kept separate from cattle.</td>
+</tr>
+<tr class="odd">
+<td>Household</td>
+<td>Household use and transfers</td>
+<td>Household consumption is an internal transfer to this node, not automatically an export.</td>
+</tr>
+<tr class="even">
+<td>Manure heap</td>
+<td>Manure collection, storage and processing</td>
+<td>Manure passes through this internal node before being returned to crop compartments.</td>
+</tr>
+<tr class="odd">
+<td>Fire</td>
+<td>Burning-related process represented in the current network</td>
+<td>Kept as a distinct node to represent the burning pathway in the farm N network.</td>
+</tr>
+</tbody>
+</table>
+<p>The three boundary terms are as follows:</p>
+<ul>
+<li>Input: nitrogen entering the farm system from managed and other external sources, together with explicitly identified accounting inputs.</li>
+<li>Output: nitrogen leaving the farm through recorded productive or other output pathways.</li>
+<li>Dissipation: nitrogen leaving internal compartments through recorded losses and residual dissipation added during accounting closure.</li>
+</ul>
+<p>The analysis has two complementary components. First, network indicators characterize the amount and organization of nitrogen moving through the farm system, including total system throughflow, path length, cycling and network overhead. Second, a functional flow budget groups flows according to their role in the farm system: managed external inputs, other boundary inputs, internal transfers and recycling, productive outputs, and other exports and losses. These functional categories are used to compare farms and explore associations with farm type and district.</p>
+<p>The analysis follows three steps:</p>
+<ol style="list-style-type: decimal">
+<li>Balance farm nitrogen accounts. Recorded flows are assembled for each farm and internal compartment. Residual imbalances are identified and represented using explicit accounting adjustments, while keeping these adjustments distinct from measured flows.</li>
+<li>Run the ecological network analysis. A network is constructed for each farm, and indicators are calculated to describe nitrogen throughput, resource dependency, cycling and network structure. A complementary functional budget classifies flows according to their role in the farming system.</li>
+<li>Compare districts and farm types. Farm-level indicators and functional flow budgets are summarized and explored across the six district × farm-type groups.</li>
+</ol>
+<p>The example uses data from Murehwa and Mbire districts in Zimbabwe (<em>farm_ena_flows_raw.xlsx</em>), which can be downloaded here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/08-ecological_network_analysis/farm_ena_flows_raw.xlsx" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/08-ecological_network_analysis/farm_ena_flows_raw.xlsx</a>.</p>
+<p>A standalone R script containing the workflow is available here: <a href="https://github.com/FBaudron/book_standardized_workflows/blob/main/08-ecological_network_analysis/ecological_network_analysis.R" class="uri">https://github.com/FBaudron/book_standardized_workflows/blob/main/08-ecological_network_analysis/ecological_network_analysis.R</a>.</p>
+<p>We first load the necessary packages.</p>
+<pre class="text"><code>if (!require(&quot;tidyverse&quot;)) install.packages(&quot;tidyverse&quot;)
+if (!require(&quot;readxl&quot;)) install.packages(&quot;readxl&quot;)
+if (!require(&quot;enaR&quot;)) install.packages(&quot;enaR&quot;)
+if (!require(&quot;GGally&quot;)) install.packages(&quot;GGally&quot;)
+if (!require(&quot;ggplot2&quot;)) install.packages(&quot;ggplot2&quot;)
+if (!require(&quot;scales&quot;)) install.packages(&quot;scales&quot;)
+if (!require(&quot;gtsummary&quot;)) install.packages(&quot;gtsummary&quot;)
+
+library(tidyverse)
+library(readxl)
+library(enaR)
+library(GGally)
+library(ggplot2)
+library(scales)
+library(gtsummary)</code></pre>
+</div>
+<div id="preparing-and-balancing-farm-nitrogen-accounts" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Preparing and balancing farm nitrogen accounts<a href="ecological-network-analysis.html#preparing-and-balancing-farm-nitrogen-accounts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="preparing-the-data" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Preparing the data<a href="ecological-network-analysis.html#preparing-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Load the survey-derived data from the following worksheets:</p>
+<ul>
+<li><em>farm_flows</em>: farm-level directed flow records, including source, destination, nitrogen and dry matter quantities, and flow classification fields.</li>
+<li><em>ena_nodes</em>: the names of the nine internal compartments.</li>
+<li><em>crop_production</em>: crop-group area and production information used to calculate crop productivity indicators.</li>
+<li><em>ENA_to_Typology</em>: links each ENA farm identifier to its district and farm type. It is an independent metadata input needed to stratify the pair plots; it is not an intermediate output of the ENA calculations.</li>
+</ul>
+<pre class="text"><code>farm_flows = read_xlsx(&quot;Data\\farm_ena_flows_raw.xlsx&quot;, sheet = &quot;farm_flows&quot;) %&gt;%
+    mutate(farm_id = as.character(farm_id), source = as.character(source), destination = as.character(destination),
+        N_kg = as.numeric(N_kg), DM_kg = as.numeric(DM_kg))
+
+ena_nodes = read_xlsx(&quot;Data\\farm_ena_flows_raw.xlsx&quot;, sheet = &quot;ena_nodes&quot;) %&gt;%
+    pull(node) %&gt;%
+    as.character()
+
+crop_production = read_xlsx(&quot;Data\\farm_ena_flows_raw.xlsx&quot;, sheet = &quot;crop_production&quot;) %&gt;%
+    mutate(farm_id = as.character(farm_id))</code></pre>
+<p>We separate internal transfers, boundary inputs, outputs and recorded dissipation. Nitrogen inflows and outflows are then summed for each farm × node. Existing survey-derived dissipation, including post-harvest losses and unused manure, is included before residuals are calculated, avoiding double counting.</p>
+<pre class="text"><code>internal_flows = farm_flows %&gt;%
+    filter(source %in% ena_nodes, destination %in% ena_nodes)
+input_flows = farm_flows %&gt;%
+    filter(source == &quot;Input&quot;, destination %in% ena_nodes)
+output_flows = farm_flows %&gt;%
+    filter(source %in% ena_nodes, destination == &quot;Output&quot;)
+dissipation_flows = farm_flows %&gt;%
+    filter(source %in% ena_nodes, destination == &quot;Dissipation&quot;)</code></pre>
+<p>We then calculate the raw nitrogen balance for each farm × node. Recorded dissipation is included before any additional residual dissipation is calculated.</p>
+<pre class="text"><code>node_balance_N = bind_rows(input_flows %&gt;%
+    group_by(farm_id, node = destination) %&gt;%
+    summarise(input_N = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;), internal_flows %&gt;%
+    group_by(farm_id, node = destination) %&gt;%
+    summarise(internal_in_N = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;), internal_flows %&gt;%
+    group_by(farm_id, node = source) %&gt;%
+    summarise(internal_out_N = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;), output_flows %&gt;%
+    group_by(farm_id, node = source) %&gt;%
+    summarise(output_N = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;), dissipation_flows %&gt;%
+    group_by(farm_id, node = source) %&gt;%
+    summarise(dissipation_N = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)) %&gt;%
+    group_by(farm_id, node) %&gt;%
+    summarise(input_N = sum(input_N, na.rm = TRUE), internal_in_N = sum(internal_in_N,
+        na.rm = TRUE), internal_out_N = sum(internal_out_N, na.rm = TRUE), output_N = sum(output_N,
+        na.rm = TRUE), dissipation_N = sum(dissipation_N, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+    right_join(tidyr::expand_grid(farm_id = sort(unique(farm_flows$farm_id)), node = ena_nodes),
+        by = c(&quot;farm_id&quot;, &quot;node&quot;)) %&gt;%
+    mutate(across(c(input_N, internal_in_N, internal_out_N, output_N, dissipation_N),
+        ~replace_na(.x, 0)), balance_before_closure_N = input_N + internal_in_N -
+        internal_out_N - output_N - dissipation_N) %&gt;%
+    arrange(farm_id, match(node, ena_nodes))</code></pre>
+</div>
+<div id="balancing-farm-nitrogen-accounts" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Balancing farm nitrogen accounts<a href="ecological-network-analysis.html#balancing-farm-nitrogen-accounts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The accounting closure is applied to each farm × compartment after all recorded inputs, internal transfers, outputs and dissipation have been included. A positive residual means that recorded inflows exceed recorded outflows; it is assigned to dissipation so that the compartment balance closes. A negative residual means that recorded outflows exceed recorded inflows and therefore requires a different interpretation. Crop deficits are represented by an <em>Input</em> → crop <em>soil_N_input</em> accounting flow, which makes the balance close but must not be interpreted as a measured soil-N flux. Livestock deficits are retained as <em>livestock_N_balance_adjustment</em> rather than being presented as genuine external inputs. Negative residuals in other compartments are not assigned an assumed pathway. Positive livestock residuals are labelled separately because they may include biomass retention as well as unmeasured losses.</p>
+<p>Crop deficits are represented as unmeasured soil-N inputs. This is an accounting term, not a measured soil-N flux.</p>
+<pre class="text"><code>soil_N_input_flows = node_balance_N %&gt;%
+    filter(node %in% c(&quot;Cereals&quot;, &quot;Legumes&quot;, &quot;Garden_crops&quot;, &quot;Other_crops&quot;), balance_before_closure_N &lt;
+        -1e-10) %&gt;%
+    transmute(farm_id, source = &quot;Input&quot;, destination = node, product = &quot;soil_N&quot;,
+        DM_kg = NA_real_, N_kg = -balance_before_closure_N, flow_type = &quot;soil_N_input&quot;,
+        mechanism = &quot;unaccounted_soil_N&quot;)</code></pre>
+<p>Negative residual in a livestock compartment is represented as a separate accounting adjustment, not as a measured external input. It may reflect unmeasured livestock N drawdown, omitted animal products or uncertainty in feed/manure/body-composition assumptions. It is excluded from both real-input indicators below.</p>
+<pre class="text"><code>livestock_balance_input_flows = node_balance_N %&gt;%
+    filter(node %in% c(&quot;Cattle&quot;, &quot;Small_ruminants&quot;), balance_before_closure_N &lt; -1e-10) %&gt;%
+    transmute(farm_id, source = &quot;Input&quot;, destination = node, product = &quot;livestock_N_balance_adjustment&quot;,
+        DM_kg = NA_real_, N_kg = -balance_before_closure_N, flow_type = &quot;livestock_N_balance_adjustment&quot;,
+        mechanism = &quot;unmeasured_livestock_N_drawdown_or_missing_flow&quot;)</code></pre>
+<p>Positive residuals are closed with an output to the Dissipation boundary. For livestock nodes, this is explicitly an unallocated residual: because birth weights and opening/closing herd biomass are unavailable, it may include animal biomass retention as well as unmeasured losses. It must not be interpreted as a measured physiological or environmental loss.</p>
+<pre class="text"><code>n_dissipation_flows = node_balance_N %&gt;%
+    filter(balance_before_closure_N &gt; 1e-10) %&gt;%
+    transmute(farm_id, source = node, destination = &quot;Dissipation&quot;, product = if_else(node %in%
+        c(&quot;Cattle&quot;, &quot;Small_ruminants&quot;), &quot;livestock_N_balance_residual&quot;, &quot;unaccounted_N&quot;),
+        DM_kg = NA_real_, N_kg = balance_before_closure_N, flow_type = if_else(node %in%
+            c(&quot;Cattle&quot;, &quot;Small_ruminants&quot;), &quot;livestock_N_balance_residual&quot;, &quot;N_dissipation&quot;),
+        mechanism = if_else(node %in% c(&quot;Cattle&quot;, &quot;Small_ruminants&quot;), &quot;unallocated_livestock_N_possible_stock_retention_or_missing_loss&quot;,
+            &quot;positive_node_balance&quot;))
+
+accounting_adjustments = bind_rows(n_dissipation_flows, soil_N_input_flows, livestock_balance_input_flows)
+
+farm_flows_final = bind_rows(farm_flows, accounting_adjustments) %&gt;%
+    mutate(farm_id = as.character(farm_id), N_kg = as.numeric(N_kg))</code></pre>
+</div>
+</div>
+<div id="running-the-ecological-network-analysis" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Running the ecological network analysis<a href="ecological-network-analysis.html#running-the-ecological-network-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="constructing-farm-level-networks" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Constructing farm-level networks<a href="ecological-network-analysis.html#constructing-farm-level-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following function builds an network for one farm, using the R package <strong>enaR</strong> (<span class="citation">Lau et al. (<a href="#ref-enaR">2026</a>)</span>). It creates a square internal-flow matrix (source rows, destination columns), fills absent links with zero, and constructs vectors for inputs, exports and dissipation. The dissipation vector is passed to the function <em>pack()</em> as respiration: this is the package argument name and does not imply that all dissipation is biological respiration.</p>
+<pre class="text"><code>build_farm_network = function(farm_id_value, flows, nodes) {
+    farm_data = flows %&gt;%
+        filter(farm_id == as.character(farm_id_value))
+    # Internal flow matrix: rows are source compartments and columns are
+    # destination compartments.
+    internal_matrix = farm_data %&gt;%
+        filter(source %in% nodes, destination %in% nodes) %&gt;%
+        group_by(source, destination) %&gt;%
+        summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+        tidyr::complete(source = nodes, destination = nodes, fill = list(N_kg = 0)) %&gt;%
+        tidyr::pivot_wider(names_from = destination, values_from = N_kg, values_fill = 0) %&gt;%
+        tibble::column_to_rownames(&quot;source&quot;) %&gt;%
+        as.matrix()
+
+    internal_matrix = internal_matrix[nodes, nodes, drop = FALSE]
+
+    # External N inputs: Input -&gt; each internal compartment.
+    input_vector = farm_data %&gt;%
+        filter(source == &quot;Input&quot;, destination %in% nodes) %&gt;%
+        group_by(destination) %&gt;%
+        summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+        right_join(tibble(node = nodes), by = c(destination = &quot;node&quot;)) %&gt;%
+        mutate(N_kg = replace_na(N_kg, 0)) %&gt;%
+        tibble::deframe()
+    input_vector = input_vector[nodes]
+    names(input_vector) = nodes
+
+    # Exports: each internal compartment -&gt; Output.
+    export_vector = farm_data %&gt;%
+        filter(source %in% nodes, destination == &quot;Output&quot;) %&gt;%
+        group_by(source) %&gt;%
+        summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+        right_join(tibble(node = nodes), by = c(source = &quot;node&quot;)) %&gt;%
+        mutate(N_kg = replace_na(N_kg, 0)) %&gt;%
+        tibble::deframe()
+    export_vector = export_vector[nodes]
+    names(export_vector) = nodes
+
+    # Dissipation: each internal compartment -&gt; Dissipation.
+    respiration_vector = farm_data %&gt;%
+        filter(source %in% nodes, destination == &quot;Dissipation&quot;) %&gt;%
+        group_by(source) %&gt;%
+        summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+        right_join(tibble(node = nodes), by = c(source = &quot;node&quot;)) %&gt;%
+        mutate(N_kg = replace_na(N_kg, 0)) %&gt;%
+        tibble::deframe()
+    respiration_vector = respiration_vector[nodes]
+    names(respiration_vector) = nodes
+
+    # Construct the enaR network object.
+    enaR::pack(flow = internal_matrix, input = input_vector, respiration = respiration_vector,
+        export = export_vector)
+}</code></pre>
+<p>The following loop builds one network per farm and calculates the network and functional indicators used below.</p>
+<pre class="text"><code>extract_ena_stat = function(result, statistic) {
+    if (is.null(result))
+        return(NA_real_)
+    stats = if (is.list(result) &amp;&amp; &quot;ns&quot; %in% names(result))
+        result$ns else result
+    if (is.matrix(stats) || is.data.frame(stats)) {
+        if (is.null(colnames(stats)) || !statistic %in% colnames(stats))
+            return(NA_real_)
+        value = stats[1, statistic]
+    } else if (!is.null(names(stats)) &amp;&amp; statistic %in% names(stats)) {
+        value = stats[[statistic]]
+    } else {
+        return(NA_real_)
+    }
+    value = suppressWarnings(as.numeric(value))
+    if (length(value) != 1)
+        NA_real_ else value
+}</code></pre>
+<pre class="text"><code>farm_ids = sort(unique(as.character(farm_flows_final$farm_id)))
+indicator_rows = vector(&quot;list&quot;, length(farm_ids))
+
+managed_flow_types = c(&quot;mineral_fertilizer&quot;, &quot;external_manure&quot;, &quot;purchased_feed&quot;,
+    &quot;livestock_input&quot;)
+other_boundary_flow_types = c(&quot;communal_feed&quot;, &quot;communal_manure_return&quot;, &quot;biological_N_fixation&quot;)
+accounting_flow_types = c(&quot;soil_N_input&quot;, &quot;livestock_N_balance_adjustment&quot;, &quot;livestock_N_balance_residual&quot;,
+    &quot;N_dissipation&quot;)</code></pre>
+</div>
+<div id="classifying-nitrogen-flows" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Classifying nitrogen flows<a href="ecological-network-analysis.html#classifying-nitrogen-flows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before calculating the throughput components and functional budgets, each flow is assigned an input class and a mutually exclusive functional role. The input classes distinguish managed external inputs, other boundary inputs and accounting adjustments. Accounting adjustments are retained explicitly and are not interpreted as measured external resources.</p>
+<p>The functional classification distinguishes the role of a flow from its position in the network. For example, a transfer to the Household node remains an internal link in the ENA network but is classified as a productive output in the functional budget. Crop harvest delivered to the household, crop sales, crop gifts/barter, livestock sales and milk output are classified as productive outputs. Milk is assigned to Household because the survey does not distinguish household consumption from milk sales. Gifts/barter remain part of the broad productive-output category.</p>
+<p>Flows that do not match these rules are retained as <em>unclassified</em>. They are not included in the five substantive functional categories and should be reviewed before interpreting the functional comparison.</p>
+<pre class="text"><code>farm_flows_final = farm_flows_final %&gt;%
+    mutate(input_class = case_when(flow_type %in% managed_flow_types ~ &quot;managed_external_input&quot;,
+        flow_type %in% other_boundary_flow_types ~ &quot;other_boundary_input&quot;, flow_type %in%
+            accounting_flow_types ~ &quot;accounting_adjustment&quot;, TRUE ~ NA_character_),
+        functional_role = case_when(flow_type %in% accounting_flow_types ~ &quot;accounting_adjustment&quot;,
+            flow_type %in% managed_flow_types ~ &quot;managed_external_input&quot;, flow_type %in%
+                other_boundary_flow_types ~ &quot;other_boundary_input&quot;, flow_type %in%
+                c(&quot;harvest_consumption&quot;, &quot;harvest_sale&quot;, &quot;harvest_gift&quot;, &quot;livestock_sale&quot;,
+                  &quot;livestock_output&quot;) ~ &quot;productive_output&quot;, flow_type == &quot;residue_burnt&quot; ~
+                &quot;other_exports_and_losses&quot;, source %in% ena_nodes &amp; destination %in%
+                ena_nodes ~ &quot;internal_transfer_recycling&quot;, destination %in% c(&quot;Output&quot;,
+                &quot;Dissipation&quot;) ~ &quot;other_exports_and_losses&quot;, TRUE ~ &quot;unclassified&quot;),
+        product_group = case_when(flow_type %in% c(&quot;harvest_consumption&quot;, &quot;harvest_sale&quot;,
+            &quot;harvest_gift&quot;) ~ source, flow_type == &quot;livestock_output&quot; ~ &quot;Milk&quot;, flow_type ==
+            &quot;livestock_sale&quot; ~ paste0(source, &quot;_livestock&quot;), TRUE ~ NA_character_),
+        production_pathway = case_when(flow_type == &quot;harvest_consumption&quot; ~ &quot;household_consumption&quot;,
+            flow_type == &quot;harvest_sale&quot; ~ &quot;market_sale&quot;, flow_type == &quot;harvest_gift&quot; ~
+                &quot;gift_or_barter&quot;, flow_type == &quot;livestock_output&quot; ~ &quot;household_milk&quot;,
+            flow_type == &quot;livestock_sale&quot; ~ &quot;market_sale&quot;, TRUE ~ NA_character_))</code></pre>
+</div>
+<div id="calculating-tst-and-farm-level-ena-indicators" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Calculating TST and farm-level ENA indicators<a href="ecological-network-analysis.html#calculating-tst-and-farm-level-ena-indicators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first calculation extracts total system throughflow (TST), defined as the sum of throughflows across all internal compartments, and decomposes it into managed external inputs, other boundary inputs, accounting inputs and transfers between internal compartments. Boundary exports and dissipation are outflows and are not added again as inputs to this decomposition.</p>
+<p>The farm-level ENA indicators are then calculated from the network constructed for each farm. The analysis also extracts total system throughput (TSTp) from <em>enaR::enaFlow()</em>, where the subscript p denotes throughput. Unlike TST, which sums flows through internal compartments, TSTp represents the sum of all flows in the network, including internal flows, external inputs and external outputs. We use TSTp as the denominator for the complementary functional flow budget, which groups flows according to their role in the farming system.</p>
+<pre class="text"><code>tst_decomposition = farm_flows_final %&gt;%
+    filter((source == &quot;Input&quot; &amp; destination %in% ena_nodes) | (source %in% ena_nodes &amp;
+        destination %in% ena_nodes)) %&gt;%
+    mutate(tst_component = case_when(input_class == &quot;managed_external_input&quot; ~ &quot;managed_external_inputs&quot;,
+        input_class == &quot;other_boundary_input&quot; ~ &quot;other_boundary_inputs&quot;, input_class ==
+            &quot;accounting_adjustment&quot; ~ &quot;accounting_inputs&quot;, source %in% ena_nodes &amp;
+            destination %in% ena_nodes ~ &quot;internal_flows&quot;, TRUE ~ &quot;unclassified&quot;)) %&gt;%
+    group_by(farm_id, tst_component) %&gt;%
+    summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)</code></pre>
+<p>The functional TSTp budget provides a complementary perspective by grouping flows according to their role in the farming system. It distinguishes five substantive categories: managed external inputs, other boundary inputs, internal transfers and recycling, productive outputs, and other exports and losses. Accounting adjustments are retained as a sixth, separate category.</p>
+<p>The five substantive categories are used in the pair plots. Accounting adjustments are not displayed as a sixth plotted category, but remain in the TSTp denominator. Consequently, the five plotted shares are not expected to sum to 100%; they are expressed relative to the full TSTp and are not renormalized to the five displayed categories. Category 5 includes exports and losses that are not food production, including useful non-food biomass destinations such as fuel and construction residues where recorded.</p>
+<pre class="text"><code>tstp_budget = farm_flows_final %&gt;%
+    mutate(tstp_component = case_when(functional_role == &quot;managed_external_input&quot; ~
+        &quot;1_managed_external_inputs&quot;, functional_role == &quot;other_boundary_input&quot; ~
+        &quot;2_other_boundary_inputs&quot;, functional_role == &quot;internal_transfer_recycling&quot; ~
+        &quot;3_internal_transfers_recycling&quot;, functional_role == &quot;productive_output&quot; ~
+        &quot;4_productive_outputs&quot;, functional_role == &quot;other_exports_and_losses&quot; ~ &quot;5_other_exports_and_losses&quot;,
+        functional_role == &quot;accounting_adjustment&quot; ~ &quot;6_accounting_adjustments&quot;,
+        TRUE ~ &quot;7_unclassified&quot;)) %&gt;%
+    group_by(farm_id, tstp_component) %&gt;%
+    summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)</code></pre>
+</div>
+<div id="summarising-production-and-detailed-flow-pathways" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Summarising production and detailed flow pathways<a href="ecological-network-analysis.html#summarising-production-and-detailed-flow-pathways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The functional categories provide an overview, while the following tables retain more detailed information on the origin and mechanism of boundary inputs, the identity of exports and losses, and productive pathways. Fuel and construction residues remain in the other-export/loss category in the supplied classification, although these may be useful biomass destinations rather than biophysical losses.</p>
+<pre class="text"><code>input_flow_breakdown = farm_flows_final %&gt;%
+    filter(source == &quot;Input&quot;, destination %in% ena_nodes) %&gt;%
+    group_by(farm_id, input_class, flow_type, mechanism, destination) %&gt;%
+    summarise(DM_kg = sum(DM_kg, na.rm = TRUE), N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+other_exports_losses_detail = farm_flows_final %&gt;%
+    filter(functional_role == &quot;other_exports_and_losses&quot;) %&gt;%
+    group_by(farm_id, flow_type, mechanism, source, destination, product) %&gt;%
+    summarise(DM_kg = sum(DM_kg, na.rm = TRUE), N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)</code></pre>
+<p>The production summaries retain productive pathways by product group and destination. Crop flows are summarized in kg dry matter and kg N; milk is summarized in litres; livestock sales are summarized in kg liveweight where recorded. The household-and-market table excludes gifts/barter, whereas the broader productive-output category includes them.</p>
+<pre class="text"><code>farm_production_indicators = farm_flows_final %&gt;%
+    filter(functional_role == &quot;productive_output&quot;) %&gt;%
+    group_by(farm_id, product_group, production_pathway, source, destination) %&gt;%
+    summarise(DM_kg = sum(DM_kg, na.rm = TRUE), N_kg = sum(N_kg, na.rm = TRUE), milk_L = if (any(product_group ==
+        &quot;Milk&quot;)) {
+        sum(product_quantity, na.rm = TRUE)
+    } else {
+        NA_real_
+    }, liveweight_sold_kg = if (any(flow_type == &quot;livestock_sale&quot;)) {
+        sum(LW_kg, na.rm = TRUE)
+    } else {
+        NA_real_
+    }, .groups = &quot;drop&quot;)</code></pre>
+<p>Productive outputs delivered to the household or market. This comparison excludes gifts/barter, which remain part of the broader productive-output category in the five-part TSTp functional budget. Milk is included as a household output because the survey does not record whether it is consumed or sold; this limitation is documented above.</p>
+<pre class="text"><code>household_market_pathways = c(&quot;household_consumption&quot;, &quot;household_milk&quot;, &quot;market_sale&quot;)
+
+farm_household_market_outputs = farm_flows_final %&gt;%
+    filter(functional_role == &quot;productive_output&quot;, production_pathway %in% household_market_pathways) %&gt;%
+    group_by(farm_id, product_group, production_pathway) %&gt;%
+    summarise(DM_kg = sum(DM_kg, na.rm = TRUE), N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+farm_household_market_output_totals = farm_household_market_outputs %&gt;%
+    group_by(farm_id) %&gt;%
+    summarise(household_market_output_DM_kg = sum(DM_kg, na.rm = TRUE), household_market_output_N_kg = sum(N_kg,
+        na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+    right_join(tibble(farm_id = sort(unique(farm_flows_final$farm_id))), by = &quot;farm_id&quot;) %&gt;%
+    mutate(across(c(household_market_output_DM_kg, household_market_output_N_kg),
+        ~replace_na(.x, 0)))</code></pre>
+<p>Crop productivity is calculated by crop group. Harvest dry matter and nitrogen are divided by cropped area to obtain kg DM ha⁻¹ and kg N ha⁻¹. These are crop-group averages at farm level, not plot-level yields. The input workbook also retains household allocation, marketed production, gifts/barter, wildlife consumption, post-harvest losses and unallocated intercrop production. These are descriptive production-accounting variables, not additional ENA nodes.</p>
+<pre class="text"><code>farm_crop_productivity = crop_production %&gt;%
+    group_by(farm_id, crop_group) %&gt;%
+    summarise(cropped_area_ha = sum(area_ha, na.rm = TRUE), harvest_DM_kg = sum(harvest_DM_kg,
+        na.rm = TRUE), harvest_N_kg = sum(harvest_N_kg, na.rm = TRUE), household_DM_kg = sum(household_DM_kg,
+        na.rm = TRUE), household_N_kg = sum(household_N_kg, na.rm = TRUE), marketed_DM_kg = sum(marketed_DM_kg,
+        na.rm = TRUE), marketed_N_kg = sum(marketed_N_kg, na.rm = TRUE), gift_barter_DM_kg = sum(gift_barter_DM_kg,
+        na.rm = TRUE), wildlife_DM_kg = sum(wildlife_DM_kg, na.rm = TRUE), postharvest_loss_DM_kg = sum(postharvest_loss_DM_kg,
+        na.rm = TRUE), intercrop_DM_unallocated_kg = sum(intercrop_DM_unallocated_kg,
+        na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+    mutate(harvest_DM_kg_ha = if_else(cropped_area_ha &gt; 0, harvest_DM_kg/cropped_area_ha,
+        NA_real_), harvest_N_kg_ha = if_else(cropped_area_ha &gt; 0, harvest_N_kg/cropped_area_ha,
+        NA_real_))</code></pre>
+<p>The network-based indicators are calculated for each farm using its ENA network. They include TST and TSTp, average path length (APL), the Finn Cycling Index (FCI), overhead/capacity, effective link density and structural indicators of network integration and connectivity. The loop is retained because the network object and ENA statistics are farm-specific. The same loop also combines these network indicators with the farm-level TST decomposition and functional flow summaries.</p>
+<pre class="text"><code>invisible(capture.output({
+
+  for (i in seq_along(farm_ids)) {
+    id = farm_ids[i]
+    network = build_farm_network(id, farm_flows_final, ena_nodes)
+
+    # Accounting adjustments are applied before network construction.
+    # Override enaR&#39;s internal test for inactive 0-in/0-out nodes.
+    flow_results = enaR::enaFlow(network, balance.override = TRUE)
+    asc_results = enaR::enaAscendency(network)
+    structure_results = enaR::enaStructure(network)
+
+    tst = if (!is.null(flow_results) &amp;&amp; &quot;TST&quot; %in% colnames(flow_results$ns)) {
+      as.numeric(flow_results$ns[1, &quot;TST&quot;])
+    } else {
+      NA_real_
+    }
+
+    tstp = if (!is.null(flow_results) &amp;&amp; &quot;TSTp&quot; %in% colnames(flow_results$ns)) {
+      as.numeric(flow_results$ns[1, &quot;TSTp&quot;])
+    } else {
+      NA_real_
+    }
+
+    farm_budget = tst_decomposition %&gt;% filter(farm_id == id)
+    managed_input_N = sum(farm_budget$N_kg[farm_budget$tst_component == &quot;managed_external_inputs&quot;], na.rm = TRUE)
+    other_boundary_input_N = sum(farm_budget$N_kg[farm_budget$tst_component == &quot;other_boundary_inputs&quot;], na.rm = TRUE)
+    accounting_input_N = sum(farm_budget$N_kg[farm_budget$tst_component == &quot;accounting_inputs&quot;], na.rm = TRUE)
+    internal_flow_N = sum(farm_budget$N_kg[farm_budget$tst_component == &quot;internal_flows&quot;], na.rm = TRUE)
+
+    farm_tstp_budget = tstp_budget %&gt;% filter(farm_id == id)
+
+    # Recycling is the functional internal-transfer category only. Household
+    # consumption and household milk are excluded because they are productive
+    # outputs, even though these transfers remain internal links in the enaR
+    # network. Market sales are also productive outputs at the farm boundary.
+    internal_recycling_N = sum(
+      farm_tstp_budget$N_kg[
+        farm_tstp_budget$tstp_component == &quot;3_internal_transfers_recycling&quot;],
+      na.rm = TRUE
+    )
+
+    household_market_output_N = farm_household_market_output_totals$household_market_output_N_kg[
+      match(id, farm_household_market_output_totals$farm_id)
+    ]
+
+    if (length(household_market_output_N) == 0 || is.na(household_market_output_N)) {
+      household_market_output_N = 0
+    }
+
+    productive_output_N = sum(farm_tstp_budget$N_kg[farm_tstp_budget$tstp_component == &quot;4_productive_outputs&quot;], na.rm = TRUE)
+    other_exports_losses_N = sum(farm_tstp_budget$N_kg[farm_tstp_budget$tstp_component == &quot;5_other_exports_and_losses&quot;], na.rm = TRUE)
+    accounting_adjustment_N = sum(farm_tstp_budget$N_kg[farm_tstp_budget$tstp_component == &quot;6_accounting_adjustments&quot;], na.rm = TRUE)
+
+    APL = extract_ena_stat(flow_results, &quot;APL&quot;)
+    FCI = extract_ena_stat(flow_results, &quot;FCI&quot;)
+    OH_CAP = extract_ena_stat(asc_results, &quot;OH.CAP&quot;)
+    ELD = extract_ena_stat(asc_results, &quot;ELD&quot;)
+    OH_internal = extract_ena_stat(asc_results, &quot;OH.internal&quot;)
+    CAP_internal = extract_ena_stat(asc_results, &quot;CAP.internal&quot;)
+    pscc = extract_ena_stat(structure_results, &quot;pscc&quot;)
+    no_scc_big = extract_ena_stat(structure_results, &quot;no.scc.big&quot;)
+    connectance_C = extract_ena_stat(structure_results, &quot;C&quot;)
+
+    RDC = if (is.finite(OH_internal) &amp;&amp; is.finite(CAP_internal) &amp;&amp; CAP_internal &gt; 0) {
+      OH_internal / CAP_internal
+    } else {
+      NA_real_
+    }
+
+    indicator_rows[[i]] = tibble(
+      farm_id = id,
+      TST_kgN = tst,
+      TSTp_kgN = tstp,
+      managed_external_input_kgN = managed_input_N,
+      managed_external_input_over_TST = ifelse(is.finite(tst) &amp; tst &gt; 0, managed_input_N / tst, NA_real_),
+      other_boundary_input_kgN = other_boundary_input_N,
+      other_boundary_input_over_TST = ifelse(is.finite(tst) &amp; tst &gt; 0, other_boundary_input_N / tst, NA_real_),
+      accounting_input_kgN = accounting_input_N,
+      accounting_input_over_TST = ifelse(is.finite(tst) &amp; tst &gt; 0, accounting_input_N / tst, NA_real_),
+      # All internal network transfers, including transfers to Household that
+      # are functionally classified as productive outputs.
+      all_internal_flows_kgN = internal_flow_N,
+      all_internal_flows_over_TST = ifelse(is.finite(tst) &amp; tst &gt; 0, internal_flow_N / tst, NA_real_),
+      # Mutually exclusive functional indicators for the recycling/output plot.
+      internal_recycling_kgN = internal_recycling_N,
+      internal_recycling_over_TSTp = ifelse(is.finite(tstp) &amp; tstp &gt; 0, internal_recycling_N / tstp, NA_real_),
+      household_market_outputs_kgN = household_market_output_N,
+      household_market_outputs_over_TSTp = ifelse(is.finite(tstp) &amp; tstp &gt; 0, household_market_output_N / tstp, NA_real_),
+      # Broader productive-output category in the five-part budget also includes
+      # gifts/barter; use household_market_outputs_* for the specific plot.
+      productive_outputs_kgN = productive_output_N,
+      productive_outputs_over_TSTp = ifelse(is.finite(tstp) &amp; tstp &gt; 0, productive_output_N / tstp, NA_real_),
+      other_exports_and_losses_kgN = other_exports_losses_N,
+      other_exports_and_losses_over_TSTp = ifelse(is.finite(tstp) &amp; tstp &gt; 0, other_exports_losses_N / tstp, NA_real_),
+      accounting_adjustments_kgN = accounting_adjustment_N,
+      accounting_adjustments_over_TSTp = ifelse(is.finite(tstp) &amp; tstp &gt; 0, accounting_adjustment_N / tstp, NA_real_),
+      APL = APL,
+      FCI = FCI,
+      pscc = pscc,
+      pscc_percent = 100 * pscc,
+      no_scc_big = no_scc_big,
+      RDC = RDC,
+      OH_CAP = OH_CAP,
+      ELD = ELD,
+      connectance_C = connectance_C
+    )
+  }
+
+  farm_ena_indicators = bind_rows(indicator_rows) %&gt;% arrange(farm_id)
+
+}))</code></pre>
+</div>
+<div id="interpreting-ena-indicators" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> Interpreting ENA indicators<a href="ecological-network-analysis.html#interpreting-ena-indicators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>All networks are expressed in annual nitrogen flows (kg N/year). The indicators below are mostly dimensionless ratios or indices. They characterize different aspects of farm-level network organization, dependency, cycling and redundancy.</p>
+<p>Dependency on external inputs:</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Indicator</th>
+<th>Formula</th>
+<th>Role in the network</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Managed input dependency</td>
+<td>Managed external N inputs / TST</td>
+<td>Proportion of total system throughflow originating from managed external resources, including mineral fertilizer, purchased feed, imported manure and purchased livestock.</td>
+<td>Higher values indicate greater dependence on purchased or deliberately imported resources.</td>
+</tr>
+<tr class="even">
+<td>Other boundary input contribution</td>
+<td>Other boundary N inputs / TST</td>
+<td>Proportion of TST originating from other external biological and landscape-derived resources, including biological nitrogen fixation, communal grazing and communal manure returned to the farm.</td>
+<td>Represents the contribution of resources originating outside the farm but not classified as managed purchases.</td>
+</tr>
+<tr class="odd">
+<td>Average Path Length (APL)</td>
+<td>TST / Boundary</td>
+<td>Average number of compartments through which nitrogen passes between entering and leaving the network.</td>
+<td>Higher values indicate greater internal processing and circulation relative to boundary flows. APL is the reciprocal of Boundary Flow Intensity (BFI); they should not be interpreted as independent indicators.</td>
+</tr>
+</tbody>
+</table>
+<p>Nutrient cycling:</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Indicator</th>
+<th>Formula</th>
+<th>Role in the network</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Finn Cycling Index (FCI)</td>
+<td>Cycling throughput / TST</td>
+<td>Proportion of total system throughput involved in cycling. It captures nitrogen that passes through the network and returns to a compartment it has previously visited before eventually leaving the system.</td>
+<td>Higher values indicate a greater contribution of cycling to total system throughput. Crop-to-same-crop flows (residue retention and incorporation) can contribute to FCI. It should therefore be interpreted as a broad network cycling indicator, not exclusively as crop-livestock-manure recycling.</td>
+</tr>
+<tr class="even">
+<td>Percentage of nodes in non-trivial strongly connected components (pscc)</td>
+<td>Number of nodes in multi-node strongly connected components / Total number of nodes</td>
+<td>Proportion of network compartments belonging to strongly connected components containing more than one compartment. Within such a component, every compartment can be reached from every other compartment through directed pathways.</td>
+<td>Measures the extent of multi-compartment integration and feedback in the network. An isolated compartment or a self-loop (e.g. Cereals → Cereals) does not constitute a multi-node strongly connected component. A value of zero therefore does not mean that there is no nutrient cycling.</td>
+</tr>
+</tbody>
+</table>
+<p>Redundancy and flexibility:</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Indicator</th>
+<th>Formula</th>
+<th>Role in the network</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relative internal redundancy (RDC)</td>
+<td>OH.internal / CAP.internal</td>
+<td>Ratio of internal overhead to internal development capacity. It focuses specifically on internal exchanges, excluding external inputs and exports from the denominator.</td>
+<td>ENA-derived proxy for the relative overhead or reserve associated with internal flow organization. Higher values may indicate greater potential for alternative internal pathways and flexibility. RDC is a derived indicator, not a directly measured level of redundancy or a direct resilience measurement.</td>
+</tr>
+<tr class="even">
+<td>OH.CAP (Overhead / Capacity)</td>
+<td>OH / CAP</td>
+<td>Proportion of total network development capacity represented by overhead rather than ascendency. It includes overhead associated with inputs, internal exchanges, exports and dissipation.</td>
+<td>Indicates the potential reserve and flexibility of the overall network. It is broader than RDC and should be retained as a separate indicator. It is not a direct measure of resilience.</td>
+</tr>
+<tr class="odd">
+<td>Effective Link Density (ELD)</td>
+<td>—</td>
+<td>Flow-based measure of the effective number of links or parallel pathways in the network, accounting for the distribution of flows between compartments.</td>
+<td>Characterizes the effective density and multiplicity of pathways through which nitrogen circulates.</td>
+</tr>
+</tbody>
+</table>
+<p>Supplementary structural indicators:</p>
+<p>These supplementary indicators describe network topology, rather than the magnitude of nitrogen flows.</p>
+<p>The proportion of nodes in non-trivial strongly connected components (pscc) and the number of such components (no.scc.big) are retained as complementary structural indicators. The first describes how much of the network is involved in multi-node feedback components; the second describes how many distinct components of this kind occur.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Indicator</th>
+<th>Formula</th>
+<th>Role in the network</th>
+<th>Important interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Connectance (C)</td>
+<td>Number of observed directed links / Number of possible directed links</td>
+<td>Proportion of possible connections between compartments that are present in the network.</td>
+<td>Measures the structural connectedness of the network. Higher values indicate a greater proportion of possible directed connections between compartments.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="expressing-flow-components-relative-to-tst-and-tstp" class="section level3 hasAnchor" number="8.3.6">
+<h3><span class="header-section-number">8.3.6</span> Expressing flow components relative to TST and TSTp<a href="ecological-network-analysis.html#expressing-flow-components-relative-to-tst-and-tstp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To compare farms of different sizes, each component of the TST decomposition is expressed as a proportion of that farm’s TST, while each functional budget category is expressed as a proportion of that farm’s TSTp. These are farm-level shares, not percentages recalculated from group totals. Accounting adjustments remain in the TSTp denominator even though they are not among the five substantive categories displayed in the pair plots. A zero or missing denominator produces <code>NA</code> rather than an undefined ratio.</p>
+<pre class="text"><code>tst_decomposition = tst_decomposition %&gt;%
+    left_join(farm_ena_indicators %&gt;%
+        select(farm_id, TST_kgN), by = &quot;farm_id&quot;) %&gt;%
+    mutate(share_of_TST = if_else(TST_kgN &gt; 0, N_kg/TST_kgN, NA_real_))
+
+tstp_budget = tstp_budget %&gt;%
+    left_join(farm_ena_indicators %&gt;%
+        select(farm_id, TSTp_kgN), by = &quot;farm_id&quot;) %&gt;%
+    mutate(share_of_TSTp = if_else(TSTp_kgN &gt; 0, N_kg/TSTp_kgN, NA_real_))</code></pre>
+</div>
+</div>
+<div id="comparing-districts-and-farm-types" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Comparing districts and farm types<a href="ecological-network-analysis.html#comparing-districts-and-farm-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This step brings together the farm-level ENA results and the functional flow budgets. District and farm types derived from <span class="citation">(<a href="#ref-Baudron2026">Baudron et al. 2026</a>)</span> are used to organize descriptive comparisons across the six groups (Mbire and Murehwa, each with Types 1–3).</p>
+<pre class="text"><code>budget = tstp_budget %&gt;%
+    mutate(farm_id = as.character(farm_id), tstp_component = as.character(tstp_component),
+        N_kg = as.numeric(N_kg), share_of_TSTp = as.numeric(share_of_TSTp))</code></pre>
+<p>We define the functional categories (mutually exclusive) for comparison. Productive outputs include household consumption, market sales, and gifts/barter.</p>
+<pre class="text"><code>components = c(&quot;1_managed_external_inputs&quot;, &quot;2_other_boundary_inputs&quot;, &quot;3_internal_transfers_recycling&quot;,
+    &quot;4_productive_outputs&quot;, &quot;5_other_exports_and_losses&quot;)
+
+component_labels = c(&quot;Managed external inputs&quot;, &quot;Other boundary inputs&quot;, &quot;Internal transfers &amp; recycling&quot;,
+    &quot;Productive outputs&quot;, &quot;Other exports &amp; losses&quot;)</code></pre>
+<p>District and farm type are linked to ENA farm identifiers using the <em>ENA_to_Typology</em> worksheet. The factor levels below set a consistent order for the six district × farm-type groups.</p>
+<pre class="text"><code>farm_metadata = read_excel(&quot;Data\\farm_ena_flows_raw.xlsx&quot;, sheet = &quot;ENA_to_Typology&quot;) %&gt;%
+    transmute(farm_id = as.character(ENA_farm_ID), District = stringr::str_trim(as.character(District)),
+        Farm_type = stringr::str_trim(as.character(Farm_type)))
+
+farm_metadata = farm_metadata %&gt;%
+    mutate(Farm_type = factor(Farm_type, levels = c(&quot;Type 1&quot;, &quot;Type 2&quot;, &quot;Type 3&quot;)),
+        District = factor(District, levels = c(&quot;Mbire&quot;, &quot;Murehwa&quot;)))
+
+district_type_levels = c(&quot;Mbire – Type 1&quot;, &quot;Mbire – Type 2&quot;, &quot;Mbire – Type 3&quot;,
+    &quot;Murehwa – Type 1&quot;, &quot;Murehwa – Type 2&quot;, &quot;Murehwa – Type 3&quot;)
+
+farm_metadata = farm_metadata %&gt;%
+    mutate(District_Type = factor(paste(as.character(District), as.character(Farm_type),
+        sep = &quot; – &quot;), levels = district_type_levels))</code></pre>
+<p>We build the absolute-flow dataset (kg N farm⁻¹ year⁻¹). The five functional categories are reshaped to one row per farm and one column per category, retaining kg N per farm per year. The typology metadata are joined to the flow values. These absolute values reflect both farm scale and the allocation of throughput among functions.</p>
+<pre class="text"><code>absolute_long = budget %&gt;%
+    filter(tstp_component %in% components) %&gt;%
+    group_by(farm_id, tstp_component) %&gt;%
+    summarise(N_kg = sum(N_kg, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+    tidyr::complete(farm_id = farm_ids, tstp_component = components, fill = list(N_kg = 0))
+
+data_absolute = absolute_long %&gt;%
+    pivot_wider(names_from = tstp_component, values_from = N_kg, values_fill = 0) %&gt;%
+    select(farm_id, all_of(components)) %&gt;%
+    rename_with(~component_labels, all_of(components)) %&gt;%
+    left_join(farm_metadata, by = &quot;farm_id&quot;) %&gt;%
+    select(farm_id, District, Farm_type, District_Type, all_of(component_labels))</code></pre>
+<p>The relative-flow dataset (proportion of TSTp) contains the same five categories, expressed as shares of TSTp. Accounting adjustments are not displayed as a sixth plotted variable but remain in the TSTp denominator. The five proportions can therefore sum to less than one; they are not renormalized to the five plotted categories.</p>
+<pre class="text"><code>relative_long = budget %&gt;%
+    filter(tstp_component %in% components) %&gt;%
+    group_by(farm_id, tstp_component) %&gt;%
+    summarise(share_of_TSTp = sum(share_of_TSTp, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+    tidyr::complete(farm_id = farm_ids, tstp_component = components, fill = list(share_of_TSTp = 0))
+
+data_percent = relative_long %&gt;%
+    pivot_wider(names_from = tstp_component, values_from = share_of_TSTp, values_fill = 0) %&gt;%
+    select(farm_id, all_of(components)) %&gt;%
+    rename_with(~component_labels, all_of(components)) %&gt;%
+    left_join(farm_metadata, by = &quot;farm_id&quot;) %&gt;%
+    select(farm_id, District, Farm_type, District_Type, all_of(component_labels))</code></pre>
+<p>We create a farm-level indicator dataset and summarize all calculated ENA indicators by district × farm type. The table reports medians and interquartile ranges (25th–75th percentiles), which describe the central tendency and spread without assuming normally distributed farm-level values. The group headings report the number of farms contributing to each summary. Absolute throughput and flow quantities are reported in kg N farm⁻¹ year⁻¹; dependency and flow-allocation indicators are proportions; the remaining indicators are dimensionless network indices. The table is descriptive and does not test for statistically significant differences between groups.</p>
+<pre class="text"><code>ena_summary_data = farm_ena_indicators %&gt;%
+    left_join(farm_metadata %&gt;%
+        select(farm_id, District_Type), by = &quot;farm_id&quot;) %&gt;%
+    select(District_Type, TST_kgN, TSTp_kgN, managed_external_input_kgN, managed_external_input_over_TST,
+        other_boundary_input_kgN, other_boundary_input_over_TST, accounting_input_kgN,
+        accounting_input_over_TST, all_internal_flows_kgN, all_internal_flows_over_TST,
+        internal_recycling_kgN, internal_recycling_over_TSTp, household_market_outputs_kgN,
+        household_market_outputs_over_TSTp, productive_outputs_kgN, productive_outputs_over_TSTp,
+        other_exports_and_losses_kgN, other_exports_and_losses_over_TSTp, accounting_adjustments_kgN,
+        accounting_adjustments_over_TSTp, APL, FCI, pscc_percent, no_scc_big, RDC,
+        OH_CAP, ELD, connectance_C)
+
+gtsummary::tbl_summary(ena_summary_data, by = District_Type, include = -District_Type,
+    type = list(pscc_percent ~ &quot;continuous&quot;, all_continuous() ~ &quot;continuous&quot;), statistic = all_continuous() ~
+        &quot;{median} ({p25}, {p75})&quot;, digits = all_continuous() ~ 2, missing = &quot;no&quot;,
+    label = list(TST_kgN ~ &quot;Total system throughput (kg N farm⁻¹ yr⁻¹)&quot;, TSTp_kgN ~
+        &quot;Total system throughput, TSTp (kg N farm⁻¹ yr⁻¹)&quot;, managed_external_input_kgN ~
+        &quot;Managed external inputs (kg N farm⁻¹ yr⁻¹)&quot;, managed_external_input_over_TST ~
+        &quot;Managed input dependency (proportion of TST)&quot;, other_boundary_input_kgN ~
+        &quot;Other boundary inputs (kg N farm⁻¹ yr⁻¹)&quot;, other_boundary_input_over_TST ~
+        &quot;Other boundary input contribution (proportion of TST)&quot;, accounting_input_kgN ~
+        &quot;Accounting inputs (kg N farm⁻¹ yr⁻¹)&quot;, accounting_input_over_TST ~
+        &quot;Accounting inputs (proportion of TST)&quot;, all_internal_flows_kgN ~ &quot;All internal flows (kg N farm⁻¹ yr⁻¹)&quot;,
+        all_internal_flows_over_TST ~ &quot;All internal flows (proportion of TST)&quot;, internal_recycling_kgN ~
+            &quot;Functional internal transfers/recycling (kg N farm⁻¹ yr⁻¹)&quot;, internal_recycling_over_TSTp ~
+            &quot;Functional internal transfers/recycling (proportion of TSTp)&quot;, household_market_outputs_kgN ~
+            &quot;Household and market outputs (kg N farm⁻¹ yr⁻¹)&quot;, household_market_outputs_over_TSTp ~
+            &quot;Household and market outputs (proportion of TSTp)&quot;, productive_outputs_kgN ~
+            &quot;All productive outputs, including gifts/barter (kg N farm⁻¹ yr⁻¹)&quot;,
+        productive_outputs_over_TSTp ~ &quot;All productive outputs (proportion of TSTp)&quot;,
+        other_exports_and_losses_kgN ~ &quot;Other exports and losses (kg N farm⁻¹ yr⁻¹)&quot;,
+        other_exports_and_losses_over_TSTp ~ &quot;Other exports and losses (proportion of TSTp)&quot;,
+        accounting_adjustments_kgN ~ &quot;Accounting adjustments (kg N farm⁻¹ yr⁻¹)&quot;,
+        accounting_adjustments_over_TSTp ~ &quot;Accounting adjustments (proportion of TSTp)&quot;,
+        APL ~ &quot;Average path length (APL)&quot;, FCI ~ &quot;Finn cycling index (FCI)&quot;, pscc_percent ~
+            &quot;Nodes in non-trivial strongly connected components (%)&quot;, no_scc_big ~
+            &quot;Number of non-trivial strongly connected components&quot;, RDC ~ &quot;Relative internal redundancy (RDC)&quot;,
+        OH_CAP ~ &quot;Overhead / capacity (OH.CAP)&quot;, ELD ~ &quot;Effective link density (ELD)&quot;,
+        connectance_C ~ &quot;Network connectance (C)&quot;)) %&gt;%
+    gtsummary::add_overall(last = TRUE) %&gt;%
+    gtsummary::modify_header(label = &quot;**ENA indicator**&quot;) %&gt;%
+    gtsummary::modify_caption(&quot;**Farm-level ENA indicators by district × farm type**&quot;) %&gt;%
+    gtsummary::bold_labels()</code></pre>
+<div id="nfpvihbyok" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nfpvihbyok table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nfpvihbyok thead, #nfpvihbyok tbody, #nfpvihbyok tfoot, #nfpvihbyok tr, #nfpvihbyok td, #nfpvihbyok th {
+  border-style: none;
+}
+
+#nfpvihbyok p {
+  margin: 0;
+  padding: 0;
+}
+
+#nfpvihbyok .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nfpvihbyok .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nfpvihbyok .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nfpvihbyok .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nfpvihbyok .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nfpvihbyok .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nfpvihbyok .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nfpvihbyok .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nfpvihbyok .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nfpvihbyok .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nfpvihbyok .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nfpvihbyok .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nfpvihbyok .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nfpvihbyok .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nfpvihbyok .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfpvihbyok .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nfpvihbyok .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nfpvihbyok .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nfpvihbyok .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfpvihbyok .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nfpvihbyok .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfpvihbyok .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nfpvihbyok .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfpvihbyok .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nfpvihbyok .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfpvihbyok .gt_left {
+  text-align: left;
+}
+
+#nfpvihbyok .gt_center {
+  text-align: center;
+}
+
+#nfpvihbyok .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nfpvihbyok .gt_font_normal {
+  font-weight: normal;
+}
+
+#nfpvihbyok .gt_font_bold {
+  font-weight: bold;
+}
+
+#nfpvihbyok .gt_font_italic {
+  font-style: italic;
+}
+
+#nfpvihbyok .gt_super {
+  font-size: 65%;
+}
+
+#nfpvihbyok .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nfpvihbyok .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nfpvihbyok .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nfpvihbyok .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nfpvihbyok .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nfpvihbyok .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nfpvihbyok .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#nfpvihbyok .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#nfpvihbyok div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <caption><span id="tab:unnamed-chunk-141">Table 8.1: </span><span class='gt_from_md'><strong>Farm-level ENA indicators by district × farm type</strong></span></caption>
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class='gt_from_md'><strong>ENA indicator</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"><span class='gt_from_md'><strong>Mbire – Type 1</strong><br />
+N = 9</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"><span class='gt_from_md'><strong>Mbire – Type 2</strong><br />
+N = 13</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_3"><span class='gt_from_md'><strong>Mbire – Type 3</strong><br />
+N = 7</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_4"><span class='gt_from_md'><strong>Murehwa – Type 1</strong><br />
+N = 7</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_5"><span class='gt_from_md'><strong>Murehwa – Type 2</strong><br />
+N = 9</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_6"><span class='gt_from_md'><strong>Murehwa – Type 3</strong><br />
+N = 9</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0"><span class='gt_from_md'><strong>Overall</strong><br />
+N = 54</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Total system throughput (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">37.28 (19.93, 119.80)</td>
+<td headers="stat_2" class="gt_row gt_center">230.89 (105.44, 252.39)</td>
+<td headers="stat_3" class="gt_row gt_center">93.04 (34.24, 109.57)</td>
+<td headers="stat_4" class="gt_row gt_center">49.79 (28.75, 87.81)</td>
+<td headers="stat_5" class="gt_row gt_center">27.02 (18.00, 40.25)</td>
+<td headers="stat_6" class="gt_row gt_center">78.69 (25.26, 225.09)</td>
+<td headers="stat_0" class="gt_row gt_center">80.76 (26.62, 138.39)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Total system throughput, TSTp (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">59.83 (35.26, 202.77)</td>
+<td headers="stat_2" class="gt_row gt_center">402.95 (186.29, 465.72)</td>
+<td headers="stat_3" class="gt_row gt_center">162.32 (59.33, 195.28)</td>
+<td headers="stat_4" class="gt_row gt_center">90.67 (57.50, 173.00)</td>
+<td headers="stat_5" class="gt_row gt_center">53.47 (33.59, 70.37)</td>
+<td headers="stat_6" class="gt_row gt_center">150.16 (47.32, 424.08)</td>
+<td headers="stat_0" class="gt_row gt_center">146.67 (51.15, 250.59)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Managed external inputs (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">11.80 (1.20, 11.80)</td>
+<td headers="stat_2" class="gt_row gt_center">3.50 (3.50, 18.75)</td>
+<td headers="stat_3" class="gt_row gt_center">0.00 (0.00, 3.50)</td>
+<td headers="stat_4" class="gt_row gt_center">28.75 (19.92, 53.35)</td>
+<td headers="stat_5" class="gt_row gt_center">25.75 (12.13, 26.55)</td>
+<td headers="stat_6" class="gt_row gt_center">20.75 (19.00, 23.90)</td>
+<td headers="stat_0" class="gt_row gt_center">12.80 (3.50, 25.75)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Managed input dependency (proportion of TST)</td>
+<td headers="stat_1" class="gt_row gt_center">0.10 (0.10, 0.43)</td>
+<td headers="stat_2" class="gt_row gt_center">0.03 (0.01, 0.07)</td>
+<td headers="stat_3" class="gt_row gt_center">0.00 (0.00, 0.10)</td>
+<td headers="stat_4" class="gt_row gt_center">0.70 (0.49, 0.97)</td>
+<td headers="stat_5" class="gt_row gt_center">0.76 (0.64, 0.93)</td>
+<td headers="stat_6" class="gt_row gt_center">0.58 (0.26, 0.75)</td>
+<td headers="stat_0" class="gt_row gt_center">0.15 (0.03, 0.70)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Other boundary inputs (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">12.26 (1.75, 29.51)</td>
+<td headers="stat_2" class="gt_row gt_center">122.91 (58.96, 184.94)</td>
+<td headers="stat_3" class="gt_row gt_center">49.84 (12.70, 85.09)</td>
+<td headers="stat_4" class="gt_row gt_center">3.40 (0.19, 23.26)</td>
+<td headers="stat_5" class="gt_row gt_center">0.44 (0.13, 7.06)</td>
+<td headers="stat_6" class="gt_row gt_center">50.65 (1.89, 71.81)</td>
+<td headers="stat_0" class="gt_row gt_center">27.02 (1.89, 76.18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Other boundary input contribution (proportion of TST)</td>
+<td headers="stat_1" class="gt_row gt_center">0.25 (0.05, 0.45)</td>
+<td headers="stat_2" class="gt_row gt_center">0.73 (0.53, 0.82)</td>
+<td headers="stat_3" class="gt_row gt_center">0.54 (0.37, 0.70)</td>
+<td headers="stat_4" class="gt_row gt_center">0.07 (0.00, 0.45)</td>
+<td headers="stat_5" class="gt_row gt_center">0.03 (0.01, 0.11)</td>
+<td headers="stat_6" class="gt_row gt_center">0.32 (0.07, 0.54)</td>
+<td headers="stat_0" class="gt_row gt_center">0.39 (0.06, 0.65)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Accounting inputs (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">3.54 (0.90, 41.66)</td>
+<td headers="stat_2" class="gt_row gt_center">24.89 (0.77, 35.74)</td>
+<td headers="stat_3" class="gt_row gt_center">8.90 (7.24, 10.95)</td>
+<td headers="stat_4" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_5" class="gt_row gt_center">0.00 (0.00, 0.10)</td>
+<td headers="stat_6" class="gt_row gt_center">0.00 (0.00, 0.07)</td>
+<td headers="stat_0" class="gt_row gt_center">0.43 (0.00, 12.94)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Accounting inputs (proportion of TST)</td>
+<td headers="stat_1" class="gt_row gt_center">0.22 (0.09, 0.35)</td>
+<td headers="stat_2" class="gt_row gt_center">0.07 (0.01, 0.10)</td>
+<td headers="stat_3" class="gt_row gt_center">0.10 (0.08, 0.26)</td>
+<td headers="stat_4" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_5" class="gt_row gt_center">0.00 (0.00, 0.01)</td>
+<td headers="stat_6" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_0" class="gt_row gt_center">0.01 (0.00, 0.10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">All internal flows (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">4.60 (3.57, 36.84)</td>
+<td headers="stat_2" class="gt_row gt_center">39.05 (12.75, 58.82)</td>
+<td headers="stat_3" class="gt_row gt_center">10.09 (9.14, 23.86)</td>
+<td headers="stat_4" class="gt_row gt_center">2.61 (2.41, 22.46)</td>
+<td headers="stat_5" class="gt_row gt_center">2.42 (1.30, 10.13)</td>
+<td headers="stat_6" class="gt_row gt_center">7.22 (3.15, 23.40)</td>
+<td headers="stat_0" class="gt_row gt_center">10.11 (2.61, 28.79)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">All internal flows (proportion of TST)</td>
+<td headers="stat_1" class="gt_row gt_center">0.23 (0.19, 0.31)</td>
+<td headers="stat_2" class="gt_row gt_center">0.15 (0.14, 0.21)</td>
+<td headers="stat_3" class="gt_row gt_center">0.26 (0.21, 0.27)</td>
+<td headers="stat_4" class="gt_row gt_center">0.10 (0.03, 0.23)</td>
+<td headers="stat_5" class="gt_row gt_center">0.14 (0.06, 0.24)</td>
+<td headers="stat_6" class="gt_row gt_center">0.12 (0.10, 0.16)</td>
+<td headers="stat_0" class="gt_row gt_center">0.17 (0.10, 0.25)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Functional internal transfers/recycling (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">1.02 (0.82, 1.45)</td>
+<td headers="stat_2" class="gt_row gt_center">33.00 (11.85, 54.45)</td>
+<td headers="stat_3" class="gt_row gt_center">10.09 (1.22, 23.37)</td>
+<td headers="stat_4" class="gt_row gt_center">1.78 (0.00, 15.36)</td>
+<td headers="stat_5" class="gt_row gt_center">1.25 (0.32, 3.53)</td>
+<td headers="stat_6" class="gt_row gt_center">7.12 (1.26, 20.26)</td>
+<td headers="stat_0" class="gt_row gt_center">3.18 (1.02, 20.26)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Functional internal transfers/recycling (proportion of TSTp)</td>
+<td headers="stat_1" class="gt_row gt_center">0.01 (0.01, 0.02)</td>
+<td headers="stat_2" class="gt_row gt_center">0.07 (0.04, 0.09)</td>
+<td headers="stat_3" class="gt_row gt_center">0.06 (0.02, 0.11)</td>
+<td headers="stat_4" class="gt_row gt_center">0.02 (0.00, 0.09)</td>
+<td headers="stat_5" class="gt_row gt_center">0.04 (0.01, 0.05)</td>
+<td headers="stat_6" class="gt_row gt_center">0.05 (0.03, 0.08)</td>
+<td headers="stat_0" class="gt_row gt_center">0.04 (0.02, 0.08)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Household and market outputs (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">6.16 (1.54, 62.84)</td>
+<td headers="stat_2" class="gt_row gt_center">31.26 (1.92, 44.91)</td>
+<td headers="stat_3" class="gt_row gt_center">9.19 (8.56, 9.19)</td>
+<td headers="stat_4" class="gt_row gt_center">2.55 (0.64, 9.25)</td>
+<td headers="stat_5" class="gt_row gt_center">1.45 (0.70, 5.67)</td>
+<td headers="stat_6" class="gt_row gt_center">3.07 (1.89, 4.73)</td>
+<td headers="stat_0" class="gt_row gt_center">6.45 (1.54, 16.31)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Household and market outputs (proportion of TSTp)</td>
+<td headers="stat_1" class="gt_row gt_center">0.17 (0.09, 0.31)</td>
+<td headers="stat_2" class="gt_row gt_center">0.05 (0.01, 0.10)</td>
+<td headers="stat_3" class="gt_row gt_center">0.09 (0.05, 0.15)</td>
+<td headers="stat_4" class="gt_row gt_center">0.05 (0.01, 0.09)</td>
+<td headers="stat_5" class="gt_row gt_center">0.03 (0.02, 0.07)</td>
+<td headers="stat_6" class="gt_row gt_center">0.02 (0.01, 0.06)</td>
+<td headers="stat_0" class="gt_row gt_center">0.05 (0.01, 0.10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">All productive outputs, including gifts/barter (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">6.16 (1.54, 62.84)</td>
+<td headers="stat_2" class="gt_row gt_center">31.26 (1.92, 44.91)</td>
+<td headers="stat_3" class="gt_row gt_center">9.19 (8.56, 9.19)</td>
+<td headers="stat_4" class="gt_row gt_center">2.55 (0.64, 9.25)</td>
+<td headers="stat_5" class="gt_row gt_center">1.52 (0.70, 5.67)</td>
+<td headers="stat_6" class="gt_row gt_center">3.27 (1.89, 4.73)</td>
+<td headers="stat_0" class="gt_row gt_center">6.45 (1.54, 17.29)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">All productive outputs (proportion of TSTp)</td>
+<td headers="stat_1" class="gt_row gt_center">0.17 (0.09, 0.31)</td>
+<td headers="stat_2" class="gt_row gt_center">0.07 (0.01, 0.10)</td>
+<td headers="stat_3" class="gt_row gt_center">0.09 (0.05, 0.15)</td>
+<td headers="stat_4" class="gt_row gt_center">0.05 (0.01, 0.09)</td>
+<td headers="stat_5" class="gt_row gt_center">0.03 (0.02, 0.07)</td>
+<td headers="stat_6" class="gt_row gt_center">0.02 (0.01, 0.06)</td>
+<td headers="stat_0" class="gt_row gt_center">0.06 (0.01, 0.10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Other exports and losses (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">7.18 (3.24, 10.62)</td>
+<td headers="stat_2" class="gt_row gt_center">40.06 (14.32, 44.49)</td>
+<td headers="stat_3" class="gt_row gt_center">13.87 (7.79, 25.74)</td>
+<td headers="stat_4" class="gt_row gt_center">1.63 (0.48, 6.56)</td>
+<td headers="stat_5" class="gt_row gt_center">0.65 (0.14, 1.87)</td>
+<td headers="stat_6" class="gt_row gt_center">11.38 (2.42, 12.21)</td>
+<td headers="stat_0" class="gt_row gt_center">7.79 (1.63, 17.85)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Other exports and losses (proportion of TSTp)</td>
+<td headers="stat_1" class="gt_row gt_center">0.06 (0.05, 0.10)</td>
+<td headers="stat_2" class="gt_row gt_center">0.09 (0.08, 0.09)</td>
+<td headers="stat_3" class="gt_row gt_center">0.10 (0.09, 0.13)</td>
+<td headers="stat_4" class="gt_row gt_center">0.03 (0.00, 0.07)</td>
+<td headers="stat_5" class="gt_row gt_center">0.01 (0.00, 0.03)</td>
+<td headers="stat_6" class="gt_row gt_center">0.06 (0.03, 0.08)</td>
+<td headers="stat_0" class="gt_row gt_center">0.07 (0.03, 0.09)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Accounting adjustments (kg N farm⁻¹ yr⁻¹)</td>
+<td headers="stat_1" class="gt_row gt_center">18.70 (13.48, 86.98)</td>
+<td headers="stat_2" class="gt_row gt_center">137.29 (70.48, 159.31)</td>
+<td headers="stat_3" class="gt_row gt_center">40.65 (24.93, 72.56)</td>
+<td headers="stat_4" class="gt_row gt_center">35.19 (28.75, 67.36)</td>
+<td headers="stat_5" class="gt_row gt_center">26.42 (14.26, 29.19)</td>
+<td headers="stat_6" class="gt_row gt_center">58.86 (20.29, 155.68)</td>
+<td headers="stat_0" class="gt_row gt_center">43.27 (21.51, 90.70)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Accounting adjustments (proportion of TSTp)</td>
+<td headers="stat_1" class="gt_row gt_center">0.43 (0.36, 0.48)</td>
+<td headers="stat_2" class="gt_row gt_center">0.37 (0.34, 0.39)</td>
+<td headers="stat_3" class="gt_row gt_center">0.37 (0.30, 0.42)</td>
+<td headers="stat_4" class="gt_row gt_center">0.44 (0.38, 0.49)</td>
+<td headers="stat_5" class="gt_row gt_center">0.43 (0.42, 0.47)</td>
+<td headers="stat_6" class="gt_row gt_center">0.43 (0.37, 0.44)</td>
+<td headers="stat_0" class="gt_row gt_center">0.41 (0.37, 0.44)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Average path length (APL)</td>
+<td headers="stat_1" class="gt_row gt_center">1.30 (1.24, 1.44)</td>
+<td headers="stat_2" class="gt_row gt_center">1.18 (1.16, 1.27)</td>
+<td headers="stat_3" class="gt_row gt_center">1.34 (1.26, 1.36)</td>
+<td headers="stat_4" class="gt_row gt_center">1.11 (1.03, 1.29)</td>
+<td headers="stat_5" class="gt_row gt_center">1.16 (1.06, 1.32)</td>
+<td headers="stat_6" class="gt_row gt_center">1.14 (1.11, 1.19)</td>
+<td headers="stat_0" class="gt_row gt_center">1.21 (1.11, 1.33)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Finn cycling index (FCI)</td>
+<td headers="stat_1" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_2" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_3" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_4" class="gt_row gt_center">0.01 (0.00, 0.03)</td>
+<td headers="stat_5" class="gt_row gt_center">0.02 (0.01, 0.08)</td>
+<td headers="stat_6" class="gt_row gt_center">0.00 (0.00, 0.01)</td>
+<td headers="stat_0" class="gt_row gt_center">0.00 (0.00, 0.01)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Nodes in non-trivial strongly connected components (%)</td>
+<td headers="stat_1" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_2" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_3" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_4" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_5" class="gt_row gt_center">0.00 (0.00, 0.00)</td>
+<td headers="stat_6" class="gt_row gt_center">0.00 (0.00, 33.33)</td>
+<td headers="stat_0" class="gt_row gt_center">0.00 (0.00, 0.00)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Number of non-trivial strongly connected components</td>
+<td headers="stat_1" class="gt_row gt_center">0 (0%)</td>
+<td headers="stat_2" class="gt_row gt_center">3 (23%)</td>
+<td headers="stat_3" class="gt_row gt_center">1 (14%)</td>
+<td headers="stat_4" class="gt_row gt_center">1 (14%)</td>
+<td headers="stat_5" class="gt_row gt_center">1 (11%)</td>
+<td headers="stat_6" class="gt_row gt_center">4 (44%)</td>
+<td headers="stat_0" class="gt_row gt_center">10 (19%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Relative internal redundancy (RDC)</td>
+<td headers="stat_1" class="gt_row gt_center">0.54 (0.44, 0.67)</td>
+<td headers="stat_2" class="gt_row gt_center">0.71 (0.69, 0.76)</td>
+<td headers="stat_3" class="gt_row gt_center">0.71 (0.29, 0.76)</td>
+<td headers="stat_4" class="gt_row gt_center">0.71 (0.69, 0.74)</td>
+<td headers="stat_5" class="gt_row gt_center">0.76 (0.75, 0.87)</td>
+<td headers="stat_6" class="gt_row gt_center">0.73 (0.62, 0.83)</td>
+<td headers="stat_0" class="gt_row gt_center">0.71 (0.65, 0.76)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Overhead / capacity (OH.CAP)</td>
+<td headers="stat_1" class="gt_row gt_center">0.49 (0.41, 0.49)</td>
+<td headers="stat_2" class="gt_row gt_center">0.62 (0.58, 0.66)</td>
+<td headers="stat_3" class="gt_row gt_center">0.55 (0.50, 0.62)</td>
+<td headers="stat_4" class="gt_row gt_center">0.58 (0.49, 0.64)</td>
+<td headers="stat_5" class="gt_row gt_center">0.56 (0.49, 0.65)</td>
+<td headers="stat_6" class="gt_row gt_center">0.60 (0.58, 0.65)</td>
+<td headers="stat_0" class="gt_row gt_center">0.58 (0.49, 0.64)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Effective link density (ELD)</td>
+<td headers="stat_1" class="gt_row gt_center">1.50 (1.36, 1.66)</td>
+<td headers="stat_2" class="gt_row gt_center">1.94 (1.72, 2.17)</td>
+<td headers="stat_3" class="gt_row gt_center">1.69 (1.64, 1.85)</td>
+<td headers="stat_4" class="gt_row gt_center">1.62 (1.41, 1.99)</td>
+<td headers="stat_5" class="gt_row gt_center">1.61 (1.40, 1.82)</td>
+<td headers="stat_6" class="gt_row gt_center">1.82 (1.71, 1.97)</td>
+<td headers="stat_0" class="gt_row gt_center">1.70 (1.43, 1.97)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Network connectance (C)</td>
+<td headers="stat_1" class="gt_row gt_center">0.04 (0.02, 0.04)</td>
+<td headers="stat_2" class="gt_row gt_center">0.06 (0.05, 0.09)</td>
+<td headers="stat_3" class="gt_row gt_center">0.04 (0.04, 0.06)</td>
+<td headers="stat_4" class="gt_row gt_center">0.05 (0.02, 0.07)</td>
+<td headers="stat_5" class="gt_row gt_center">0.05 (0.02, 0.06)</td>
+<td headers="stat_6" class="gt_row gt_center">0.05 (0.05, 0.09)</td>
+<td headers="stat_0" class="gt_row gt_center">0.05 (0.02, 0.07)</td></tr>
+  </tbody>
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td class="gt_footnote" colspan="8"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>Median (Q1, Q3); n (%)</span></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<p>The following panel functions define the pair-plot encodings. Mbire Types 1–3 use green shades; Murehwa Types 1–3 use orange shades; colour identifies district × farm type. Diagonal panels show distributions, lower panels show farm-level scatterplots and a pooled linear trend, and upper panels show pooled Spearman correlations. The correlations are pooled across groups.</p>
+<pre class="text"><code>district_type_colors = c(`Mbire – Type 1` = &quot;#c7e9c0&quot;, `Mbire – Type 2` = &quot;#74c476&quot;,
+    `Mbire – Type 3` = &quot;#238b45&quot;, `Murehwa – Type 1` = &quot;#fdd0a2&quot;, `Murehwa – Type 2` = &quot;#fd8d3c&quot;,
+    `Murehwa – Type 3` = &quot;#d94701&quot;)
+
+# Diagonal: distributions by District x Farm type
+diag_density_by_district_type = function(data, mapping, ...) {
+    x_values = rlang::eval_tidy(mapping$x, data = data)
+    density_data = tibble(plot_value = x_values, District_Type = data$District_Type)
+    ggplot(density_data, aes(x = plot_value, colour = District_Type, group = District_Type)) +
+        geom_density(linewidth = 0.8, na.rm = TRUE) + scale_colour_manual(values = district_type_colors,
+        limits = district_type_levels, drop = FALSE) + theme_classic(base_size = 10) +
+        theme(legend.position = &quot;none&quot;)
+}
+
+# Lower triangle: scatterplots
+lower_scatter_by_district_type = function(data, mapping, ...) {
+    x_name = rlang::as_name(rlang::get_expr(mapping$x))
+    y_name = rlang::as_name(rlang::get_expr(mapping$y))
+    ggplot(data = data, aes(x = .data[[x_name]], y = .data[[y_name]])) + geom_point(aes(colour = District_Type),
+        shape = 16, size = 3, alpha = 0.75, na.rm = TRUE) + geom_smooth(method = &quot;lm&quot;,
+        se = FALSE, colour = &quot;black&quot;, linewidth = 0.6, na.rm = TRUE) + scale_colour_manual(values = district_type_colors,
+        limits = district_type_levels, drop = FALSE) + theme_classic(base_size = 10) +
+        theme(legend.position = &quot;none&quot;)
+}
+
+# Upper triangle: pooled Spearman correlation
+
+upper_spearman = function(data, mapping, ...) {
+    x_values = rlang::eval_tidy(mapping$x, data = data)
+    y_values = rlang::eval_tidy(mapping$y, data = data)
+    keep = stats::complete.cases(x_values, y_values)
+    n = sum(keep)
+    if (n &gt;= 3 &amp;&amp; stats::sd(x_values[keep]) &gt; 0 &amp;&amp; stats::sd(y_values[keep]) &gt; 0) {
+        test = suppressWarnings(stats::cor.test(x_values[keep], y_values[keep], method = &quot;spearman&quot;,
+            exact = FALSE))
+        rho = unname(test$estimate)
+        p_value = test$p.value
+        significance = if (p_value &lt; 0.001) {
+            &quot;***&quot;
+        } else if (p_value &lt; 0.01) {
+            &quot;**&quot;
+        } else if (p_value &lt; 0.05) {
+            &quot;*&quot;
+        } else {
+            &quot;&quot;
+        }
+        label = sprintf(&quot;Spearman\nρ = %.2f%s\nn = %d&quot;, rho, significance, n)
+    } else {
+        label = sprintf(&quot;Spearman\nnot estimable\nn = %d&quot;, n)
+    }
+    ggplot() + annotate(&quot;text&quot;, x = 0.5, y = 0.5, label = label, size = 4) + coord_cartesian(xlim = c(0,
+        1), ylim = c(0, 1)) + theme_void()
+}
+
+
+legend_data = farm_metadata %&gt;%
+    distinct(District_Type) %&gt;%
+    mutate(legend_y = 1)
+
+legend_plot = ggplot(legend_data, aes(x = District_Type, y = legend_y, colour = District_Type)) +
+    geom_point(shape = 16, size = 4) + scale_colour_manual(values = district_type_colors,
+    limits = district_type_levels, breaks = district_type_levels, drop = FALSE, name = &quot;District × Farm type&quot;) +
+    theme_void() + theme(legend.position = &quot;right&quot;)
+
+explicit_legend = GGally::grab_legend(legend_plot)</code></pre>
+<p>The two pair plots are produced separately below, using the same panel definitions and formatting. The first shows relative TSTp shares; the second shows absolute N flows.</p>
+<pre class="text"><code>p_percent = GGally::ggpairs(data_percent, columns = 5:9, mapping = ggplot2::aes(colour = District_Type),
+    diag = list(continuous = diag_density_by_district_type), lower = list(continuous = lower_scatter_by_district_type),
+    upper = list(continuous = upper_spearman), columnLabels = component_labels, legend = explicit_legend,
+    progress = FALSE) + theme_bw(base_size = 11) + theme(strip.text = element_text(size = 10,
+    face = &quot;bold&quot;), axis.text = element_text(size = 8.5), axis.title = element_text(size = 10),
+    panel.grid = element_blank(), legend.position = &quot;right&quot;)
+
+p_percent</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-142-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+<p>The second figure shows absolute nitrogen flows (kg N farm⁻¹ year⁻¹), combining farm size and flow allocation.</p>
+<pre class="text"><code>p_absolute = GGally::ggpairs(data_absolute, columns = 5:9, mapping = ggplot2::aes(colour = District_Type),
+    diag = list(continuous = diag_density_by_district_type), lower = list(continuous = lower_scatter_by_district_type),
+    upper = list(continuous = upper_spearman), columnLabels = component_labels, legend = explicit_legend,
+    progress = FALSE) + theme_bw(base_size = 11) + theme(strip.text = element_text(size = 10,
+    face = &quot;bold&quot;), axis.text = element_text(size = 8.5), axis.title = element_text(size = 10),
+    panel.grid = element_blank(), legend.position = &quot;right&quot;)
+
+p_absolute</code></pre>
+<p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-143-1.png" alt="" width="100%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Baudron2026" class="csl-entry">
+Baudron, Frédéric, Gatien Falconnier, Telma Sibanda, and Vimbayi G. P. Chimonyo. 2026. <span>“Are Agroecological Practices Pro-Poor? Evidence from Smallholder Farms in Zimbabwe.”</span> <em>Agricultural Systems</em> 238 (October). <a href="https://doi.org/10.1016/j.agsy.2026.104883">https://doi.org/10.1016/j.agsy.2026.104883</a>.
+</div>
+<div id="ref-enaR" class="csl-entry">
+Lau, Matthew K., S. R. Borrett, D. E. Hines, and P. Singh. 2026. <em>enaR: Tools for Ecological Network Analysis</em>. <a href="https://github.com/SEELab/enaR">https://github.com/SEELab/enaR</a>.
+</div>
+<div id="ref-Rufino2009" class="csl-entry">
+Rufino, M. C., P. Tittonell, P. Reidsma, S. López-Ridaura, H. Hengsdijk, K. E. Giller, and A. Verhagen. 2009. <span>“Network Analysis of n Flows and Food Self-Sufficiency-a Comparative Study of Crop-Livestock Systems of the Highlands of East and Southern Africa.”</span> <em>Nutrient Cycling in Agroecosystems</em> 85 (October): 169–86. <a href="https://doi.org/10.1007/s10705-009-9256-9">https://doi.org/10.1007/s10705-009-9256-9</a>.
+</div>
+<div id="ref-Ulanowicz2009" class="csl-entry">
+Ulanowicz, Robert E., Sally J. Goerner, Bernard Lietaer, and Rocio Gomez. 2009. <span>“Quantifying Sustainability: Resilience, Efficiency and the Return of Information Theory.”</span> <em>Ecological Complexity</em> 6 (March): 27–36. <a href="https://doi.org/10.1016/j.ecocom.2008.10.005">https://doi.org/10.1016/j.ecocom.2008.10.005</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="farm-typologies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-prediction-of-crop-damage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/07-ena.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["standardized_workflows_for_managing_and_analyzing_agronomic_datasets.pdf", "standardized_workflows_for_managing_and_analyzing_agronomic_datasets.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 15 1. Set up the analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit</title>
+<meta name="description" content='15.1 1.1. Load packages library(terra) library(geodata) library(sf) library(dplyr) library(ggplot2) library(patchwork) path = "Data"  15.2 Define the geographical domain and reference sites The...'>
+<meta name="generator" content="bookdown 0.46 with bs4_book()">
+<meta property="og:title" content="Chapter 15 1. Set up the analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit">
+<meta property="og:type" content="book">
+<meta property="og:description" content='15.1 1.1. Load packages library(terra) library(geodata) library(sf) library(dplyr) library(ggplot2) library(patchwork) path = "Data"  15.2 Define the geographical domain and reference sites The...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 15 1. Set up the analysis | standardized_workflows_for_managing_and_analyzing_agronomic_datasets.knit">
+<meta name="twitter:description" content='15.1 1.1. Load packages library(terra) library(geodata) library(sf) library(dplyr) library(ggplot2) library(patchwork) path = "Data"  15.2 Define the geographical domain and reference sites The...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.11.0/transition.js"></script><script src="libs/bs3compat-0.11.0/tabs.js"></script><script src="libs/bs3compat-0.11.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title=""></a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="learning-kobotoolbox-and-r.html"><span class="header-section-number">2</span> Learning KoboToolBox and R</a></li>
+<li><a class="" href="datasets.html"><span class="header-section-number">3</span> Datasets</a></li>
+<li><a class="" href="managing-on-farm-experiments.html"><span class="header-section-number">4</span> Managing on-farm experiments</a></li>
+<li><a class="" href="evaluating-on-farm-experiments.html"><span class="header-section-number">5</span> Evaluating on-farm experiments</a></li>
+<li><a class="" href="baselining.html"><span class="header-section-number">6</span> Baselining</a></li>
+<li><a class="" href="farm-typologies.html"><span class="header-section-number">7</span> Farm typologies</a></li>
+<li><a class="" href="ecological-network-analysis.html"><span class="header-section-number">8</span> Ecological Network Analysis</a></li>
+<li><a class="" href="spatial-prediction-of-crop-damage-by-pests-using-a-set-of-landscape-metrics.html"><span class="header-section-number">9</span> Spatial prediction of crop damage by pests using a set of landscape metrics</a></li>
+<li><a class="" href="potential-manure-production-under-current-land-use.html"><span class="header-section-number">10</span> Potential manure production under current land use</a></li>
+<li><a class="" href="spatial-recommendation-domains.html"><span class="header-section-number">11</span> Spatial recommendation domains</a></li>
+<li><a class="" href="mapping-the-eco-physiological-suitability-of-maize-and-sorghum.html"><span class="header-section-number">12</span> Mapping the eco-physiological suitability of maize and sorghum</a></li>
+<li><a class="" href="technology-extrapolation-domains.html"><span class="header-section-number">13</span> Technology extrapolation domains</a></li>
+<li><a class="" href="introduction-1.html"><span class="header-section-number">14</span> Introduction</a></li>
+<li><a class="active" href="set-up-the-analysis.html"><span class="header-section-number">15</span> 1. Set up the analysis</a></li>
+<li><a class="" href="representativity-of-on-farm-trials-in-terms-of-soil-and-climate-conditions.html"><span class="header-section-number">16</span> Representativity of on-farm trials in terms of soil and climate conditions</a></li>
+<li><a class="" href="conclusions.html"><span class="header-section-number">17</span> Conclusions</a></li>
+<li><a class="" href="acknowledgments.html">Acknowledgments</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="set-up-the-analysis" class="section level1" number="15">
+<h1>
+<span class="header-section-number">15</span> 1. Set up the analysis<a class="anchor" aria-label="anchor" href="#set-up-the-analysis"><i class="fas fa-link"></i></a>
+</h1>
+<div id="load-packages" class="section level2" number="15.1">
+<h2>
+<span class="header-section-number">15.1</span> 1.1. Load packages<a class="anchor" aria-label="anchor" href="#load-packages"><i class="fas fa-link"></i></a>
+</h2>
+<pre class="text"><code><a href="https://rspatial.org/">library(terra)
+library(geodata)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+
+path = "Data"</a></code></pre>
+</div>
+<div id="define-the-geographical-domain-and-reference-sites" class="section level2" number="15.2">
+<h2>
+<span class="header-section-number">15.2</span> Define the geographical domain and reference sites<a class="anchor" aria-label="anchor" href="#define-the-geographical-domain-and-reference-sites"><i class="fas fa-link"></i></a>
+</h2>
+<p>The analysis is conducted across Sub-Saharan Africa. The shapefile <code>ssa.shp</code> defines the geographical boundary used to crop and mask the spatial datasets.</p>
+<p>The reference sites are provided as a GeoPackage. In this example, the layer contains the Living Lab polygons and a <code>district</code> attribute identifying each reference site.</p>
+<pre class="text"><code>ssa &lt;- vect("Data/ssa.shp")
+
+reference_sites &lt;- vect("Data/ll_mfl.gpkg")
+
+reference_sites &lt;- reference_sites[reference_sites$district %in% c("Senegal", "Ethiopia",
+    "Kenya1", "Kenya2", "Zimbabwe", "Ivory Coast"), ]
+
+plot(ssa, main = "Sub-Saharan Africa")
+plot(reference_sites, add = TRUE, col = "blue")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/geographical-data-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="load-the-spatial-datasets" class="section level2" number="15.3">
+<h2>
+<span class="header-section-number">15.3</span> Load the spatial datasets<a class="anchor" aria-label="anchor" href="#load-the-spatial-datasets"><i class="fas fa-link"></i></a>
+</h2>
+<p>All spatial input datasets are called at the beginning of the workflow. This makes the data requirements explicit and allows users to check that all files are available before starting the processing steps.</p>
+<p>Two cropland datasets are used in the workflow:</p>
+<ul>
+<li>
+<code>cropland.tif</code>: cropland fraction or proportion, used to estimate cropland area;</li>
+<li>
+<code>cropmask.tif</code>: binary cropland mask, used to define the pixels included in the analysis.</li>
+</ul>
+<p>Check the values and units of these two rasters before proceeding. The cropland fraction should be expressed either as a proportion (0–1) or as a percentage (0–100). The binary mask should identify cropland pixels with a positive value and non-cropland pixels with <code>NA</code> or zero.</p>
+<pre class="text"><code>cropland_fraction &lt;- rast("Data/cropland.tif")
+cropmask &lt;- rast("Data/cropmask.tif")
+
+plot(cropland_fraction, main = "Cropland fraction")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-cropland-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(cropmask, main = "Cropland mask")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-cropland-2.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>The soil indicators used in the analysis are:</p>
+<ul>
+<li>sand content in the 0–30 cm soil layer;</li>
+<li>total soil nitrogen at 30 cm;</li>
+<li>available water content (AWC) from the Harmonized World Soil Database (HWSD).</li>
+</ul>
+<pre class="text"><code>sand &lt;- rast("Data/sand_0_30cm.tiff")
+
+sand = resample(sand, cropmask, method = "bilinear")
+sand = crop(sand, cropmask)
+sand = mask(sand, cropmask)
+
+
+soil_n &lt;- rast("Data/soil_grid_ntot.tiff")
+
+soil_n = resample(soil_n, cropmask, method = "bilinear")
+soil_n = crop(soil_n, cropmask)
+soil_n = mask(soil_n, cropmask)
+
+
+awc &lt;- rast("Data/hwsd_awc.tiff")
+
+awc = resample(awc, cropmask, method = "bilinear")
+awc = crop(awc, cropmask)
+awc = mask(awc, cropmask)
+
+
+plot(sand, main = "Sand content, 0–30 cm")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-soil-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(soil_n, main = "Total soil nitrogen")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-soil-2.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(awc, main = "Available water content")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-soil-3.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>Climate is represented by mean annual temperature and total annual precipitation. These are the combined rasters prepared for the Sub-Saharan African domain.</p>
+<pre class="text"><code>mean_temperature &lt;- rast("Data/tavg_combined.tiff")
+
+mean_temperature = resample(mean_temperature, cropmask, method = "bilinear")
+mean_temperature = crop(mean_temperature, cropmask)
+mean_temperature = mask(mean_temperature, cropmask)
+
+
+annual_precipitation &lt;- rast("Data/prec_combined.tiff")
+
+annual_precipitation = resample(annual_precipitation, cropmask, method = "bilinear")
+annual_precipitation = crop(annual_precipitation, cropmask)
+annual_precipitation = mask(annual_precipitation, cropmask)
+
+
+plot(mean_temperature, main = "Mean annual temperature")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-climate-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(annual_precipitation, main = "Annual precipitation")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-climate-2.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>Livestock density is represented as tropical livestock units (TLU). Rural population is represented by the 5-km population raster for 2020.</p>
+<pre class="text"><code>tlu &lt;- rast("Data/tlu.tiff")
+
+tlu = resample(tlu, cropmask, method = "bilinear")
+tlu = crop(tlu, cropmask)
+tlu = mask(tlu, cropmask)
+
+
+rural_population &lt;- rast("Data/rural_population_5km_2020_ssa.tif")
+
+rural_population = resample(rural_population, cropmask, method = "sum")
+rural_population = crop(rural_population, cropmask)
+rural_population = mask(rural_population, cropmask)
+
+
+plot(tlu, main = "Tropical livestock units")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-livestock-population-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(rural_population, main = "Rural population, 2020")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-livestock-population-2.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>The value of crop production is represented separately for food and non-food crops, using the SPAM value-of-production layers.</p>
+<pre class="text"><code>value_food_crops &lt;- rast("Data/value_food_crops.tif")
+
+value_food_crops = resample(value_food_crops, cropmask, method = "sum")
+value_food_crops = crop(value_food_crops, cropmask)
+value_food_crops = mask(value_food_crops, cropmask)
+
+
+value_nonfood_crops &lt;- rast("Data/value_nonfood_crops.tif")
+
+value_nonfood_crops = resample(value_nonfood_crops, cropmask, method = "sum")
+value_nonfood_crops = crop(value_nonfood_crops, cropmask)
+value_nonfood_crops = mask(value_nonfood_crops, cropmask)
+
+
+plot(value_food_crops, main = "Value of food crop production")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-production-value-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>plot(value_nonfood_crops, main = "Value of non-food crop production")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-production-value-2.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>Travel time to the nearest city is obtained using the <code>geodata</code> package. If a previously downloaded travel-time raster is available, it can instead be loaded from disk.</p>
+<pre class="text"><code>travel_time &lt;- geodata::travel_time(to = "city", size = 6, up = TRUE, path = path)
+
+
+travel_time = resample(travel_time, cropmask, method = "bilinear")
+travel_time = crop(travel_time, cropmask)
+travel_time = mask(travel_time, cropmask)
+
+
+plot(travel_time, main = "Travel time to cities")</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/load-travel-time-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>The indicators included in the transferability analysis are assembled into a single raster stack. All layers must have the same coordinate reference system, extent, resolution and origin.</p>
+<pre class="text"><code>indicator_stack &lt;- c(cropland_fraction, sand, soil_n, awc, mean_temperature, annual_precipitation,
+    tlu, rural_population, value_food_crops, value_nonfood_crops, travel_time)
+
+names(indicator_stack) &lt;- c("cropland_fraction", "sand", "soil_n", "awc", "mean_temperature",
+    "annual_precipitation", "tlu", "rural_population", "value_food_crops", "value_nonfood_crops",
+    "travel_time")
+
+indicator_stack</code></pre>
+<pre><code>class       : SpatRaster 
+size        : 746, 1066, 11  (nrow, ncol, nlyr)
+resolution  : 0.08333333, 0.08333333  (x, y)
+extent      : -25.33333, 63.5, -34.83333, 27.33333  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+sources     : cropland.tif  
+              memory  
+              memory  
+              ... and 8 more sources
+varnames    : cropland 
+              cropmask 
+              cropmask 
+              ...
+names       : cropl~ction,     sand,    soil_n, awc, mean_~ature, annua~ation, ... 
+min values  :        75.2, 13.46766,  0.201745,   0,    6.178354,    6.178354, ... 
+max values  :      8546.9, 90.59614, 14.826745, 150,   30.631733,   30.631733, ... 
+unit        :            ,         ,          ,  mm,            ,            , ... </code></pre>
+<p>Inspect the indicator stack and map selected layers to verify that the spatial alignment is correct.</p>
+<pre class="text"><code>plot(indicator_stack)</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/plot-indicators-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>The indicators are measured in different units and have different ranges. They are therefore standardized using Z-scores before calculating Euclidean distances.</p>
+<p>For each indicator <span class="math inline">\(k\)</span>, the standardized value is:</p>
+<p><span class="math display">\[
+z_{pk} = \frac{x_{pk} - \mu_k}{\sigma_k}
+\]</span></p>
+<p>where <span class="math inline">\(x_{pk}\)</span> is the value of indicator <span class="math inline">\(k\)</span> in pixel <span class="math inline">\(p\)</span>, and <span class="math inline">\(\mu_k\)</span> and <span class="math inline">\(\sigma_k\)</span> are the mean and standard deviation of that indicator across the analysis domain.</p>
+<pre class="text"><code>indicator_means &lt;- global(indicator_stack, "mean", na.rm = TRUE)
+indicator_sds &lt;- global(indicator_stack, "sd", na.rm = TRUE)
+
+indicator_means &lt;- as.numeric(indicator_means[, 1])
+indicator_sds &lt;- as.numeric(indicator_sds[, 1])
+
+indicator_z &lt;- (indicator_stack - indicator_means)/indicator_sds
+
+names(indicator_z) &lt;- paste0(names(indicator_stack), "_z")
+
+plot(indicator_z)</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/standardize-indicators-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>Each reference site is characterized by the mean value of each standardized indicator within its polygon. The resulting site profile represents the environmental and socioeconomic conditions associated with that site.</p>
+<p>The <code>district</code> attribute identifies the reference sites.</p>
+<pre class="text"><code>site_names &lt;- unique(reference_sites$district)
+site_names &lt;- site_names[!is.na(site_names)]
+
+site_profiles &lt;- data.frame(site = site_names, matrix(NA_real_, nrow = length(site_names),
+    ncol = nlyr(indicator_z)))
+
+names(site_profiles)[-1] &lt;- names(indicator_z)
+
+for (i in seq_along(site_names)) {
+
+    site_polygon &lt;- reference_sites[reference_sites$district == site_names[i], ]
+
+    site_values &lt;- extract(indicator_z, site_polygon, fun = mean, na.rm = TRUE)
+
+    site_profiles[i, -1] &lt;- as.numeric(site_values[1, -1])
+}
+
+knitr::kable(site_profiles, digits = 2)</code></pre>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="6%">
+<col width="11%">
+<col width="3%">
+<col width="5%">
+<col width="3%">
+<col width="10%">
+<col width="13%">
+<col width="3%">
+<col width="10%">
+<col width="10%">
+<col width="12%">
+<col width="7%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">site</th>
+<th align="right">cropland_fraction_z</th>
+<th align="right">sand_z</th>
+<th align="right">soil_n_z</th>
+<th align="right">awc_z</th>
+<th align="right">mean_temperature_z</th>
+<th align="right">annual_precipitation_z</th>
+<th align="right">tlu_z</th>
+<th align="right">rural_population_z</th>
+<th align="right">value_food_crops_z</th>
+<th align="right">value_nonfood_crops_z</th>
+<th align="right">travel_time_z</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">2.23</td>
+<td align="right">0.93</td>
+<td align="right">0.03</td>
+<td align="right">-0.38</td>
+<td align="right">0.85</td>
+<td align="right">0.85</td>
+<td align="right">1.29</td>
+<td align="right">1.09</td>
+<td align="right">0.29</td>
+<td align="right">-0.26</td>
+<td align="right">-0.66</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">-0.52</td>
+<td align="right">-1.40</td>
+<td align="right">1.41</td>
+<td align="right">-1.54</td>
+<td align="right">-0.91</td>
+<td align="right">-0.91</td>
+<td align="right">2.72</td>
+<td align="right">1.22</td>
+<td align="right">-0.04</td>
+<td align="right">0.05</td>
+<td align="right">-0.61</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">1.33</td>
+<td align="right">-1.63</td>
+<td align="right">1.66</td>
+<td align="right">0.86</td>
+<td align="right">-1.05</td>
+<td align="right">-1.05</td>
+<td align="right">3.75</td>
+<td align="right">0.79</td>
+<td align="right">0.22</td>
+<td align="right">3.71</td>
+<td align="right">-0.81</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">-0.63</td>
+<td align="right">-0.86</td>
+<td align="right">0.27</td>
+<td align="right">0.44</td>
+<td align="right">-1.10</td>
+<td align="right">-1.10</td>
+<td align="right">0.52</td>
+<td align="right">-0.27</td>
+<td align="right">-0.27</td>
+<td align="right">-0.22</td>
+<td align="right">-0.34</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">-0.72</td>
+<td align="right">1.05</td>
+<td align="right">-0.36</td>
+<td align="right">-0.95</td>
+<td align="right">0.14</td>
+<td align="right">0.14</td>
+<td align="right">-0.47</td>
+<td align="right">-0.44</td>
+<td align="right">-0.43</td>
+<td align="right">-0.25</td>
+<td align="right">0.33</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.22</td>
+<td align="right">0.49</td>
+<td align="right">-0.21</td>
+<td align="right">-0.92</td>
+<td align="right">0.64</td>
+<td align="right">0.64</td>
+<td align="right">-0.50</td>
+<td align="right">-0.16</td>
+<td align="right">0.20</td>
+<td align="right">1.06</td>
+<td align="right">-0.53</td>
+</tr>
+</tbody>
+</table></div>
+<p>Map the reference sites to verify their geographical distribution.</p>
+<pre class="text"><code>plot(ssa, main = "Reference sites in Sub-Saharan Africa")
+plot(reference_sites, add = TRUE, col = "red", pch = 16)</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/map-reference-sites-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="calculate-technology-transferability" class="section level2" number="15.4">
+<h2>
+<span class="header-section-number">15.4</span> Calculate technology transferability<a class="anchor" aria-label="anchor" href="#calculate-technology-transferability"><i class="fas fa-link"></i></a>
+</h2>
+<p>For each reference site, the Euclidean distance between the site’s mean standardized profile and every cropland pixel is calculated.</p>
+<p><span class="math display">\[
+d_{pi} = \sqrt{\sum_{k=1}^{K}(z_{pk}-\bar{z}_{ik})^2}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li>
+<span class="math inline">\(d_{pi}\)</span> is the distance between pixel <span class="math inline">\(p\)</span> and reference site <span class="math inline">\(i\)</span>;</li>
+<li>
+<span class="math inline">\(z_{pk}\)</span> is the standardized value of indicator <span class="math inline">\(k\)</span> in pixel <span class="math inline">\(p\)</span>;</li>
+<li>
+<span class="math inline">\(\bar{z}_{ik}\)</span> is the mean standardized value of indicator <span class="math inline">\(k\)</span> at reference site <span class="math inline">\(i\)</span>;</li>
+<li>
+<span class="math inline">\(K\)</span> is the number of indicators.</li>
+</ul>
+<p>Distance is converted into a transferability index using an exponential decay function:</p>
+<p><span class="math display">\[
+Pr_{pi} = \exp(-\lambda d_{pi})
+\]</span></p>
+<p>The parameter <span class="math inline">\(\lambda\)</span> controls how rapidly transferability decreases as distance increases. A larger value produces a more restrictive transferability surface.</p>
+<p>The value used in the original script is 0.4. This parameter should be treated as an analytical choice and tested through sensitivity analysis.</p>
+<pre class="text"><code>lambda &lt;- 0.4
+
+transferability_stack &lt;- rast()
+
+for (i in seq_along(site_names)) {
+
+    site_profile &lt;- as.numeric(site_profiles[i, -1])
+
+    distance_squared &lt;- (indicator_z - site_profile)^2
+
+    distance_to_site &lt;- sqrt(sum(distance_squared))
+
+    transferability &lt;- exp(-lambda * distance_to_site)
+
+    names(transferability) &lt;- site_names[i]
+
+    transferability_stack &lt;- c(transferability_stack, transferability)
+}
+
+transferability_stack</code></pre>
+<pre><code>class       : SpatRaster 
+size        : 746, 1066, 6  (nrow, ncol, nlyr)
+resolution  : 0.08333333, 0.08333333  (x, y)
+extent      : -25.33333, 63.5, -34.83333, 27.33333  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+source(s)   : memory
+names       :      Senegal,     Ethiopia,       Kenya1,       Kenya2,     Zimbabwe,  Ivory Coast 
+min values  : 1.905469e-11, 2.054574e-11, 9.288751e-11, 1.844964e-11, 1.729799e-11, 3.062191e-11 
+max values  : 8.431718e-01, 7.481585e-01, 5.444154e-01, 8.729144e-01, 1.000000e+00, 8.248507e-01 </code></pre>
+<p>The maps show the geographical distribution of pixels with different degrees of similarity to each reference site.</p>
+<pre class="text"><code>plot(transferability_stack, range = c(0, 1), main = names(transferability_stack))</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/map-transferability-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>A transferability value close to one indicates high similarity to the reference site’s profile. A value close to zero indicates low similarity.</p>
+</div>
+<div id="calculate-cumulative-reach" class="section level2" number="15.5">
+<h2>
+<span class="header-section-number">15.5</span> Calculate cumulative reach<a class="anchor" aria-label="anchor" href="#calculate-cumulative-reach"><i class="fas fa-link"></i></a>
+</h2>
+<p>The cumulative reach analysis estimates the cropland area and rural population located in pixels with transferability values equal to or greater than a given threshold.</p>
+<p>The physical area of each pixel is calculated in hectares. Cropland fraction is then used to estimate the cropland area within each pixel.</p>
+<p>The following code accommodates cropland fractions expressed either as proportions or percentages.</p>
+<pre class="text"><code>maximum_cropland_fraction &lt;- global(cropland_fraction, "max", na.rm = TRUE)[1, 1]
+
+cropland_divisor &lt;- ifelse(maximum_cropland_fraction &gt; 1, 100, 1)
+
+pixel_area_ha &lt;- cellSize(cropmask, unit = "ha")
+
+cropland_area_ha &lt;- pixel_area_ha * (cropland_fraction/cropland_divisor)
+
+cropland_area_ha &lt;- mask(cropland_area_ha, cropmask)</code></pre>
+<p>The cumulative reach is calculated at thresholds from 1 to 0, in increments of 0.05. For each threshold, the cropland area and rural population in pixels meeting or exceeding the threshold are summed.</p>
+<pre class="text"><code>transferability_thresholds &lt;- seq(1, 0, by = -0.05)
+
+total_cropland_ha &lt;- global(cropland_area_ha, "sum", na.rm = TRUE)[1, 1]
+
+total_rural_population &lt;- global(rural_population, "sum", na.rm = TRUE)[1, 1]</code></pre>
+<p>Calculate cumulative reach for each reference site</p>
+<pre class="text"><code>cumulative_reach &lt;- data.frame()
+
+for (i in seq_along(site_names)) {
+    site_transferability &lt;- transferability_stack[[i]]
+    cumulative_cropland &lt;- numeric(length(transferability_thresholds))
+    cumulative_population &lt;- numeric(length(transferability_thresholds))
+    for (j in seq_along(transferability_thresholds)) {
+        threshold_mask &lt;- site_transferability &gt;= transferability_thresholds[j]
+        cumulative_cropland[j] &lt;- global(cropland_area_ha * threshold_mask, "sum",
+            na.rm = TRUE)[1, 1]
+        cumulative_population[j] &lt;- global(rural_population * threshold_mask, "sum",
+            na.rm = TRUE)[1, 1]
+    }
+
+    site_reach &lt;- data.frame(reference_site = site_names[i], transferability_threshold = transferability_thresholds,
+        cumulative_cropland_ha = cumulative_cropland, share_cropland_pct = 100 *
+            cumulative_cropland/total_cropland_ha, cumulative_rural_population = cumulative_population,
+        share_rural_population_pct = 100 * cumulative_population/total_rural_population)
+
+    cumulative_reach &lt;- rbind(cumulative_reach, site_reach)
+}
+
+knitr::kable(cumulative_reach, digits = 2)</code></pre>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="10%">
+<col width="18%">
+<col width="16%">
+<col width="13%">
+<col width="20%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">reference_site</th>
+<th align="right">transferability_threshold</th>
+<th align="right">cumulative_cropland_ha</th>
+<th align="right">share_cropland_pct</th>
+<th align="right">cumulative_rural_population</th>
+<th align="right">share_rural_population_pct</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">1.00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.95</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.90</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.85</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.80</td>
+<td align="right">5.389449e+05</td>
+<td align="right">0.00</td>
+<td align="right">450.25</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.75</td>
+<td align="right">1.538083e+06</td>
+<td align="right">0.01</td>
+<td align="right">1555.37</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.70</td>
+<td align="right">3.731040e+06</td>
+<td align="right">0.02</td>
+<td align="right">3349.47</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.65</td>
+<td align="right">1.003978e+07</td>
+<td align="right">0.06</td>
+<td align="right">9666.64</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.60</td>
+<td align="right">4.008312e+07</td>
+<td align="right">0.22</td>
+<td align="right">37050.40</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.55</td>
+<td align="right">1.313529e+08</td>
+<td align="right">0.73</td>
+<td align="right">125974.47</td>
+<td align="right">0.52</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.50</td>
+<td align="right">3.291368e+08</td>
+<td align="right">1.82</td>
+<td align="right">309240.47</td>
+<td align="right">1.27</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.45</td>
+<td align="right">7.882962e+08</td>
+<td align="right">4.37</td>
+<td align="right">690470.41</td>
+<td align="right">2.84</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.40</td>
+<td align="right">1.613828e+09</td>
+<td align="right">8.94</td>
+<td align="right">1331032.72</td>
+<td align="right">5.47</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.35</td>
+<td align="right">2.736997e+09</td>
+<td align="right">15.16</td>
+<td align="right">2226509.91</td>
+<td align="right">9.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.30</td>
+<td align="right">4.251042e+09</td>
+<td align="right">23.55</td>
+<td align="right">3621970.24</td>
+<td align="right">14.88</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.25</td>
+<td align="right">6.325560e+09</td>
+<td align="right">35.04</td>
+<td align="right">6027299.10</td>
+<td align="right">24.76</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.20</td>
+<td align="right">8.946573e+09</td>
+<td align="right">49.56</td>
+<td align="right">9878424.78</td>
+<td align="right">40.58</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.15</td>
+<td align="right">1.174529e+10</td>
+<td align="right">65.06</td>
+<td align="right">14766409.49</td>
+<td align="right">60.66</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.10</td>
+<td align="right">1.376386e+10</td>
+<td align="right">76.24</td>
+<td align="right">18044337.19</td>
+<td align="right">74.13</td>
+</tr>
+<tr class="even">
+<td align="left">Senegal</td>
+<td align="right">0.05</td>
+<td align="right">1.495247e+10</td>
+<td align="right">82.83</td>
+<td align="right">20255032.13</td>
+<td align="right">83.21</td>
+</tr>
+<tr class="odd">
+<td align="left">Senegal</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">1.00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.95</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.90</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.85</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.80</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.75</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.70</td>
+<td align="right">1.179850e+05</td>
+<td align="right">0.00</td>
+<td align="right">2007.09</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.65</td>
+<td align="right">1.263346e+05</td>
+<td align="right">0.00</td>
+<td align="right">2392.75</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.60</td>
+<td align="right">7.062983e+05</td>
+<td align="right">0.00</td>
+<td align="right">7883.96</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.55</td>
+<td align="right">2.208738e+06</td>
+<td align="right">0.01</td>
+<td align="right">19402.67</td>
+<td align="right">0.08</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.50</td>
+<td align="right">6.667374e+06</td>
+<td align="right">0.04</td>
+<td align="right">39960.62</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.45</td>
+<td align="right">1.661447e+07</td>
+<td align="right">0.09</td>
+<td align="right">83770.59</td>
+<td align="right">0.34</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.40</td>
+<td align="right">4.352104e+07</td>
+<td align="right">0.24</td>
+<td align="right">165891.34</td>
+<td align="right">0.68</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.35</td>
+<td align="right">1.024289e+08</td>
+<td align="right">0.57</td>
+<td align="right">335510.03</td>
+<td align="right">1.38</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.30</td>
+<td align="right">2.446852e+08</td>
+<td align="right">1.36</td>
+<td align="right">713560.62</td>
+<td align="right">2.93</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.25</td>
+<td align="right">6.172849e+08</td>
+<td align="right">3.42</td>
+<td align="right">1540760.09</td>
+<td align="right">6.33</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.20</td>
+<td align="right">1.362497e+09</td>
+<td align="right">7.55</td>
+<td align="right">3040712.33</td>
+<td align="right">12.49</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.15</td>
+<td align="right">3.887905e+09</td>
+<td align="right">21.54</td>
+<td align="right">7568787.22</td>
+<td align="right">31.09</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.10</td>
+<td align="right">1.114437e+10</td>
+<td align="right">61.73</td>
+<td align="right">16615134.56</td>
+<td align="right">68.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Ethiopia</td>
+<td align="right">0.05</td>
+<td align="right">1.464855e+10</td>
+<td align="right">81.14</td>
+<td align="right">19992348.06</td>
+<td align="right">82.13</td>
+</tr>
+<tr class="even">
+<td align="left">Ethiopia</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">1.00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.95</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.90</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.85</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.80</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.75</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.70</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.65</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.60</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.55</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.50</td>
+<td align="right">1.797445e+06</td>
+<td align="right">0.01</td>
+<td align="right">2258.73</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.45</td>
+<td align="right">4.393962e+06</td>
+<td align="right">0.02</td>
+<td align="right">6091.46</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.40</td>
+<td align="right">1.308149e+07</td>
+<td align="right">0.07</td>
+<td align="right">17167.06</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.35</td>
+<td align="right">2.954799e+07</td>
+<td align="right">0.16</td>
+<td align="right">37609.39</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.30</td>
+<td align="right">5.983490e+07</td>
+<td align="right">0.33</td>
+<td align="right">77238.70</td>
+<td align="right">0.32</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.25</td>
+<td align="right">1.243725e+08</td>
+<td align="right">0.69</td>
+<td align="right">170169.56</td>
+<td align="right">0.70</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.20</td>
+<td align="right">2.689620e+08</td>
+<td align="right">1.49</td>
+<td align="right">403283.29</td>
+<td align="right">1.66</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.15</td>
+<td align="right">8.639821e+08</td>
+<td align="right">4.79</td>
+<td align="right">1340771.16</td>
+<td align="right">5.51</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.10</td>
+<td align="right">2.565545e+09</td>
+<td align="right">14.21</td>
+<td align="right">3863893.45</td>
+<td align="right">15.87</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya1</td>
+<td align="right">0.05</td>
+<td align="right">1.306109e+10</td>
+<td align="right">72.35</td>
+<td align="right">17751887.55</td>
+<td align="right">72.93</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya1</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">1.00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.95</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.90</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.85</td>
+<td align="right">6.304597e+04</td>
+<td align="right">0.00</td>
+<td align="right">499.28</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.80</td>
+<td align="right">3.291282e+05</td>
+<td align="right">0.00</td>
+<td align="right">1995.98</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.75</td>
+<td align="right">1.294355e+06</td>
+<td align="right">0.01</td>
+<td align="right">5689.91</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.70</td>
+<td align="right">5.339953e+06</td>
+<td align="right">0.03</td>
+<td align="right">17598.41</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.65</td>
+<td align="right">1.397998e+07</td>
+<td align="right">0.08</td>
+<td align="right">38619.76</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.60</td>
+<td align="right">3.460794e+07</td>
+<td align="right">0.19</td>
+<td align="right">87257.29</td>
+<td align="right">0.36</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.55</td>
+<td align="right">9.723721e+07</td>
+<td align="right">0.54</td>
+<td align="right">216018.15</td>
+<td align="right">0.89</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.50</td>
+<td align="right">2.550299e+08</td>
+<td align="right">1.41</td>
+<td align="right">501970.21</td>
+<td align="right">2.06</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.45</td>
+<td align="right">5.971594e+08</td>
+<td align="right">3.31</td>
+<td align="right">1102177.97</td>
+<td align="right">4.53</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.40</td>
+<td align="right">1.211159e+09</td>
+<td align="right">6.71</td>
+<td align="right">2169852.78</td>
+<td align="right">8.91</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.35</td>
+<td align="right">2.194161e+09</td>
+<td align="right">12.15</td>
+<td align="right">3709942.99</td>
+<td align="right">15.24</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.30</td>
+<td align="right">3.477490e+09</td>
+<td align="right">19.26</td>
+<td align="right">5604142.90</td>
+<td align="right">23.02</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.25</td>
+<td align="right">5.018919e+09</td>
+<td align="right">27.80</td>
+<td align="right">7909351.58</td>
+<td align="right">32.49</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.20</td>
+<td align="right">7.029963e+09</td>
+<td align="right">38.94</td>
+<td align="right">10566890.60</td>
+<td align="right">43.41</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.15</td>
+<td align="right">9.859427e+09</td>
+<td align="right">54.61</td>
+<td align="right">13930761.02</td>
+<td align="right">57.23</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.10</td>
+<td align="right">1.284830e+10</td>
+<td align="right">71.17</td>
+<td align="right">17196560.40</td>
+<td align="right">70.65</td>
+</tr>
+<tr class="odd">
+<td align="left">Kenya2</td>
+<td align="right">0.05</td>
+<td align="right">1.460458e+10</td>
+<td align="right">80.90</td>
+<td align="right">19701473.05</td>
+<td align="right">80.94</td>
+</tr>
+<tr class="even">
+<td align="left">Kenya2</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">1.00</td>
+<td align="right">2.017193e+04</td>
+<td align="right">0.00</td>
+<td align="right">73.01</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.95</td>
+<td align="right">2.017193e+04</td>
+<td align="right">0.00</td>
+<td align="right">73.01</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.90</td>
+<td align="right">2.017193e+04</td>
+<td align="right">0.00</td>
+<td align="right">73.01</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.85</td>
+<td align="right">3.925233e+04</td>
+<td align="right">0.00</td>
+<td align="right">91.73</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.80</td>
+<td align="right">2.409883e+05</td>
+<td align="right">0.00</td>
+<td align="right">349.57</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.75</td>
+<td align="right">1.621624e+06</td>
+<td align="right">0.01</td>
+<td align="right">2973.41</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.70</td>
+<td align="right">9.041154e+06</td>
+<td align="right">0.05</td>
+<td align="right">12998.37</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.65</td>
+<td align="right">2.773890e+07</td>
+<td align="right">0.15</td>
+<td align="right">38403.57</td>
+<td align="right">0.16</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.60</td>
+<td align="right">6.880627e+07</td>
+<td align="right">0.38</td>
+<td align="right">89177.60</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.55</td>
+<td align="right">1.558710e+08</td>
+<td align="right">0.86</td>
+<td align="right">208202.13</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.50</td>
+<td align="right">3.353484e+08</td>
+<td align="right">1.86</td>
+<td align="right">434545.54</td>
+<td align="right">1.79</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.45</td>
+<td align="right">6.949939e+08</td>
+<td align="right">3.85</td>
+<td align="right">899204.06</td>
+<td align="right">3.69</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.40</td>
+<td align="right">1.495365e+09</td>
+<td align="right">8.28</td>
+<td align="right">2011170.31</td>
+<td align="right">8.26</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.35</td>
+<td align="right">2.750096e+09</td>
+<td align="right">15.23</td>
+<td align="right">3738984.59</td>
+<td align="right">15.36</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.30</td>
+<td align="right">4.526780e+09</td>
+<td align="right">25.08</td>
+<td align="right">6111919.79</td>
+<td align="right">25.11</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.25</td>
+<td align="right">6.304733e+09</td>
+<td align="right">34.92</td>
+<td align="right">8506788.84</td>
+<td align="right">34.95</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.20</td>
+<td align="right">7.993362e+09</td>
+<td align="right">44.28</td>
+<td align="right">10686084.70</td>
+<td align="right">43.90</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.15</td>
+<td align="right">1.000419e+10</td>
+<td align="right">55.42</td>
+<td align="right">13069482.14</td>
+<td align="right">53.69</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.10</td>
+<td align="right">1.229539e+10</td>
+<td align="right">68.11</td>
+<td align="right">15916802.88</td>
+<td align="right">65.39</td>
+</tr>
+<tr class="even">
+<td align="left">Zimbabwe</td>
+<td align="right">0.05</td>
+<td align="right">1.419897e+10</td>
+<td align="right">78.65</td>
+<td align="right">18966602.80</td>
+<td align="right">77.92</td>
+</tr>
+<tr class="odd">
+<td align="left">Zimbabwe</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">1.00</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.95</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.90</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.85</td>
+<td align="right">0.000000e+00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.80</td>
+<td align="right">1.582603e+05</td>
+<td align="right">0.00</td>
+<td align="right">137.08</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.75</td>
+<td align="right">8.932906e+05</td>
+<td align="right">0.00</td>
+<td align="right">722.07</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.70</td>
+<td align="right">4.652797e+06</td>
+<td align="right">0.03</td>
+<td align="right">4006.38</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.65</td>
+<td align="right">2.557578e+07</td>
+<td align="right">0.14</td>
+<td align="right">20718.46</td>
+<td align="right">0.09</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.60</td>
+<td align="right">7.374347e+07</td>
+<td align="right">0.41</td>
+<td align="right">62786.08</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.55</td>
+<td align="right">1.875357e+08</td>
+<td align="right">1.04</td>
+<td align="right">157170.89</td>
+<td align="right">0.65</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.50</td>
+<td align="right">4.631254e+08</td>
+<td align="right">2.57</td>
+<td align="right">394242.71</td>
+<td align="right">1.62</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.45</td>
+<td align="right">1.034448e+09</td>
+<td align="right">5.73</td>
+<td align="right">938637.27</td>
+<td align="right">3.86</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.40</td>
+<td align="right">2.004315e+09</td>
+<td align="right">11.10</td>
+<td align="right">1941211.73</td>
+<td align="right">7.98</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.35</td>
+<td align="right">3.657831e+09</td>
+<td align="right">20.26</td>
+<td align="right">3906117.84</td>
+<td align="right">16.05</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.30</td>
+<td align="right">5.664933e+09</td>
+<td align="right">31.38</td>
+<td align="right">6739713.26</td>
+<td align="right">27.69</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.25</td>
+<td align="right">7.584286e+09</td>
+<td align="right">42.01</td>
+<td align="right">9423814.59</td>
+<td align="right">38.72</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.20</td>
+<td align="right">9.816377e+09</td>
+<td align="right">54.38</td>
+<td align="right">12197014.64</td>
+<td align="right">50.11</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.15</td>
+<td align="right">1.170063e+10</td>
+<td align="right">64.81</td>
+<td align="right">14781573.54</td>
+<td align="right">60.73</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.10</td>
+<td align="right">1.319219e+10</td>
+<td align="right">73.08</td>
+<td align="right">17080252.99</td>
+<td align="right">70.17</td>
+</tr>
+<tr class="odd">
+<td align="left">Ivory Coast</td>
+<td align="right">0.05</td>
+<td align="right">1.461261e+10</td>
+<td align="right">80.94</td>
+<td align="right">19579305.94</td>
+<td align="right">80.44</td>
+</tr>
+<tr class="even">
+<td align="left">Ivory Coast</td>
+<td align="right">0.00</td>
+<td align="right">1.551563e+10</td>
+<td align="right">85.95</td>
+<td align="right">21684459.34</td>
+<td align="right">89.09</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="calculate-combined-portfolio-reach" class="section level2" number="15.6">
+<h2>
+<span class="header-section-number">15.6</span> Calculate combined portfolio reach<a class="anchor" aria-label="anchor" href="#calculate-combined-portfolio-reach"><i class="fas fa-link"></i></a>
+</h2>
+<p>Individual transferability maps can overlap geographically. To calculate the combined reach of the portfolio, the maximum transferability value across all reference sites is calculated for each pixel.</p>
+<p>This creates an envelope representing the best match to at least one reference site.</p>
+<pre class="text"><code>maximum_transferability &lt;- app(transferability_stack, fun = max, na.rm = TRUE)
+
+plot(maximum_transferability, main = "Maximum transferability across reference sites",
+    range = c(0, 1))</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/combined-envelope-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<p>The default threshold below is 0.6, as used in the original script. The threshold can be changed depending on the desired level of similarity.</p>
+<pre class="text"><code>selected_threshold &lt;- 0.6
+
+combined_reach_mask &lt;- ifel(maximum_transferability &gt;= selected_threshold, 1, NA)
+
+combined_cropland &lt;- mask(cropland_area_ha, combined_reach_mask)
+combined_population &lt;- mask(rural_population, combined_reach_mask)
+
+combined_cropland_ha &lt;- global(combined_cropland, "sum", na.rm = TRUE)[1, 1]
+
+combined_rural_population &lt;- global(combined_population, "sum", na.rm = TRUE)[1,
+    1]
+
+combined_reach_summary &lt;- data.frame(transferability_threshold = selected_threshold,
+    unique_cropland_ha = combined_cropland_ha, share_cropland_pct = 100 * combined_cropland_ha/total_cropland_ha,
+    unique_rural_population = combined_rural_population, share_rural_population_pct = 100 *
+        combined_rural_population/total_rural_population)
+
+knitr::kable(combined_reach_summary, digits = 2)</code></pre>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="22%">
+<col width="16%">
+<col width="16%">
+<col width="20%">
+<col width="23%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">transferability_threshold</th>
+<th align="right">unique_cropland_ha</th>
+<th align="right">share_cropland_pct</th>
+<th align="right">unique_rural_population</th>
+<th align="right">share_rural_population_pct</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">0.6</td>
+<td align="right">217947096</td>
+<td align="right">1.21</td>
+<td align="right">284155.3</td>
+<td align="right">1.17</td>
+</tr></tbody>
+</table></div>
+</div>
+<div id="visualize-cumulative-reach" class="section level2" number="15.7">
+<h2>
+<span class="header-section-number">15.7</span> Visualize cumulative reach<a class="anchor" aria-label="anchor" href="#visualize-cumulative-reach"><i class="fas fa-link"></i></a>
+</h2>
+<p>The cumulative reach curves show how the share of cropland and rural population increases as the transferability threshold becomes less restrictive.</p>
+<pre class="text"><code>p_cropland &lt;- ggplot(cumulative_reach, aes(x = transferability_threshold, y = share_cropland_pct,
+    colour = reference_site)) + geom_line(linewidth = 1) + scale_x_reverse(breaks = seq(0,
+    1, by = 0.1)) + labs(x = "Transferability threshold", y = "Cumulative cropland share (%)",
+    colour = "Reference site") + theme_bw()
+
+p_cropland</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/plot-cropland-reach-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+<pre class="text"><code>p_population &lt;- ggplot(cumulative_reach, aes(x = transferability_threshold, y = share_rural_population_pct,
+    colour = reference_site)) + geom_line(linewidth = 1) + scale_x_reverse(breaks = seq(0,
+    1, by = 0.1)) + labs(x = "Transferability threshold", y = "Cumulative rural population share (%)",
+    colour = "Reference site") + theme_bw()
+
+p_population</code></pre>
+<div class="inline-figure"><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/plot-population-reach-1.png" alt="" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="interpretation-and-limitations" class="section level2" number="15.8">
+<h2>
+<span class="header-section-number">15.8</span> Interpretation and limitations<a class="anchor" aria-label="anchor" href="#interpretation-and-limitations"><i class="fas fa-link"></i></a>
+</h2>
+<p>The transferability maps identify areas whose measured environmental and socioeconomic characteristics resemble those of the reference sites. The cumulative reach curves quantify the cropland area and rural population located within these areas at different transferability thresholds.</p>
+<p>Several limitations should be considered when interpreting the results:</p>
+<ul>
+<li>
+<strong>Indicator selection:</strong> transferability depends on the variables included in the analysis. Important unmeasured constraints may affect actual technology performance.</li>
+<li>
+<strong>Standardization:</strong> Z-scores give each indicator a comparable scale, but do not necessarily give each indicator equal agronomic importance.</li>
+<li>
+<strong>Distance metric:</strong> Euclidean distance assumes that differences across indicators contribute additively to overall dissimilarity.</li>
+<li>
+<strong>Decay parameter:</strong> the value of lambda controls the rate at which transferability declines with distance and should be tested for sensitivity.</li>
+<li>
+<strong>Reference-site representation:</strong> site means may conceal within-site heterogeneity.</li>
+<li>
+<strong>Spatial resolution:</strong> resampling datasets to a common grid does not create new information at finer spatial scales.</li>
+<li>
+<strong>Population estimates:</strong> population totals depend on the original raster units, spatial alignment and resampling procedure.</li>
+<li>
+<strong>Interpretation:</strong> environmental similarity is a proxy for potential transferability, not a direct prediction of adoption, yield response or technology performance.</li>
+</ul>
+<p>A useful next step is to compare transferability maps and cumulative reach estimates under alternative indicator sets, decay parameters and transferability thresholds.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="introduction-1.html"><span class="header-section-number">14</span> Introduction</a></div>
+<div class="next"><a href="representativity-of-on-farm-trials-in-terms-of-soil-and-climate-conditions.html"><span class="header-section-number">16</span> Representativity of on-farm trials in terms of soil and climate conditions</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#set-up-the-analysis"><span class="header-section-number">15</span> 1. Set up the analysis</a></li>
+<li><a class="nav-link" href="#load-packages"><span class="header-section-number">15.1</span> 1.1. Load packages</a></li>
+<li><a class="nav-link" href="#define-the-geographical-domain-and-reference-sites"><span class="header-section-number">15.2</span> Define the geographical domain and reference sites</a></li>
+<li><a class="nav-link" href="#load-the-spatial-datasets"><span class="header-section-number">15.3</span> Load the spatial datasets</a></li>
+<li><a class="nav-link" href="#calculate-technology-transferability"><span class="header-section-number">15.4</span> Calculate technology transferability</a></li>
+<li><a class="nav-link" href="#calculate-cumulative-reach"><span class="header-section-number">15.5</span> Calculate cumulative reach</a></li>
+<li><a class="nav-link" href="#calculate-combined-portfolio-reach"><span class="header-section-number">15.6</span> Calculate combined portfolio reach</a></li>
+<li><a class="nav-link" href="#visualize-cumulative-reach"><span class="header-section-number">15.7</span> Visualize cumulative reach</a></li>
+<li><a class="nav-link" href="#interpretation-and-limitations"><span class="header-section-number">15.8</span> Interpretation and limitations</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong></strong>" was written by . </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

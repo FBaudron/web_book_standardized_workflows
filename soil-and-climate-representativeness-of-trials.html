@@ -623,7 +623,7 @@ site_values = site_values |&gt;
     labels = round(temp_breaks[axis_breaks], 1), limits = c(0.5, n_intervals + 0.5)) +
     scale_y_continuous(breaks = axis_breaks, labels = round(rain_breaks[axis_breaks],
         0), limits = c(0.5, n_intervals + 0.5)) + scale_fill_gradient(low = &quot;white&quot;,
-    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\\narea (%)&quot;) + coord_fixed() +
+    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\narea (%)&quot;) + coord_fixed() +
     labs(x = &quot;Mean annual temperature (°C)&quot;, y = &quot;Annual precipitation (mm)&quot;, title = &quot;Maize climate envelope and field sites&quot;) +
     theme_bw()</code></pre>
 <p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-240-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
@@ -633,7 +633,7 @@ site_values = site_values |&gt;
     labels = round(pawc_breaks[axis_breaks], 1), limits = c(0.5, n_intervals + 0.5)) +
     scale_y_continuous(breaks = axis_breaks, labels = signif(totn_breaks[axis_breaks],
         3), limits = c(0.5, n_intervals + 0.5)) + scale_fill_gradient(low = &quot;white&quot;,
-    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\\narea (%)&quot;) + coord_fixed() +
+    high = &quot;darkgreen&quot;, name = &quot;Share of harvested\narea (%)&quot;) + coord_fixed() +
     labs(x = &quot;Plant-available water capacity (mm)&quot;, y = &quot;Total soil nitrogen (%)&quot;,
         title = &quot;Maize soil envelope and field sites&quot;) + theme_bw()</code></pre>
 <p><img src="standardized_workflows_for_managing_and_analyzing_agronomic_datasets_files/figure-html/unnamed-chunk-241-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
